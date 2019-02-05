@@ -1,0 +1,26 @@
+sonata_admin:
+    title: 'Админка'
+    dashboard:
+        blocks:
+            - { type: sonata.admin.block.admin_list, position: left }
+        groups:
+                            app.admin.group.content:
+                                label: Контент
+                                label_catalogue: App
+                                items:
+                                    - admin.jos.content
+    #                            roles: [ ROLE_CUSTOMER ]
+
+sonata_block:
+    blocks:
+        sonata.admin.block.admin_list:
+            contexts: [admin]
+
+services:
+
+    admin.jos.content:
+               class: App\Admin\JosContentAdmin
+               arguments: [~, App\Entity\JosContent, ~]
+               tags:
+                   - { name: sonata.admin, manager_type: orm, group: app.admin.group.content, label: О компании, продукция и фото, label_catalogue: App }
+               public: true

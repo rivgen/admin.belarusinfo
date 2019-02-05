@@ -1,0 +1,114 @@
+<?php
+
+namespace App\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
+
+/**
+ * Category
+ *
+ * @ORM\Table(name="category")
+ * @ORM\Entity
+ */
+class Category
+{
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer", nullable=false)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $id;
+
+    /**
+     * @var string|null
+     *
+     * @ORM\Column(name="name", type="string")
+     */
+    private $name;
+
+    /**
+     * @ORM\OneToMany(targetEntity="BlogPost", mappedBy="category")
+     */
+    private $blogPosts;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $string;
+
+    /**
+     * @ORM\Column(type="string", length=50)
+     */
+    private $title;
+
+    public function __construct()
+    {
+        $this->blogPosts = new ArrayCollection();
+    }
+
+    public function getBlogPosts()
+    {
+        return $this->blogPosts;
+    }
+
+    /**
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * @param int $id
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * @param null|string $name
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+    }
+
+    public function getString(): ?int
+    {
+        return $this->string;
+    }
+
+    public function setString(int $string): self
+    {
+        $this->string = $string;
+
+        return $this;
+    }
+
+    public function getTitle(): ?string
+    {
+        return $this->title;
+    }
+
+    public function setTitle(string $title): self
+    {
+        $this->title = $title;
+
+        return $this;
+    }
+
+
+}

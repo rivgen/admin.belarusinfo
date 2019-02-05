@@ -1,0 +1,151 @@
+<?php
+
+namespace App\Controller;
+
+use App\Entity\City;
+use App\Entity\News;
+use App\Entity\NewsRubric;
+use App\Entity\Region;
+use App\Entity\Tag;
+use App\Form\NewsType;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
+use Tetranz\Select2EntityBundle\Form\Type\Select2EntityType;
+
+/**
+ * @Route("/news")
+ */
+class NewsController extends Controller
+{
+    /**
+     * @Route("/", name="news_index", methods="GET")
+     */
+    public function index(Request $request): Response
+    {
+        $em = $this->getDoctrine()->getManager();
+        $newsRepository = $em->getRepository(News::class);
+        $newsRubricRepository = $em->getRepository(NewsRubric::class);
+        $regionRepository = $em->getRepository(Region::class);
+        $tagRepository = $em->getRepository(Tag::class);
+        $terms = $request->query->all();
+        $terms['tagName'] = $request->query->get('tags', 0);
+        $defaultRegionIds = $regionRepository->getDefaultRegionIdes();
+        $terms['limit'] = $request->query->get('limit', 20);
+        $terms['page'] = $request->query->get('page', 1);
+        $terms['alias'] = $request->query->get('alias');
+        $terms['regions'] = $request->query->get('regions', $defaultRegionIds);
+        $terms['region201'] = $request->query->get('region201', null);
+        $terms['region202'] = $request->query->get('region202', null);
+        $terms['region203'] = $request->query->get('region203', null);
+        $terms['region204'] = $request->query->get('region204', null);
+        $terms['region205'] = $request->query->get('region205', null);
+        $terms['region206'] = $request->query->get('region206', null);
+        $tagIds = $request->query->get('tags');
+        $terms['tags'] = $tagRepository->searchByIds($tagIds);
+        $search_form = $this->container->get('search_form_helper')->createSearchTag($terms);
+        $news = $newsRepository->searchArr($terms);
+        $newsRubrics = $newsRubricRepository->getRubricNews();
+
+        return $this->render('news/index.html.twig', [
+            'news' => $news,
+            'terms' => $terms,
+            'total' => $newsRepository->countTotal($terms),
+            'search_form' => $search_form->createView(),
+            'search_form2' => $search_form->createView(),
+            'newsRubrics' => $newsRubrics
+            ]);
+
+    }
+
+    /**
+     * @Route("/new", name="news_new", methods="GET|POST")
+     */
+    public function new(Request $request): Response
+    {
+        $news = new News();
+        $form = $this->createForm(NewsType::class, $news);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($news);
+            $em->flush();
+
+            return $this->redirectToRoute('news_index');
+        }
+
+        return $this->render('news/new.html.twig', [
+            'news' => $news,
+            'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("/{id}", name="news_show", methods="GET")
+     */
+    public function show($id, Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $regionRepository = $em->getRepository(Region::class);
+        $defaultRegionIds = $regionRepository->getDefaultRegionIdes();
+        $terms = $request->query->all();
+        $terms['tagName'] = $request->query->get('tags', 0);
+        $tagIds = $request->query->get('tags');
+        $terms['tags'] = $em->getRepository(Tag::class)->searchByIds($tagIds);
+        $terms['regions'] = $request->query->get('regions', $defaultRegionIds);
+        $terms['alias'] = $request->query->get('alias');
+        $terms['region201'] = $request->query->get('region201', null);
+        $terms['region202'] = $request->query->get('region202', null);
+        $terms['region203'] = $request->query->get('region203', null);
+        $terms['region204'] = $request->query->get('region204', null);
+        $terms['region205'] = $request->query->get('region205', null);
+        $terms['region206'] = $request->query->get('region206', null);
+        $newsRepository = $em->getRepository(News::class);
+        $news = $newsRepository->searchCom($id);
+        $search_form = $this->container->get('search_form_helper')->createSearchTag($terms);
+        return $this->render('news/show.html.twig', [
+            'news' => $news,
+            'search_form' => $search_form->createView(),
+            'search_form2' => $search_form->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("/{id}/edit", name="news_edit", methods="GET|POST")
+     */
+    public function edit(Request $request, News $news): Response
+    {
+        $form = $this->createForm(NewsType::class, $news);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->getDoctrine()->getManager()->flush();
+
+            return $this->redirectToRoute('news_edit', ['id' => $news->getId()]);
+        }
+
+        return $this->render('news/edit.html.twig', [
+            'news' => $news,
+            'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("/{id}", name="news_delete", methods="DELETE")
+     */
+    public function delete(Request $request, News $news): Response
+    {
+        if ($this->isCsrfTokenValid('delete'.$news->getId(), $request->request->get('_token'))) {
+            $em = $this->getDoctrine()->getManager();
+            $em->remove($news);
+            $em->flush();
+        }
+
+        return $this->redirectToRoute('news_index');
+    }
+
+}

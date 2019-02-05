@@ -1,0 +1,237 @@
+<?php
+
+namespace App\Entity;
+
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * @ORM\Entity(repositoryClass="App\Repository\NewsRubricRepository")
+ */
+class NewsRubric
+{
+    /**
+     * @ORM\Id()
+     * @ORM\GeneratedValue()
+     * @ORM\Column(type="integer")
+     */
+    private $id;
+
+    /**
+     * @ORM\Column(type="string", length=50)
+     */
+    private $title;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $parent_id;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $level;
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $keywords;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $published;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $create_product;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $modified;
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $description;
+
+    /**
+     * @ORM\Column(type="string", length=50)
+     */
+    private $alias;
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $headTitle;
+
+    /**
+     * @ORM\OneToMany(targetEntity="News", mappedBy="catid")
+     */
+    private $news;
+
+    private $newsCount;
+
+    /**
+     * @return mixed
+     */
+    public function getNews()
+    {
+        return $this->news;
+    }
+
+    /**
+     * @param mixed $news
+     */
+    public function setNews($news)
+    {
+        $this->news = $news;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getHeadTitle()
+    {
+        return $this->headTitle;
+    }
+
+    /**
+     * @param mixed $headTitle
+     */
+    public function setHeadTitle($headTitle)
+    {
+        $this->headTitle = $headTitle;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getNewsCount()
+    {
+        return $this->newsCount;
+    }
+
+    /**
+     * @param mixed $newsCount
+     */
+    public function setNewsCount($newsCount)
+    {
+        $this->newsCount = $newsCount;
+    }
+
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
+
+    public function getTitle(): ?string
+    {
+        return $this->title;
+    }
+
+    public function setTitle(string $title): self
+    {
+        $this->title = $title;
+
+        return $this;
+    }
+
+    public function getParentId(): ?int
+    {
+        return $this->parent_id;
+    }
+
+    public function setParentId(?int $parent_id): self
+    {
+        $this->parent_id = $parent_id;
+
+        return $this;
+    }
+
+    public function getLevel(): ?int
+    {
+        return $this->level;
+    }
+
+    public function setLevel(?int $level): self
+    {
+        $this->level = $level;
+
+        return $this;
+    }
+
+    public function getKeywords(): ?string
+    {
+        return $this->keywords;
+    }
+
+    public function setKeywords(?string $keywords): self
+    {
+        $this->keywords = $keywords;
+
+        return $this;
+    }
+
+    public function getPublished(): ?int
+    {
+        return $this->published;
+    }
+
+    public function setPublished(?int $published): self
+    {
+        $this->published = $published;
+
+        return $this;
+    }
+
+    public function getCreateProduct(): ?\DateTimeInterface
+    {
+        return $this->create_product;
+    }
+
+    public function setCreateProduct(?\DateTimeInterface $create_product): self
+    {
+        $this->create_product = $create_product;
+
+        return $this;
+    }
+
+    public function getModified(): ?\DateTimeInterface
+    {
+        return $this->modified;
+    }
+
+    public function setModified(?\DateTimeInterface $modified): self
+    {
+        $this->modified = $modified;
+
+        return $this;
+    }
+
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    public function setDescription(?string $description): self
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    public function getAlias(): ?string
+    {
+        return $this->alias;
+    }
+
+    public function setAlias(string $alias): self
+    {
+        $this->alias = $alias;
+
+        return $this;
+    }
+}

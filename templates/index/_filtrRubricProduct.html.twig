@@ -1,0 +1,299 @@
+{% block body %}
+    </form>
+    <div id="homeTovar" style="background: #dcf2fd; border-top: 1px solid #003580;">
+        <div class="container maxRazmer">
+            <div class="row rubricProduct">
+                <div class="col-md-2">
+                    <a href="{{ path('all_rubric_product') }}"><img
+                                class="img-fluid" style="height: 60px;"
+                                src="/image/1.png"
+                                alt="Товары для офиса"></a>
+                    <a href="{{ path('all_rubric_product') }}" >
+                    <p>Товары для офиса</p>
+                    </a>
+                </div>
+                <div class="col-md-2">
+                    <a href="{{ path('all_rubric_product') }}"><img
+                                class="img-fluid" style="height: 60px;"
+                                src="/image/2.png"
+                                alt="Товары для офиса"></a>
+                    <a href="{{ path('all_rubric_product') }}" >
+                    <p>Товары для кафе/ресторанов</p>
+                    </a>
+                </div>
+                <div class="col-md-2">
+                    <a href="{{ path('all_rubric_product') }}"><img
+                                class="img-fluid" style="height: 60px;"
+                                src="/image/3.png"
+                                alt="Товары для офиса"></a>
+                    <a href="{{ path('all_rubric_product') }}" >
+                    <p>Товары для промышленности</p>
+                    </a>
+                </div>
+                <div class="col-md-2">
+                    <a href="{{ path('all_rubric_product') }}"><img
+                                class="img-fluid" style="height: 60px;"
+                                src="/image/4.png"
+                                alt="Товары для офиса"></a>
+                    <a href="{{ path('all_rubric_product') }}" >
+                    <p>Товары для с/х</p>
+                    </a>
+                </div>
+                <div class="col-md-2">
+                    <a href="{{ path('all_rubric_product') }}"><img
+                                class="img-fluid" style="height: 60px;"
+                                src="/image/5.png"
+                                alt="Товары для офиса"></a>
+                    <a href="{{ path('all_rubric_product') }}" >
+                    <p>Товары для транспорта</p>
+                    </a>
+                </div>
+                <div class="col-md-2">
+                    <a href="{{ path('all_rubric_product') }}"><img
+                                class="img-fluid" style="height: 60px;"
+                                src="/image/ar.png"
+                                alt="Товары для офиса"></a>
+                    <a href="{{ path('all_rubric_product') }}" >
+                    <p>Еще товары</p>
+                    </a>
+                </div>
+            </div>
+            {#<div class="row">#}
+                {#<div class="col-md-12 collapse" id="navbarToggleExternalContent">#}
+                    {#<div class="bg-dark p-4"#}
+                         {#style="border-radius: 6px; margin-bottom: 10px; background: #3369a7 !important;">#}
+                        {#<div class="row">#}
+                            {#{% for i in 0..countRubricProduct %}#}
+                                {#{% for rubric in rubricProduct|slice(i, 1) %}#}
+                                    {#<div class="col-md-4">#}
+                                        {#<a href="{{ path('rubric_product', {'alias': rubric.alias}) }}"#}
+                                           {#style="color: white;"> {{ rubric.title }}</a> <br/>#}
+                                    {#</div>#}
+                                {#{% endfor %}#}
+                            {#{% endfor %}#}
+                        {#</div>#}
+                    {#</div>#}
+                {#</div>#}
+            {#</div>#}
+            <div class="row"
+                 style="margin-left: 0px; margin-right: 0px; background: #dcf2fd;">
+                <div class="col-md-9">
+                    <h2 style="margin-left: 0px; margin-right: 0px; background: #dcf2fd;  padding-top: 5px; padding-bottom: 8px; ">
+                        Последние поступления</h2>
+                </div>
+                <div class="col-md-3 pos-f-t">
+                    {#<nav class="navbar navbar-light" style="padding-left: 0px; padding-top: 10px; padding-bottom: 5px;">#}
+                    <a href="{{ path('all_rubric_product') }}">
+                        <button class="navbar-toggler"
+                                style=" padding: 3px; font-size: 16px; color: #2a63a4; font-weight: bold;" type="button"
+                                data-toggle="collapse" data-target="#navbarToggleExternalContent"
+                                aria-controls="navbarToggleExternalContent" aria-expanded="false"
+                                aria-label="Toggle navigation">
+                            Ещё товары <span class="navbar-toggler-icon"></span>
+                        </button>
+                    </a>
+                    {#</nav>#}
+                </div>
+                {#<div class="col-md-3"#}
+                     {#style=" color: #2a63a4; float: right; max-width: 34%; flex: 0%; font-size: 16px; padding-top: 10px; text-align: right;">#}
+                    {#<h7 style="color: #424243;">Товаров в каталоге</h7>#}
+                    {#(157689)#}
+                {#</div>#}
+            </div>
+            <div id="slider-carousel" class="row"
+                 style="margin-left: 0px; margin-right: 0px; padding-left: 15px; padding-right: 15px; ">
+                {#{% for product in productsAll|slice(0, 6)|sort %}#}
+                    {#<div class="col-md-2" style=" margin-bottom: 15px; background: #fff; border: 1px solid #cce2ed;">#}
+                        {#<div class="inline-block" style="height: 100px; overflow: hidden; text-align: center;">#}
+                            {#<a itemprop="url" href="{{ path('product_show', {'id': product.id}) }}"><img#}
+                                        {#class="img-fluid" style="height: 100px auto;"#}
+                                        {#src="/image/product/{{ product.id }}/{{ product.fotoProduct }}"#}
+                                        {#alt=""></a>#}
+                        {#</div>#}
+                        {#<div class="d-inline-block" style=" height: 50px; overflow: hidden;">#}
+                            {#<a itemprop="url" href="{{ path('product_show', {'id': product.id}) }}">#}
+                                {#{{ product.nameProduct }}#}
+                            {#</a>#}
+                        {#</div>#}
+                        {#<div class="d-inline-block" style="height: 50px; overflow: hidden;">#}
+                            {#<button type="button" class="btn btn-primary btn-sm">Предложений нет</button>#}
+
+                            {#{% if product.cennik is null %}#}
+                                {#<br/>Уточняйте цену#}
+                            {#{% else %}#}
+                                {#<br/>{{ product.cennik }}{{ product.cennikRefined }}#}
+                            {#{% endif %}#}
+                        {#</div>#}
+                    {#</div>#}
+                {#{% endfor %}#}
+
+
+                <div class="col-md-12">
+                    <div id="blogCarousel" class="carousel slide" data-ride="carousel">
+                        <!-- Carousel indicators (dots) -->
+                        <ol class="carousel-indicators">
+                            <li data-target="#blogCarousel" data-slide-to="0" class="active"></li>
+                            <li data-target="#blogCarousel" data-slide-to="1"></li>
+                            <li data-target="#blogCarousel" data-slide-to="2"></li>
+                        </ol>
+                        <!-- Carousel items -->
+                        <div class="carousel-inner">
+                            <!-- Carousel item-row active -->
+                            <div class="carousel-item active">
+                                <div class="row">
+                                    {% for product in productsAll|slice(0, 6)|sort %}
+                                        <div class="col-md-2" style=" margin-bottom: 15px; background: #fff; border: 1px solid #cce2ed;">
+                                            <div class="inline-block" style="height: 100px; overflow: hidden; text-align: center;">
+                                                <a itemprop="url" href="{{ path('product_show', {'id': product.id}) }}"><img
+                                                            class="img-fluid" style="height: 100px auto;"
+                                                            src="/image/product/{{ product.id }}/{{ product.fotoProduct }}"
+                                                            alt=""></a>
+                                            </div>
+                                            <div class="d-inline-block" style=" height: 50px; overflow: hidden;">
+                                                <a itemprop="url" href="{{ path('product_show', {'id': product.id}) }}">
+                                                    {{ product.nameProduct }}
+                                                </a>
+                                            </div>
+                                            <div class="d-inline-block" style="height: 50px; overflow: hidden;">
+                                                {#<button type="button" class="btn btn-primary btn-sm">Предложений нет</button>#}
+
+                                                {% if product.cennik is null %}
+                                                    <br/>Уточняйте цену
+                                                {% else %}
+                                                    <br/>{{ product.cennik }}{{ product.cennikRefined }}
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                            <!--.item-->
+                            <!-- Carousel item-row 2 -->
+                            <div class="carousel-item">
+                                <div class="row">
+                                    {% for product in productsAll|slice(6, 6)|sort %}
+                                        <div class="col-md-2" style=" margin-bottom: 15px; background: #fff; border: 1px solid #cce2ed;">
+                                            <div class="inline-block" style="height: 100px; overflow: hidden; text-align: center;">
+                                                <a itemprop="url" href="{{ path('product_show', {'id': product.id}) }}"><img
+                                                            class="img-fluid" style="height: 100px auto;"
+                                                            src="/image/product/{{ product.id }}/{{ product.fotoProduct }}"
+                                                            alt=""></a>
+                                            </div>
+                                            <div class="d-inline-block" style=" height: 50px; overflow: hidden;">
+                                                <a itemprop="url" href="{{ path('product_show', {'id': product.id}) }}">
+                                                    {{ product.nameProduct }}
+                                                </a>
+                                            </div>
+                                            <div class="d-inline-block" style="height: 50px; overflow: hidden;">
+                                                {#<button type="button" class="btn btn-primary btn-sm">Предложений нет</button>#}
+
+                                                {% if product.cennik is null %}
+                                                    <br/>Уточняйте цену
+                                                {% else %}
+                                                    <br/>{{ product.cennik }}{{ product.cennikRefined }}
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                            <!--.item-->
+                            <!-- Carousel item-row 3 -->
+                            <div class="carousel-item">
+                                <div class="row">
+                                    {% for product in productsAll|slice(12, 6)|sort %}
+                                        <div class="col-md-2" style=" margin-bottom: 15px; background: #fff; border: 1px solid #cce2ed;">
+                                            <div class="inline-block" style="height: 100px; overflow: hidden; text-align: center;">
+                                                <a itemprop="url" href="{{ path('product_show', {'id': product.id}) }}"><img
+                                                            class="img-fluid" style="height: 100px auto;"
+                                                            src="/image/product/{{ product.id }}/{{ product.fotoProduct }}"
+                                                            alt=""></a>
+                                            </div>
+                                            <div class="d-inline-block" style=" height: 50px; overflow: hidden;">
+                                                <a itemprop="url" href="{{ path('product_show', {'id': product.id}) }}">
+                                                    {{ product.nameProduct }}
+                                                </a>
+                                            </div>
+                                            <div class="d-inline-block" style="height: 50px; overflow: hidden;">
+                                                {#<button type="button" class="btn btn-primary btn-sm">Предложений нет</button>#}
+
+                                                {% if product.cennik is null %}
+                                                    <br/>Уточняйте цену
+                                                {% else %}
+                                                    <br/>{{ product.cennik }}{{ product.cennikRefined }}
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                            <!--.item-->
+                        </div>
+                    </div>
+                    {#<!-- The Lightbox -->#}
+                    {#<div id="myLightbox" class="lightbox-bgr">#}
+                        {#<span class="close cursor" onclick="closeLightbox()">&times;</span>#}
+                        {#<div class="lightbox-content">#}
+                            {#<div class="mySlides">#}
+                                {#<div class="numbertext">1 / 11</div>#}
+                                {#<img src="./images/certif-orig1.jpg">#}
+                            {#</div>#}
+
+                            {#<div class="mySlides">#}
+                                {#<div class="numbertext">2 / 11</div>#}
+                                {#<img src="./images/certif-orig5.jpg">#}
+                            {#</div>#}
+
+                            {#<div class="mySlides">#}
+                                {#<div class="numbertext">3 / 11</div>#}
+                                {#<img src="./images/certif-orig2.jpg">#}
+                            {#</div>#}
+
+                            {#<div class="mySlides">#}
+                                {#<div class="numbertext">4 / 11</div>#}
+                                {#<img src="./images/certif-orig2b.jpg">#}
+                            {#</div>#}
+                            {#<div class="mySlides">#}
+                                {#<div class="numbertext">5 / 11</div>#}
+                                {#<img src="./images/certif-orig3.jpg">#}
+                            {#</div>#}
+                            {#<div class="mySlides">#}
+                                {#<div class="numbertext">6 / 11</div>#}
+                                {#<img src="./images/certif-orig3b.jpg">#}
+                            {#</div>#}
+                            {#<div class="mySlides">#}
+                                {#<div class="numbertext">7 / 11</div>#}
+                                {#<img src="./images/certif-orig3c.jpg">#}
+                            {#</div>#}
+                            {#<div class="mySlides">#}
+                                {#<div class="numbertext">8 / 11</div>#}
+                                {#<img src="./images/certif-orig4.jpg">#}
+                            {#</div>#}
+                            {#<div class="mySlides">#}
+                                {#<div class="numbertext">9 / 11</div>#}
+                                {#<img src="./images/certif-orig4b.jpg">#}
+                            {#</div>#}
+                            {#<div class="mySlides">#}
+                                {#<div class="numbertext">10 / 11</div>#}
+                                {#<img src="./images/certif-orig4c.jpg">#}
+                            {#</div>#}
+                            {#<div class="mySlides">#}
+                                {#<div class="numbertext">11 / 11</div>#}
+                                {#<img src="./images/certif-orig4d.jpg">#}
+                            {#</div>#}
+                            {#<!-- Next/previous controls -->#}
+                            {#<a class="prev" onclick="plusSlides(-1)"><span class="mbri-arrow-prev"></span></a>#}
+                            {#<a class="next" onclick="plusSlides(1)"><span class="mbri-arrow-next"></span></a>#}
+
+                        {#</div>#}
+                    {#</div>#}
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="/js/scripts.js"></script>
+
+{% endblock %}

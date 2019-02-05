@@ -1,0 +1,108 @@
+{% block body %}
+    {% if app.request.get('_route') == 'rubric_companies' %}
+        {{ form_start(regionForm) }}
+    {% endif %}
+    <div class="zver02">
+    <div class="container maxRazmer">
+        <div class="row">
+            {#<div class="container" style="max-width: 1200px; margin: 0; padding: 0; float: left;">#}
+                {#<div class="row">#}
+                    <div class="col-md-3" style="margin: 0; padding: 0;">
+                        <nav class="navbar navbar-light ">
+                            <button type="button" class="btn btn-primary " data-toggle="modal"
+                                    data-target=".bd-example-modal-lg">
+                                Выбрать регион, город
+                                <span class="navbar-toggler-icon"></span>
+                            </button>
+                        </nav>
+                    </div>
+                    {#<div class="col-md-9 variable-width2 zver04" style="color: #666;">#}
+                            {#{% for region in showRegions %}#}
+                                {#<div>#}
+                                {#{{ region }} |#}
+                                {#</div>#}
+                            {#{% endfor %}#}
+                        {#{% for city in showCites %}#}
+                                {#<div>#}
+                                {#{{ city }} |#}
+                                {#</div>#}
+                            {#{% endfor %}#}
+                    {#</div>#}
+                        {#<form name="test" method="get" action="">#}
+                            <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog"
+                                 aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                                <div class="modal-dialog modal-lg" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">Выбрать область, город</h5>
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть
+                                            </button>
+                                            <button type="submit" class="btn btn-primary">Сохранить изменения</button>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div>
+                                                {{ form_label(regionForm.regions) }}
+                                                {{ form_widget(regionForm.regions) }}
+                                            </div>
+                                            <div>
+                                                Города:<br/>
+                                                <div class="row sort_by">
+                                                    {#{% if form_widget(search_form.region201) is not null %}#}
+                                                    <div class="col-md-2">
+                                                        Брестская обл.
+                                                        {{ form_widget(regionForm.region201) }}
+                                                        {#{{ form_widget(search_form.region201) }}#}
+                                                    </div>
+                                                    {#{% endif %}#}
+                                                    <div class="col-md-2">
+                                                        Витебская обл.
+                                                        {{ form_widget(regionForm.region202) }}
+                                                    </div>
+                                                    <div class="col-md-2">
+                                                        Гомельская обл.
+                                                        {{ form_widget(regionForm.region203) }}
+                                                    </div>
+                                                    <div class="col-md-2">
+                                                        Гродненская обл.
+                                                        {{ form_widget(regionForm.region204) }}
+                                                    </div>
+                                                    <div class="col-md-2">
+                                                        Минская обл.
+                                                        {{ form_widget(regionForm.region205) }}
+                                                    </div>
+                                                    <div class="col-md-2">
+                                                        Могилевская обл.
+                                                        {{ form_widget(regionForm.region206) }}
+                                                    </div>
+                                                    {#{{ form_widget(search_form.alias) }}#}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть
+                                            </button>
+                                            <button type="submit" class="btn btn-primary">Сохрагить изменения</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            {#</div>#}
+                            {# end Modal #}
+                            {#</form>#}
+                    {#</div>#}
+                </div>
+            {# Modal #}
+
+        </div>
+    </div>
+    </div>
+    {#<div class="row">#}
+    {#<div class="col-md-12">#}
+    {#{{ form_label(search_form.cites) }} {{ form_widget(search_form.cites) }}#}
+    {#</div>#}
+    {#</div>#}
+
+
+{% endblock %}

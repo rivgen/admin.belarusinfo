@@ -1,0 +1,147 @@
+{% block body %}
+    <div class="container maxRazmer homeNews">
+        <div class="row">
+            <div class="col-md-12">
+                <h2 style=" padding-top: 10px; padding-bottom: 10px;">Новости и обзоры</h2>
+            </div>
+        </div>
+        <div class="row" style=" overflow: hidden; margin-left: 15px !important;">
+            <div class="col-md-8" style="border: 1px solid #fff; padding: 0; margin: 0; border-bottom: 0px; ">
+                {% for creat in showNewsTop|slice(0, 1) %}
+                    <div class="inline-block">
+                        <a itemprop="url" href="{{ path('news_show', {'id': creat.id}) }}">
+                            <span class="entry-pic">
+                                <img style="position: relative; z-index: -1; width: 100%; height: auto; vertical-align: top; " src="/image/news_preview/{{ creat.id }}.jpg" alt="" title="" >
+                            </span>
+                        </a>
+                        <div >
+                            <a href="{{ path('news_index') }}">
+                            <span style="position: absolute; left: 0; top: 0; width: auto; color: #fff; transition: color 350ms; padding: 5px; line-height: 21px; font-size: 15px; background: #1766c7; margin: 5px;">
+                            Новости
+                            </span>
+                            </a>
+                        </div>
+                        <div style="pointer-events: none; display: block; position: relative; width: 100%; ">
+                            <div style="position: absolute; left: 0; bottom: 19px; width: auto; color: #fff; transition: color 350ms; line-height: 16px; font-size: 15px; margin: 5px; padding: 5px; max-height: 100px; overflow: hidden; text-shadow: 1px 1px 2px black, 0 0 1em black; ">
+                                <a style="display: block; margin-bottom: 15px; color: #fff; font-size: 25px; font-weight: bold; line-height: 30px;" itemprop="url" href="{{ path('news_show', {'id': creat.id}) }}">{{ creat.newsTitle }}</a>
+                                {{ creat.introtext|raw }}
+                            </div>
+                            {#<p style="clear: both;" class="prevv"></p>#}
+                        </div>
+
+                    </div>
+                {% endfor %}
+            </div>
+            <div class="col-md-4" style="padding: 0px; margin: 0;">
+                {% for creat in showNews|slice(0, 1) %}
+                    <div class="inline-block" style="clear: both; display: block; position: relative; border-top: 1px solid #fff; border-right: 1px solid #fff;">
+                        <a itemprop="url" href="{{ path('news_show', {'id': creat.id}) }}" title="">
+                            <span class="entry-pic">
+                                <img style="position: relative; z-index: -1; width: 100%; height: auto; vertical-align: top; height: auto;" src="/image/news_preview/{{ creat.id }}.jpg" alt="" title="" >
+                            </span>
+                        </a>
+                        <div style="pointer-events: none; ">
+                            <span style="position: absolute; left: 0; top: 0; width: auto; color: #fff; transition: color 350ms; padding: 5px; line-height: 21px; font-size: 15px; background: #1766c7; margin: 5px;">
+                            Новости
+                            </span>
+                        </div>
+                        <div style="pointer-events: none; display: block; position: relative; width: 100%; ">
+                            <div style="position: absolute; left: 0; bottom: 19px; width: auto; color: #fff; transition: color 350ms; line-height: 16px; font-size: 15px; margin: 5px; padding: 5px; max-height: 100px; overflow: hidden; text-shadow: 1px 1px 2px black, 0 0 1em black; ">
+                                <a style="display: block; color: #fff; font-size: 20px; font-weight: bold; line-height: 24px;" itemprop="url" href="{{ path('news_show', {'id': creat.id}) }}">{{ creat.newsTitle }}</a>
+                            </div>
+                        </div>
+
+                    </div>
+                {% endfor %}
+                {% for creat in showNews|slice(1, 1) %}
+                    <div class="inline-block" style=" clear: both; display: block; position: relative; border-top: 1px solid #fff; border-right: 1px solid #fff;">
+                        <a itemprop="url" href="{{ path('news_show', {'id': creat.id}) }}" title="">
+                            <span class="entry-pic">
+                                <img style="position: relative; z-index: -1; width: 100%; height: auto; vertical-align: top; height: auto;" src="/image/news_preview/{{ creat.id }}.jpg" alt="" title="" >
+                            </span>
+                        </a>
+                        <div style="pointer-events: none; ">
+                            <span style="position: absolute; left: 0; top: 0; width: auto; color: #fff; transition: color 350ms; padding: 5px; line-height: 21px; font-size: 15px; background: #1766c7; margin: 5px;">
+                            Новости
+                            </span>
+                        </div>
+                        <div style="pointer-events: none; display: block; position: relative; width: 100%; ">
+                            <div style="position: absolute; left: 0; bottom: 19px; width: auto; color: #fff; transition: color 350ms; line-height: 16px; font-size: 15px; margin: 5px; padding: 5px; max-height: 100px; overflow: hidden; text-shadow: 1px 1px 2px black, 0 0 1em black; ">
+                                <a style="display: block; color: #fff; font-size: 20px; font-weight: bold; line-height: 24px;" itemprop="url" href="{{ path('news_show', {'id': creat.id}) }}">{{ creat.newsTitle }}</a>
+                            </div>
+                        </div>
+
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="row" style=" overflow: hidden; margin-left: 15px !important;">
+            <div class="col-md-4" style="padding: 0px; margin: 0;">
+                {% for creat in showNews|slice(2, 1) %}
+                    <div class="inline-block" style="clear: both; display: block; position: relative; border-top: 1px solid #fff; border-left: 1px solid #fff;">
+                        <a itemprop="url" href="{{ path('news_show', {'id': creat.id}) }}" title="">
+                            <span class="entry-pic">
+                                <img style="position: relative; z-index: -1; width: 100%; height: auto; vertical-align: top; height: auto;" src="/image/news_preview/{{ creat.id }}.jpg" alt="" title="" >
+                            </span>
+                        </a>
+                        <div style="pointer-events: none;">
+                            <span style="position: absolute; left: 0; top: 0; width: auto; color: #fff; transition: color 350ms; padding: 5px; line-height: 21px; font-size: 15px; background: #1766c7; margin: 5px;">
+                            Новости
+                            </span>
+                        </div>
+                        <div style="pointer-events: none; display: block; position: relative; width: 100%; ">
+                            <div style="position: absolute; left: 0; bottom: 19px; width: auto; color: #fff; transition: color 350ms; line-height: 16px; font-size: 15px; margin: 5px; padding: 5px; max-height: 100px; overflow: hidden; text-shadow: 1px 1px 2px black, 0 0 1em black; ">
+                                <a style="display: block; color: #fff; font-size: 20px; font-weight: bold; line-height: 24px;" itemprop="url" href="{{ path('news_show', {'id': creat.id}) }}">{{ creat.newsTitle }}</a>
+                            </div>
+                        </div>
+
+                    </div>
+                {% endfor %}
+                {% for creat in showNews|slice(3, 1) %}
+                    <div class="inline-block" style="clear: both; display: block; position: relative; border-left: 1px solid #fff; border-top: 1px solid #fff;">
+                        <a itemprop="url" href="{{ path('news_show', {'id': creat.id}) }}" title="">
+                            <span class="entry-pic">
+                                <img style="position: relative; z-index: -1; width: 100%; height: auto; vertical-align: top; height: auto;" src="/image/news_preview/{{ creat.id }}.jpg" alt="" title="" >
+                            </span>
+                        </a>
+                            <span style="position: absolute; left: 0; top: 0; width: auto; color: #fff; transition: color 350ms; padding: 5px; line-height: 21px; font-size: 15px; background: #1766c7; margin: 5px;">
+                            Новости
+                            </span>
+                        <div style="pointer-events: none; display: block; position: relative; width: 100%; ">
+                            <div style="position: absolute; left: 0; bottom: 19px; width: auto; color: #fff; transition: color 350ms; line-height: 16px; font-size: 15px; margin: 5px; padding: 5px; max-height: 100px; overflow: hidden; text-shadow: 1px 1px 2px black, 0 0 1em black; ">
+                                <a style="display: block; color: #fff; font-size: 20px; font-weight: bold; line-height: 24px;" itemprop="url" href="{{ path('news_show', {'id': creat.id}) }}">{{ creat.newsTitle }}</a>
+                            </div>
+                        </div>
+
+                    </div>
+                {% endfor %}
+            </div>
+            <div class="col-md-8" style="border: 1px solid #fff; padding: 0; margin: 0; border-bottom: 0px;">
+                {% for creat in showNewsTop|slice(1, 1) %}
+                    <div class="inline-block">
+                        <a itemprop="url" href="{{ path('news_show', {'id': creat.id}) }}" title="">
+                            <span class="entry-pic">
+                                <img style="position: relative; z-index: -1; width: 100%; height: auto; vertical-align: top; height: auto;" src="/image/news_preview/{{ creat.id }}.jpg" alt="" title="" >
+                            </span>
+                        </a>
+                        <div style="pointer-events: none;">
+                            <span style="position: absolute; left: 0; top: 0; width: auto; color: #fff; transition: color 350ms; padding: 5px; line-height: 21px; font-size: 15px; background: #1766c7; margin: 5px;">
+                            Новости
+                            </span>
+                        </div>
+                        <div style="pointer-events: none; display: block; position: relative; width: 100%; ">
+                            <div style="position: absolute; left: 0; bottom: 19px; width: auto; color: #fff; transition: color 350ms; line-height: 16px; font-size: 15px; margin: 5px; padding: 5px; max-height: 100px; overflow: hidden; text-shadow: 1px 1px 2px black, 0 0 1em black; ">
+                                <a style="display: block; margin-bottom: 15px; color: #fff; font-size: 25px; font-weight: bold; line-height: 30px;" itemprop="url" href="{{ path('news_show', {'id': creat.id}) }}">{{ creat.newsTitle }}</a>
+                                {{ creat.introtext|raw }}
+                            </div>
+                            {#<p style="clear: both;" class="prevv"></p>#}
+                        </div>
+
+                    </div>
+
+                {% endfor %}
+            </div>
+        </div>
+
+    </div>
+{% endblock %}
