@@ -9,7 +9,14 @@ sonata_admin:
                                 label_catalogue: App
                                 items:
                                     - admin.jos.content
-    #                            roles: [ ROLE_CUSTOMER ]
+                                roles: [ ROLE_CUSTOMER ]
+
+                            app.admin.group.customer:
+                                label: Users
+                                label_catalogue: App
+                                items:
+                                    - admin.customer
+                                roles: [ ROLE_SUPER_ADMIN ]
 
 sonata_block:
     blocks:
@@ -22,5 +29,12 @@ services:
                class: App\Admin\JosContentAdmin
                arguments: [~, App\Entity\JosContent, ~]
                tags:
-                   - { name: sonata.admin, manager_type: orm, group: app.admin.group.content, label: О компании, продукция и фото, label_catalogue: App }
+                   - { name: sonata.admin, manager_type: orm, label: О компании, продукция и фото, label_catalogue: App }
+               public: true
+
+    admin.customer:
+               class: App\Admin\CustomerAdmin
+               arguments: [~, App\Entity\Customer, ~]
+               tags:
+                   - { name: sonata.admin, manager_type: orm, label: User, label_catalogue: App }
                public: true

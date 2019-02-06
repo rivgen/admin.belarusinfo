@@ -43,7 +43,18 @@ class JosContentAdmin extends AbstractAdmin
 //            ->add('id', NumberType::class)
 //            ->end()
             ->with('Номер организации', ['class' => 'col-md-4'])
-            ->add('title', TextType::class)
+            ->add('title', TextType::class, [
+                'label' => 'id организации',
+            ])
+            ->add('state', ChoiceType::class, [
+                'label' => 'Опубликовано',
+//                'multiple' => true,
+                'expanded' => true,
+//                'required' => false,
+                'choices'  => [
+                    'Да' => true,
+                    'Нет' => false,]
+            ])
             ->end()
 //            ->with('Адрес', ['class' => 'col-md-3'])
 //            ->add('introtext', TextType::class, ['required' => false])
@@ -108,6 +119,11 @@ class JosContentAdmin extends AbstractAdmin
                 ])
                 ->end();
         $formMapper
+            ->with('admin', ['class' => 'col-md-4'])
+            ->add('adminCreated', null, [
+                'data' => ''
+            ])
+            ->end()
             ->end()
             ->tab('О компании')
 //            ->add('shot_description', TextareaType::class, ['required' => false])
@@ -132,7 +148,10 @@ class JosContentAdmin extends AbstractAdmin
     {
         $datagridMapper
 //            ->add('id')
-            ->add('title', null, ['show_filter' => true]);
+            ->add('title', null, [
+                'label' => 'id организации',
+                'show_filter' => true
+            ]);
 //            ->add('categoryProduct', null, ['show_filter' => true], EntityType::class, [
 //                'class'    => ProductRubric::class,
 //                'choice_label' => 'title',
@@ -143,9 +162,12 @@ class JosContentAdmin extends AbstractAdmin
     {
         $listMapper
 //            ->add('id')
-            ->addIdentifier('title')
+            ->addIdentifier('title', null, [
+                'label' => 'Id организации',
+            ])
 //            ->add('companies.id')
             ->add('_action', null, [
+                'label' => 'Действия',
                 'actions' => [
                     'show' => [],
                     'edit' => [],

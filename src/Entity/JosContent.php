@@ -68,7 +68,7 @@ class JosContent
      *
      * @ORM\Column(name="state", type="boolean", nullable=false)
      */
-    private $state = '0';
+    private $state = '1';
 
     /**
      * @var int
@@ -104,6 +104,13 @@ class JosContent
      * @ORM\Column(name="created_by", type="integer", nullable=false, options={"unsigned"=true})
      */
     private $createdBy = '0';
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="admin_created", type="string", length=50, nullable=false)
+     */
+    private $adminCreated;
 
     /**
      * @var string
@@ -725,5 +732,21 @@ class JosContent
     public function setMetadata($metadata)
     {
         $this->metadata = $metadata;
+    }
+
+    /**
+     * @return string
+     */
+    public function getAdminCreated()
+    {
+        return $this->adminCreated;
+    }
+
+    /**
+     * @param string $adminCreated
+     */
+    public function setAdminCreated($adminCreated)
+    {
+        $this->adminCreated = $adminCreated;
     }
 }
