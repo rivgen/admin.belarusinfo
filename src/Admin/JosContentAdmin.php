@@ -26,11 +26,11 @@ use Symfony\Component\Security\Core\Security;
 
 class JosContentAdmin extends AbstractAdmin
 {
-    protected $security;
-    public function __construct(Security $security)
-    {
-        $this->security = $security;
-    }
+//    protected $security;
+//    public function __construct(Security $security)
+//    {
+//        $this->security = $security;
+//    }
 
 //    public function parse(string $source)
 //    {
@@ -56,7 +56,7 @@ class JosContentAdmin extends AbstractAdmin
       protected function configureFormFields(FormMapper $formMapper)
     {
 
-        $username = $this->security->getUser()->getUsername();
+//        $username = $this->security->getUser()->getUsername();
         $formMapper
             ->tab('Основные данные')
 //            ->with('Id', ['class' => 'col-md-2'])
@@ -132,7 +132,7 @@ class JosContentAdmin extends AbstractAdmin
                 ])
                 ->add('createdId', ChoiceType::class, [
                     'data' => 222,
-                    'choices' =>[  $username => 333, ],
+                    'choices' =>[  111 => 333, ],
                     'expanded' => true,
                     'mapped' => false,
                     'required' => true,
