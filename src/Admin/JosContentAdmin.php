@@ -9,6 +9,7 @@ use App\Entity\Company;
 use App\Entity\ProductRubric;
 use App\Entity\Region;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
+use Sonata\AdminBundle\Admin\AdminInterface;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
@@ -20,9 +21,26 @@ use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Knp\Menu\ItemInterface as MenuItemInterface;
+use Symfony\Component\Security\Core\Security;
 
 class JosContentAdmin extends AbstractAdmin
 {
+    protected $security;
+    public function __construct(Security $security)
+    {
+        $this->security = $security;
+    }
+
+//    public function parse(string $source)
+//    {
+//        if (stripos($source, 'bacon') !== false) {
+//            $this->logger->info('They are talking about bacon again!', [
+//                'user' => $this->security->getUser()
+//            ]);
+//        }
+//    }
+
     protected $datagridValues = [
 
         // display the first page (default = 1)
@@ -35,8 +53,10 @@ class JosContentAdmin extends AbstractAdmin
 //        '_sort_by' => 'updatedAt',
     ];
 
-    protected function configureFormFields(FormMapper $formMapper)
+      protected function configureFormFields(FormMapper $formMapper)
     {
+
+        $username = $this->security->getUser()->getUsername();
         $formMapper
             ->tab('Основные данные')
 //            ->with('Id', ['class' => 'col-md-2'])
@@ -110,6 +130,15 @@ class JosContentAdmin extends AbstractAdmin
                     'disabled' => true,
 //                    'data' => new \DateTime()
                 ])
+                ->add('createdId', ChoiceType::class, [
+                    'data' => 222,
+                    'choices' =>[  $username => 333, ],
+                    'expanded' => true,
+                    'mapped' => false,
+                    'required' => true,
+                    'label' => 'user',
+                ])
+                ->add('modifiedId', NumberType::class)
                 ->add('modified', DateTimeType::class, [
                     'label' => 'изменения',
                     'widget' => 'single_text',
@@ -119,11 +148,11 @@ class JosContentAdmin extends AbstractAdmin
                 ])
                 ->end();
         $formMapper
-            ->with('admin', ['class' => 'col-md-4'])
-            ->add('adminCreated', null, [
-                'data' => ''
-            ])
-            ->end()
+//            ->with('admin', ['class' => 'col-md-4'])
+//            ->add('adminCreated', null, [
+//                'data' => ''
+//            ])
+//            ->end()
             ->end()
             ->tab('О компании')
 //            ->add('shot_description', TextareaType::class, ['required' => false])
@@ -150,7 +179,10 @@ class JosContentAdmin extends AbstractAdmin
 //            ->add('id')
             ->add('title', null, [
                 'label' => 'id организации',
-                'show_filter' => true
+                'show_filter' => true,
+                'type' => 3,
+//                'operator_type' => 'sonata_type_boolean',
+//                'advanced_filter' => false
             ]);
 //            ->add('categoryProduct', null, ['show_filter' => true], EntityType::class, [
 //                'class'    => ProductRubric::class,
@@ -161,7 +193,7 @@ class JosContentAdmin extends AbstractAdmin
     protected function configureListFields(ListMapper $listMapper)
     {
         $listMapper
-//            ->add('id')
+            ->add('id')
             ->addIdentifier('title', null, [
                 'label' => 'Id организации',
             ])
@@ -188,5 +220,38 @@ class JosContentAdmin extends AbstractAdmin
         return $object instanceof JosContent
             ? $object->getTitle()
             : 'Компания'; // shown in the breadcrumb on the create view
+    }
+
+    protected function configureSideMenu(MenuItemInterface $menu, $action, AdminInterface $childAdmin = null)
+    {
+        if (!$childAdmin && !in_array($action, ['edit', 'show'])) {
+            return;
+        }
+
+        $admin = $this->isChild() ? $this->getParent() : $this;
+        $id = $admin->getRequest()->get('id');
+
+//        $menu->addChild('View BlogPost', [
+//        'uri' => $admin->generateUrl('show', ['id' => $id])
+//    ]);
+if ($this->getRoot()->getSubject()->getCatid() == 53) {
+        if ($this->isGranted('EDIT')) {
+            $menu->addChild('Редактирование контента', [
+                'uri' => $admin->generateUrl('edit', ['id' => $id])
+            ]);
+        }
+
+    if ($this->isGranted('LIST')) {
+        $menu->addChild('список ключей', [
+            'uri' => $admin->generateUrl('admin.description.key.list', ['id' => $id])
+        ]);
+    }
+
+    if ($this->isGranted('create')) {
+        $menu->addChild('добавить ключ', [
+            'uri' => $admin->generateUrl('admin.description.key.create', ['id' => $id])
+        ]);
+    }
+}
     }
 }

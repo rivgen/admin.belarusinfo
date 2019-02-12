@@ -1,20 +1,28 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Company{% endblock %}
+{% block title %}Login!{% endblock %}
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/login.css') }}">
+    {% endblock %}
 
 {% block body %}
 
 
-<form action="{{ path('login') }}" method="post">
+<form class="form-signin" method="post">
     {% if error %}
         <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
     {% endif %}
     <h1 class="h3 mb-3 font-weight-normal">Пожалуйста, заполните форму:</h1>
-    <label for="username" class="sr-only">Username:</label>
-    <input type="text" id="username" name="_username" value="{{ last_username }}" class="form-control" placeholder="Username" required autofocus />
+    <label for="username" class="sr-only">Email address</label>
+    <input type="email" value="{{ last_username }}" name="_username" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
 
-    <label for="password" class="sr-only">Password:</label>
-    <input type="password" id="password" name="_password" class="form-control" placeholder="Password" required />
+    <label for="inputPassword" class="sr-only">Password</label>
+    <input type="password" name="_password" id="inputPassword" class="form-control" placeholder="Password"
+           required>
+    <input type="hidden" name="_csrf_token"
+           value="{{ csrf_token('authenticate') }}"
+    >
 
     {#
         If you want to control the URL the user
@@ -23,9 +31,9 @@
     #}
     <div class="checkbox mb-3">
         <label>
-            <input type="checkbox" name="_remember_me"> Запомнить меня
+            <input type="checkbox" name="remember_me"> Запомнить меня
         </label>
     </div>
-    <button class="btn btn-lg btn-primary" type="submit">Воити в свой аккаунт</button>
+    <button class="btn btn-lg btn-primary btn-block" type="submit">Воити в свой аккаунт</button>
 </form>
 {% endblock %}

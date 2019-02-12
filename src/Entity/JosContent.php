@@ -28,12 +28,12 @@ class JosContent
      */
     private $title = '';
 
-    /**
-     * @var int|null
-     *
-     * @ORM\Column(name="title_id", type="integer", nullable=true)
-     */
-    private $titleId;
+//    /**
+//     * @var int|null
+//     *
+//     * @ORM\Column(name="title_id", type="integer", nullable=true)
+//     */
+//    private $titleId;
 
     /**
      * @var string
@@ -101,16 +101,16 @@ class JosContent
     /**
      * @var int
      *
-     * @ORM\Column(name="created_by", type="integer", nullable=false, options={"unsigned"=true})
+     * @ORM\Column(name="created_id", type="integer", nullable=false, options={"unsigned"=true})
      */
-    private $createdBy = '0';
+    private $createdId = '0';
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="admin_created", type="string", length=50, nullable=false)
-     */
-    private $adminCreated;
+//    /**
+//     * @var string
+//     *
+//     * @ORM\Column(name="admin_created", type="string", length=50, nullable=false)
+//     */
+//    private $adminCreated;
 
     /**
      * @var string
@@ -129,9 +129,9 @@ class JosContent
     /**
      * @var int
      *
-     * @ORM\Column(name="modified_by", type="integer", nullable=false, options={"unsigned"=true})
+     * @ORM\Column(name="modified_id", type="integer", nullable=false, options={"unsigned"=true})
      */
-    private $modifiedBy = '0';
+    private $modifiedId = '0';
 
     /**
      * @var int
@@ -237,6 +237,59 @@ class JosContent
      * @ORM\Column(name="metadata", type="text", length=65535, nullable=false)
      */
     private $metadata;
+
+    /**
+     * @ORM\OneToMany(targetEntity="DescriptionKey", mappedBy="content")
+     */
+    private $descriptionKeys;
+
+    /**
+     * @return int
+     */
+    public function getModifiedId()
+    {
+        return $this->modifiedId;
+    }
+
+    /**
+     * @param int $modifiedId
+     */
+    public function setModifiedId($modifiedId)
+    {
+        $this->modifiedId = $modifiedId;
+    }
+
+    /**
+     * @return int
+     */
+    public function getCreatedId()
+    {
+        return $this->createdId;
+    }
+
+    /**
+     * @param int $createdId
+     */
+    public function setCreatedId($createdId)
+    {
+        $this->createdId = $createdId;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getDescriptionKeys()
+    {
+        return $this->descriptionKeys;
+    }
+
+    /**
+     * @param mixed $descriptionKeys
+     */
+    public function setDescriptionKeys($descriptionKeys)
+    {
+        $this->descriptionKeys = $descriptionKeys;
+    }
 
     /**
      * @return int

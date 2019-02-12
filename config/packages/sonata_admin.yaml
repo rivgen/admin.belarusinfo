@@ -9,14 +9,17 @@ sonata_admin:
                                 label_catalogue: App
                                 items:
                                     - admin.jos.content
-                                roles: [ ROLE_CUSTOMER ]
+                                    - admin.description.key
+#                                roles: [ ROLE_CUSTOMER ]
+#                                roles: [ ROLE_USER ]
 
                             app.admin.group.customer:
                                 label: Users
                                 label_catalogue: App
                                 items:
                                     - admin.customer
-                                roles: [ ROLE_SUPER_ADMIN ]
+                                roles: [ ROLE_CUSTOMER ]
+#                                roles: [ ROLE_SUPER_ADMIN ]
 
 sonata_block:
     blocks:
@@ -28,6 +31,11 @@ services:
     admin.jos.content:
                class: App\Admin\JosContentAdmin
                arguments: [~, App\Entity\JosContent, ~]
+               calls:
+               ##                        - [setLabelTranslatorStrategy, ['@sonata.admin.label.strategy.underscore']]
+               ##                       - [setTranslationDomain, ['App']]
+               #                      - [addChild, ['@admin.category', 'blogposts']]
+                                     - [addChild, ['@admin.description.key', 'content']]
                tags:
                    - { name: sonata.admin, manager_type: orm, label: О компании, продукция и фото, label_catalogue: App }
                public: true
@@ -37,4 +45,11 @@ services:
                arguments: [~, App\Entity\Customer, ~]
                tags:
                    - { name: sonata.admin, manager_type: orm, label: User, label_catalogue: App }
+               public: true
+
+    admin.description.key:
+               class: App\Admin\DescriptionKeyAdmin
+               arguments: [~, App\Entity\DescriptionKey, ~]
+               tags:
+                   - { name: sonata.admin, manager_type: orm, label: Ключи, label_catalogue: App }
                public: true
