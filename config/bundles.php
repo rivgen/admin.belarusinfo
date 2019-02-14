@@ -21,5 +21,9 @@ return [
     Sonata\AdminBundle\SonataAdminBundle::class => ['all' => true],
     Sonata\DoctrineORMAdminBundle\SonataDoctrineORMAdminBundle::class => ['all' => true],
     Stfalcon\Bundle\TinymceBundle\StfalconTinymceBundle::class => ['all' => true],
+    FOS\UserBundle\FOSUserBundle::class => ['all' => true],
     Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle::class => ['dev' => true, 'test' => true],
+    Sonata\EasyExtendsBundle\SonataEasyExtendsBundle::class => ['dev' => true, 'test' => true],
+    Sonata\UserBundle\SonataUserBundle::class => ['all' => true],
+    App\Application\Sonata\UserBundle\ApplicationSonataUserBundle::class => ['all' => true],
 ];

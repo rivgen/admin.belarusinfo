@@ -182,8 +182,14 @@
     "sonata-project/doctrine-orm-admin-bundle": {
         "version": "3.8.2"
     },
+    "sonata-project/easy-extends-bundle": {
+        "version": "2.5.0"
+    },
     "sonata-project/exporter": {
         "version": "2.0.1"
+    },
+    "sonata-project/user-bundle": {
+        "version": "4.3.0"
     },
     "stfalcon/tinymce-bundle": {
         "version": "v2.3.0"

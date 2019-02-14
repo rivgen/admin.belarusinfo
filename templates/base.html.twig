@@ -16,15 +16,15 @@
                     <ul class="navbar-nav ml-auto">
                         {% if is_granted('ROLE_USER') %}
                             <li class="nav-item dropdown" style="margin-right: 75px;">
-                                    <a class="dropdown-item" href="{{ path('app_account') }}">Profile</a>
+                                    <a class="dropdown-item" href="{{ path('fos_user_profile_show') }}">Profile</a>
                                 {% if is_granted('ROLE_ADMIN') %}
-                                    <a class="dropdown-item" href="#">Create Post</a>
+                                    <a class="dropdown-item" href="{{ path('fos_user_profile_edit') }}">Create Post</a>
                                 {% endif %}
-                                    <a class="dropdown-item" href="{{ path('logout') }}">Logout</a>
+                                    <a class="dropdown-item" href="{{ path('fos_user_security_logout') }}">Logout</a>
                             </li>
                         {% else %}
                             <li class="nav-item">
-                                <a style="color: #000;" class="nav-link" href="{{ path('login') }}">Login</a>
+                                <a style="color: #000;" class="nav-link" href="{{ path('fos_user_security_login') }}">Login 333</a>
                             </li>
                         {% endif %}
                     </ul>
