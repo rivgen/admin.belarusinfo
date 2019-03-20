@@ -1,22 +1,23 @@
 sonata_admin:
     security:
-        handler: sonata.admin.security.handler.role
+#    <<<<<<<<<<посмотреть здесь!!!!
+#        handler: sonata.admin.security.handler.role
 
-        role_admin: ROLE_ADMIN
+        role_admin: ROLE_USER
         role_super_admin: ROLE_SUPER_ADMIN
 
         # acl security information
-        information:
-             GUEST:    [VIEW, LIST]
-             STAFF:    [EDIT, LIST, CREATE]
-             EDITOR:   [OPERATOR, EXPORT]
-             ADMIN:    [MASTER]
+#        information:
+#             GUEST:    [VIEW, LIST]
+#             STAFF:    [EDIT, LIST, CREATE]
+#             EDITOR:   [OPERATOR, EXPORT]
+#             ADMIN:    [MASTER]
 
         # permissions not related to an object instance and also to be available when objects do not exist
         # the DELETE admin permission means the user is allowed to batch delete objects
-        admin_permissions: [CREATE, LIST, DELETE, UNDELETE, EXPORT, OPERATOR, MASTER]
-        # permission related to the objects
-        object_permissions: [VIEW, EDIT, DELETE, UNDELETE, OPERATOR, MASTER, OWNER]
+#        admin_permissions: [CREATE, LIST, DELETE, UNDELETE, EXPORT, OPERATOR, MASTER]
+#         permission related to the objects
+#        object_permissions: [VIEW, EDIT, DELETE, UNDELETE, OPERATOR, MASTER, OWNER]
 
     title: 'Админка'
     dashboard:
@@ -29,15 +30,24 @@ sonata_admin:
                                 items:
                                     - admin.jos.content
                                     - admin.description.key
-#                                roles: [ ROLE_CUSTOMER ]
+                                roles: [ ROLE_STAFF ]
 #                                roles: [ ROLE_USER ]
+#                                roles: [ ROLE_ADMIN ]
 
                             app.admin.group.customer:
                                 label: Users
                                 label_catalogue: App
                                 items:
                                     - admin.customer
-                                roles: [ ROLE_CUSTOMER ]
+#                                roles: [ ROLE_ADMIN ]
+                                roles: [ ROLE_SUPER_ADMIN ]
+
+                            app.admin.group.stat:
+                                label: Статистика
+                                label_catalogue: App
+                                items:
+                                    - admin.stat
+                                roles: [ ROLE_USER ]
 #                                roles: [ ROLE_SUPER_ADMIN ]
 
 sonata_block:
@@ -56,14 +66,14 @@ services:
                #                      - [addChild, ['@admin.category', 'blogposts']]
                                      - [addChild, ['@admin.description.key', 'content']]
                tags:
-                   - { name: sonata.admin, manager_type: orm, label: О компании, продукция и фото, label_catalogue: App }
+                   - { name: sonata.admin, manager_type: orm, label: О компании, label_catalogue: App }
                public: true
 
     admin.customer:
                class: App\Admin\CustomerAdmin
                arguments: [~, App\Entity\Customer, ~]
                tags:
-                   - { name: sonata.admin, manager_type: orm, label: User, label_catalogue: App }
+                   - { name: sonata.admin, manager_type: orm, label: User, roles: ROLE_SUPER_ADMIN, label_catalogue: App }
                public: true
 
     admin.description.key:
@@ -71,4 +81,11 @@ services:
                arguments: [~, App\Entity\DescriptionKey, ~]
                tags:
                    - { name: sonata.admin, manager_type: orm, label: Ключи, label_catalogue: App }
+               public: true
+
+    admin.stat:
+               class: App\Admin\StatAdmin
+               arguments: [~, App\Entity\Stat, ~]
+               tags:
+                   - { name: sonata.admin, manager_type: orm, label: Статистика, label_catalogue: App }
                public: true

@@ -138,7 +138,7 @@ class JosContentAdmin extends AbstractAdmin
                     'required' => true,
                     'label' => 'user',
                 ])
-                ->add('modifiedId', NumberType::class)
+//                ->add('modifiedId', NumberType::class)
                 ->add('modified', DateTimeType::class, [
                     'label' => 'изменения',
                     'widget' => 'single_text',
