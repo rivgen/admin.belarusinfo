@@ -47,6 +47,7 @@ sonata_admin:
                                 label_catalogue: App
                                 items:
                                     - admin.stat
+                                    - admin.client.field
                                 roles: [ ROLE_USER ]
 #                                roles: [ ROLE_SUPER_ADMIN ]
 
@@ -88,4 +89,11 @@ services:
                arguments: [~, App\Entity\Stat, ~]
                tags:
                    - { name: sonata.admin, manager_type: orm, label: Статистика, label_catalogue: App }
+               public: true
+
+    admin.client.field:
+               class: App\Admin\JosClientFieldsAdmin
+               arguments: [~, App\Entity\JosClientFields, ~]
+               tags:
+                   - { name: sonata.admin, manager_type: orm, label: Соц. сети, label_catalogue: App }
                public: true

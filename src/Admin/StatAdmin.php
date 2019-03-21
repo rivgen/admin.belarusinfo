@@ -60,13 +60,18 @@ class StatAdmin extends AbstractAdmin
     protected function configureListFields(ListMapper $listMapper)
     {
         $listMapper
-            ->add('id')
-            ->addIdentifier('count', null, [
+            ->addIdentifier('id', null, [
+                'header_style' => 'width: 5%',
+                'row_align' => 'left'
+            ])
+            ->add('count', null, [
                 'label' => 'счетчик',
+                'header_style' => 'width: 5%',
+                'row_align' => 'left'
             ])
             ->add('_action', null, [
                 'actions' => [
-                    'show' => [],
+//                    'show' => [],
                     'edit' => [],
                     'delete' => [],
                 ]]);;
