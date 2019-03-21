@@ -5,9 +5,9 @@ security:
                 cost: 12
 
             App\Entity\User:
-                        algorithm: argon2i
+                        algorithm: bcrypt
 
-            FOS\UserBundle\Model\UserInterface: argon2i
+            FOS\UserBundle\Model\UserInterface: bcrypt
 
 #    acl:
 #            connection: default
