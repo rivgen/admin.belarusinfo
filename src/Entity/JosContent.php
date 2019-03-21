@@ -98,12 +98,12 @@ class JosContent
      */
     private $created;
 
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="created_id", type="integer", nullable=false, options={"unsigned"=true})
-     */
-    private $createdId = '0';
+//    /**
+//     * @var int
+//     *
+//     * @ORM\Column(name="created_id", type="integer", nullable=false, options={"unsigned"=true})
+//     */
+//    private $createdId = '0';
 
 //    /**
 //     * @var string
@@ -126,12 +126,12 @@ class JosContent
      */
     private $modified = '0000-00-00 00:00:00';
 
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="modified_id", type="integer", nullable=false, options={"unsigned"=true})
-     */
-    private $modifiedId = '0';
+//    /**
+//     * @var int
+//     *
+//     * @ORM\Column(name="modified_id", type="integer", nullable=false, options={"unsigned"=true})
+//     */
+//    private $modifiedId = '0';
 
     /**
      * @var int
