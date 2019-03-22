@@ -48,6 +48,7 @@ sonata_admin:
                                 items:
                                     - admin.stat
                                     - admin.client.field
+                                    - admin.clients.land
                                 roles: [ ROLE_USER ]
 #                                roles: [ ROLE_SUPER_ADMIN ]
 
@@ -96,4 +97,11 @@ services:
                arguments: [~, App\Entity\JosClientFields, ~]
                tags:
                    - { name: sonata.admin, manager_type: orm, label: Соц. сети, label_catalogue: App }
+               public: true
+
+    admin.clients.land:
+               class: App\Admin\ClientsLandAdmin
+               arguments: [~, App\Entity\ClientsLand, ~]
+               tags:
+                   - { name: sonata.admin, manager_type: orm, label: Ссылка из рубрики на промо, label_catalogue: App }
                public: true

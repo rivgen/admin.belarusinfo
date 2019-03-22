@@ -2,7 +2,7 @@
 
 namespace App\Admin;
 
-use App\Entity\JosClientFields;
+use App\Entity\ClientsLand;
 use App\Entity\JosContent;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Admin\AdminInterface;
@@ -20,7 +20,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Knp\Menu\ItemInterface as MenuItemInterface;
 use Symfony\Component\Security\Core\Security;
 
-class JosClientFieldsAdmin extends AbstractAdmin
+class ClientsLandAdmin extends AbstractAdmin
 {
 
     protected $datagridValues = [
@@ -37,43 +37,13 @@ class JosClientFieldsAdmin extends AbstractAdmin
 
       protected function configureFormFields(FormMapper $formMapper)
     {
-
-//        $username = $this->security->getUser()->getUsername();
         $formMapper
-            ->add('client', NumberType::class, [
+            ->add('clientId', NumberType::class, [
                 'label' => 'Клиент',
             ])
-            ->add('fb', null, [
-                'label' => 'Facebook',
-                'required' => false
-            ])
-            ->add('instagram', null, [
-                'label' => 'Instagram',
-                'required' => false
-            ])
-            ->add('ok', null, [
-                'label' => 'Одноклассники',
-                'required' => false
-            ])
-            ->add('vk', null, [
-                'label' => 'В контакте',
-                'required' => false
-            ])
-            ->add('tripadvisor', null, [
-                'label' => 'Tripadvisor',
-                'required' => false
-            ])
-            ->add('youtube', null, [
-                'label' => 'Youtube',
-                'required' => false
-            ])
-            ->add('gps', null, [
-                'label' => 'GPS координаты',
-                'required' => false
-            ])
-            ->add('action', null, [
-                'label' => 'Акции и скидки',
-                'required' => false
+            ->add('cardUrl', null, [
+                'label' => 'URL страницы',
+//                'required' => false
             ])
         ;
     }
@@ -82,7 +52,7 @@ class JosClientFieldsAdmin extends AbstractAdmin
     {
         $datagridMapper
 //            ->add('id')
-            ->add('client', null, [
+            ->add('clientId', null, [
                 'label' => 'Клиент',
                 'show_filter' => true,
             ]);
@@ -91,15 +61,14 @@ class JosClientFieldsAdmin extends AbstractAdmin
     protected function configureListFields(ListMapper $listMapper)
     {
         $listMapper
-            ->addIdentifier('client', null, [
+            ->addIdentifier('clientId', null, [
                 'label' => 'Клиент',
                 'header_style' => 'width: 5%',
                 'row_align' => 'left'
             ])
-//            ->add('fb', TextType::class, [
-//                'label' => 'Facebook',
-//                'header_style' => 'width: 25%',
-////                'header_class' => 'fbAdmin',
+            ->add('cardUrl', TextType::class, [
+                'label' => 'URL страницы',
+                'header_style' => 'width: 25%',
 //                'collapse' => [
 //                    // height in px
 //                    'height' => 1,
@@ -110,8 +79,7 @@ class JosClientFieldsAdmin extends AbstractAdmin
 //                    // content of the "read less" link
 //                    'less' => 'This text is too long, reduce the size',
 //                ],
-////                'label_icon' => 'fa fa-thumbs-o-up',
-//            ])
+            ])
             ->add('_action', null, [
                 'actions' => [
 //                    'show' => [],
@@ -123,13 +91,13 @@ class JosClientFieldsAdmin extends AbstractAdmin
     protected function configureShowFields(ShowMapper $showMapper)
     {
         $showMapper
-            ->add('fb');
+            ->add('cardUrl');
     }
 
     public function toString($object)
     {
-        return $object instanceof JosClientFields
-            ? 'клиент ' . $object->getClient()
+        return $object instanceof ClientsLand
+            ? 'клиент ' . $object->getClientId()
             : 'номер клиента'; // shown in the breadcrumb on the create view
     }
 
