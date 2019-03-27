@@ -13,6 +13,7 @@ use Sonata\AdminBundle\Admin\AdminInterface;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Sonata\AdminBundle\Form\Type\ModelType;
 use Sonata\AdminBundle\Show\ShowMapper;
@@ -26,20 +27,6 @@ use Symfony\Component\Security\Core\Security;
 
 class JosContentAdmin extends AbstractAdmin
 {
-//    protected $security;
-//    public function __construct(Security $security)
-//    {
-//        $this->security = $security;
-//    }
-
-//    public function parse(string $source)
-//    {
-//        if (stripos($source, 'bacon') !== false) {
-//            $this->logger->info('They are talking about bacon again!', [
-//                'user' => $this->security->getUser()
-//            ]);
-//        }
-//    }
 
     protected $datagridValues = [
 
@@ -56,19 +43,30 @@ class JosContentAdmin extends AbstractAdmin
       protected function configureFormFields(FormMapper $formMapper)
     {
 
-//        $username = $this->security->getUser()->getUsername();
+        $userId = $this->getConfigurationPool()->getContainer()->get('security.token_storage')->getToken()->getUser()->getId();
+        $admin = $this->isChild() ? $this->getParent() : $this;
+        $idParent = $admin->getRequest()->get('id');
+        $content = $this->getRoot()->getSubject();
+//        $username = $this->getUser();
+//          dump($content);
         $formMapper
             ->tab('Основные данные')
 //            ->with('Id', ['class' => 'col-md-2'])
 //            ->add('id', NumberType::class)
 //            ->end()
-            ->with('Номер организации', ['class' => 'col-md-4'])
-            ->add('title', TextType::class, [
+            ->with('Номер организации '. $idParent, ['class' => 'col-md-4'])
+            ->add('title', HiddenType::class, [
                 'label' => 'id организации',
+                'data' => $idParent,
+            ])
+            ->add('alias', HiddenType::class, [
+                'label' => 'alias',
+                'data' => 'alias-'.$idParent,
             ])
             ->add('state', ChoiceType::class, [
                 'label' => 'Опубликовано',
 //                'multiple' => true,
+                'data' => true,
                 'expanded' => true,
 //                'required' => false,
                 'choices'  => [
@@ -115,8 +113,23 @@ class JosContentAdmin extends AbstractAdmin
                     'required' => false,
                     'label' => 'создания',
                     'widget' => 'single_text',
-                    'format' => 'dd-MM-yyyy hh:mm:ss',
+                    'format' => 'dd-MM-yyyy HH:mm:ss',
                     'data' => new \DateTime()
+                ])
+                ->add('publishUp', DateTimeType::class, [
+//                    'required' => false,
+                    'label' => 'публикации',
+                    'widget' => 'single_text',
+                    'format' => 'dd-MM-yyyy HH:mm:ss',
+                    'data' => new \DateTime()
+                ])
+                ->add('createdBy', HiddenType::class, [
+                    'data' => $userId,
+//                    'choices' =>[  111 => 333, ],
+//                    'expanded' => true,
+//                    'mapped' => false,
+//                    'required' => true,
+                    'label' => 'user',
                 ])
                 ->end();
         } else
@@ -126,26 +139,29 @@ class JosContentAdmin extends AbstractAdmin
                     'required' => false,
                     'label' => 'создания',
                     'widget' => 'single_text',
-                    'format' => 'dd-MM-yyyy hh:mm:ss',
+                    'format' => 'dd-MM-yyyy HH:mm:ss',
                     'disabled' => true,
 //                    'data' => new \DateTime()
                 ])
-                ->add('createdId', ChoiceType::class, [
-                    'data' => 222,
-                    'choices' =>[  111 => 333, ],
-                    'expanded' => true,
-                    'mapped' => false,
-                    'required' => true,
+                ->add('modifiedBy', HiddenType::class, [
+                    'data' => $userId,
                     'label' => 'user',
                 ])
 //                ->add('modifiedId', NumberType::class)
                 ->add('modified', DateTimeType::class, [
                     'label' => 'изменения',
                     'widget' => 'single_text',
-                    'format' => 'dd-MM-yyyy hh:mm:ss',
+                    'format' => 'dd-MM-yyyy HH:mm:ss',
                     'data' => new \DateTime(),
                     'required' => false
                 ])
+//                ->add('publishUp', DateTimeType::class, [
+//                    'required' => false,
+//                    'label' => 'публикации',
+//                    'widget' => 'single_text',
+//                    'format' => 'dd-MM-yyyy HH:mm:ss',
+//                    'disabled' => true,
+//                ])
                 ->end();
         $formMapper
 //            ->with('admin', ['class' => 'col-md-4'])
@@ -218,7 +234,7 @@ class JosContentAdmin extends AbstractAdmin
     public function toString($object)
     {
         return $object instanceof JosContent
-            ? $object->getTitle()
+            ? 'Компания ' . $object->getTitle()
             : 'Компания'; // shown in the breadcrumb on the create view
     }
 

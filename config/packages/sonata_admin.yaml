@@ -30,6 +30,7 @@ sonata_admin:
                                 items:
                                     - admin.jos.content
                                     - admin.description.key
+                                    - admin.clients
                                 roles: [ ROLE_STAFF ]
 #                                roles: [ ROLE_USER ]
 #                                roles: [ ROLE_ADMIN ]
@@ -49,6 +50,7 @@ sonata_admin:
                                     - admin.stat
                                     - admin.client.field
                                     - admin.clients.land
+                                    - admin.banners
                                 roles: [ ROLE_USER ]
 #                                roles: [ ROLE_SUPER_ADMIN ]
 
@@ -92,6 +94,13 @@ services:
                    - { name: sonata.admin, manager_type: orm, label: Статистика, label_catalogue: App }
                public: true
 
+    admin.banners:
+               class: App\Admin\JosBannersAdmin
+               arguments: [~, App\Entity\JosBanners, ~]
+               tags:
+                   - { name: sonata.admin, manager_type: orm, label: Банера, label_catalogue: App }
+               public: true
+
     admin.client.field:
                class: App\Admin\JosClientFieldsAdmin
                arguments: [~, App\Entity\JosClientFields, ~]
@@ -105,3 +114,13 @@ services:
                tags:
                    - { name: sonata.admin, manager_type: orm, label: Ссылка из рубрики на промо, label_catalogue: App }
                public: true
+
+    admin.clients:
+               class: App\Admin\CopirClientsAdmin
+               arguments: [~, App\Entity\JosClients, ~]
+               calls:
+                  - [addChild, ['@admin.jos.content', 'companytitle']]
+               tags:
+                   - { name: sonata.admin, manager_type: orm, label: Ключевики организаций, label_catalogue: App }
+               public: true
+

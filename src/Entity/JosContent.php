@@ -26,70 +26,68 @@ class JosContent
      *
      * @ORM\Column(name="title", type="string", length=255, nullable=false)
      */
-    private $title = '';
-
-//    /**
-//     * @var int|null
-//     *
-//     * @ORM\Column(name="title_id", type="integer", nullable=true)
-//     */
-//    private $titleId;
+    private $title;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="alias", type="string", length=255, nullable=false)
+     * @ORM\ManyToOne(targetEntity="JosClients", inversedBy="content")
      */
-    private $alias = '';
+    private $companytitle;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="title_alias", type="string", length=255, nullable=false)
+     * @ORM\Column(name="alias", type="string", length=255)
      */
-    private $titleAlias = '';
+    private $alias;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="introtext", type="text", length=16777215, nullable=false)
+     * @ORM\Column(name="title_alias", type="string", length=255)
+     */
+    private $titleAlias;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="introtext", type="text", length=16777215)
      */
     private $introtext;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="fulltext", type="text", length=16777215, nullable=false)
-     */
-    private $fulltext;
+//    /**
+//     * @var string
+//     *
+//     * @ORM\Column(name="fulltext", type="text", length=16777215)
+//     */
+//    private $fulltext;
 
     /**
      * @var bool
      *
-     * @ORM\Column(name="state", type="boolean", nullable=false)
+     * @ORM\Column(name="state", type="boolean")
      */
-    private $state = '1';
+    private $state;
 
     /**
      * @var int
      *
-     * @ORM\Column(name="sectionid", type="integer", nullable=false, options={"unsigned"=true})
+     * @ORM\Column(name="sectionid", type="integer")
      */
-    private $sectionid = '0';
+    private $sectionid;
 
     /**
      * @var int
      *
-     * @ORM\Column(name="mask", type="integer", nullable=false, options={"unsigned"=true})
+     * @ORM\Column(name="mask", type="integer", options={"unsigned"=true})
      */
     private $mask = '0';
 
     /**
      * @var int
      *
-     * @ORM\Column(name="catid", type="integer", nullable=false, options={"unsigned"=true})
+     * @ORM\Column(name="catid", type="integer")
      */
-    private $catid = '0';
+    private $catid;
 
     /**
      * @var \DateTime
@@ -98,12 +96,12 @@ class JosContent
      */
     private $created;
 
-//    /**
-//     * @var int
-//     *
-//     * @ORM\Column(name="created_id", type="integer", nullable=false, options={"unsigned"=true})
-//     */
-//    private $createdId = '0';
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="created_by", type="integer")
+     */
+    private $createdBy;
 
 //    /**
 //     * @var string
@@ -115,79 +113,95 @@ class JosContent
     /**
      * @var string
      *
-     * @ORM\Column(name="created_by_alias", type="string", length=255, nullable=false)
+     * @ORM\Column(name="created_by_alias", type="string", length=255)
      */
-    private $createdByAlias = '';
+    private $createdByAlias;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="modified", type="datetime", nullable=false, options={"default"="0000-00-00 00:00:00"})
+     * @ORM\Column(name="modified", type="datetime")
      */
-    private $modified = '0000-00-00 00:00:00';
+    private $modified;
 
-//    /**
-//     * @var int
-//     *
-//     * @ORM\Column(name="modified_id", type="integer", nullable=false, options={"unsigned"=true})
-//     */
-//    private $modifiedId = '0';
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="modified_by", type="integer", nullable=false, options={"unsigned"=true})
+     */
+    private $modifiedBy = "";
 
     /**
      * @var int
      *
      * @ORM\Column(name="checked_out", type="integer", nullable=false, options={"unsigned"=true})
      */
-    private $checkedOut = '0';
+    private $checkedOut = "0";
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="checked_out_time", type="datetime", nullable=false, options={"default"="0000-00-00 00:00:00"})
+     * @ORM\Column(name="checked_out_time", type="datetime")
      */
-    private $checkedOutTime = '0000-00-00 00:00:00';
+    private $checkedOutTime;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="publish_up", type="datetime", nullable=false, options={"default"="0000-00-00 00:00:00"})
+     * @ORM\Column(name="publish_up", type="datetime")
      */
-    private $publishUp = '0000-00-00 00:00:00';
+    private $publishUp;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="publish_down", type="datetime", nullable=false, options={"default"="0000-00-00 00:00:00"})
+     * @ORM\Column(name="publish_down", type="datetime")
      */
-    private $publishDown = '0000-00-00 00:00:00';
+    private $publishDown;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="images", type="text", length=65535, nullable=false)
+     * @ORM\Column(name="images", type="text", length=65535)
      */
     private $images;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="urls", type="text", length=65535, nullable=false)
+     * @ORM\Column(name="urls", type="text", length=65535)
      */
     private $urls;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="attribs", type="text", length=65535, nullable=false)
+     * @ORM\Column(name="attribs", type="text", length=65535, nullable=false, options={"unsigned"=true})
      */
-    private $attribs;
+    private $attribs = 'show_title=
+link_titles=
+show_intro=
+show_section=
+link_section=
+show_category=
+link_category=
+show_vote=
+show_author=
+show_create_date=
+show_modify_date=
+show_pdf_icon=
+show_print_icon=
+show_email_icon=
+language=
+keyref=
+readmore=';
 
     /**
      * @var int
      *
-     * @ORM\Column(name="version", type="integer", nullable=false, options={"default"="1","unsigned"=true})
+     * @ORM\Column(name="version", type="integer")
      */
-    private $version = '1';
+    private $version;
 
     /**
      * @var int
@@ -199,21 +213,21 @@ class JosContent
     /**
      * @var int
      *
-     * @ORM\Column(name="ordering", type="integer", nullable=false)
+     * @ORM\Column(name="ordering", type="integer")
      */
-    private $ordering = '0';
+    private $ordering;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="metakey", type="text", length=65535, nullable=false)
+     * @ORM\Column(name="metakey", type="text", length=65535)
      */
     private $metakey;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="metadesc", type="text", length=65535, nullable=false)
+     * @ORM\Column(name="metadesc", type="text", length=65535)
      */
     private $metadesc;
 
@@ -234,9 +248,10 @@ class JosContent
     /**
      * @var string
      *
-     * @ORM\Column(name="metadata", type="text", length=65535, nullable=false)
+     * @ORM\Column(name="metadata", type="text", length=65535,  nullable=false, options={"unsigned"=true})
      */
-    private $metadata;
+    private $metadata = 'robots=
+author=';
 
     /**
      * @ORM\OneToMany(targetEntity="DescriptionKey", mappedBy="content")
@@ -802,4 +817,22 @@ class JosContent
     {
         $this->adminCreated = $adminCreated;
     }
+
+    /**
+     * @return int|null
+     */
+    public function getCompanytitle()
+    {
+        return $this->companytitle;
+    }
+
+    /**
+     * @param int|null $companytitle
+     */
+    public function setCompanytitle($companytitle)
+    {
+        $this->companytitle = $companytitle;
+    }
+
+
 }
