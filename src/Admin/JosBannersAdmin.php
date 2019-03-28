@@ -81,17 +81,13 @@ class JosBannersAdmin extends AbstractAdmin
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
     {
         $datagridMapper
-//            ->add('id')
-            ->add('id', null, [
-                'label' => 'Клиент',
-                'show_filter' => true,
-            ])
             ->add('rubricId', null, [
                 'label' => 'рубрика',
                 'show_filter' => true,
             ])
             ->add('clientId', null, [
                 'label' => 'клиент',
+                'show_filter' => true,
             ])
             ->add('title', null, [
                 'label' => 'title',

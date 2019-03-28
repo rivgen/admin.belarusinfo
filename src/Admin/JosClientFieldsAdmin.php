@@ -35,7 +35,7 @@ class JosClientFieldsAdmin extends AbstractAdmin
 //        '_sort_by' => 'updatedAt',
     ];
 
-      protected function configureFormFields(FormMapper $formMapper)
+    protected function configureFormFields(FormMapper $formMapper)
     {
 
 //        $username = $this->security->getUser()->getUsername();
@@ -75,7 +75,10 @@ class JosClientFieldsAdmin extends AbstractAdmin
                 'label' => 'Акции и скидки',
                 'required' => false
             ])
-        ;
+            ->add('news', null, [
+                'label' => 'Новости',
+                'required' => false
+            ]);
     }
 
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
@@ -123,7 +126,42 @@ class JosClientFieldsAdmin extends AbstractAdmin
     protected function configureShowFields(ShowMapper $showMapper)
     {
         $showMapper
-            ->add('fb');
+            ->add('fb', null, [
+                'label' => 'Facebook',
+                'required' => false
+            ])
+            ->add('instagram', null, [
+                'label' => 'Instagram',
+                'required' => false
+            ])
+            ->add('ok', null, [
+                'label' => 'Одноклассники',
+                'required' => false
+            ])
+            ->add('vk', null, [
+                'label' => 'В контакте',
+                'required' => false
+            ])
+            ->add('tripadvisor', null, [
+                'label' => 'Tripadvisor',
+                'required' => false
+            ])
+            ->add('youtube', null, [
+                'label' => 'Youtube',
+                'required' => false
+            ])
+            ->add('gps', null, [
+                'label' => 'GPS координаты',
+                'required' => false
+            ])
+            ->add('action', null, [
+                'label' => 'Акции и скидки',
+                'required' => false
+            ])
+            ->add('news', null, [
+                'label' => 'Новости',
+                'required' => false
+            ]);
     }
 
     public function toString($object)

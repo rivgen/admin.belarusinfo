@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * JosContent
  *
- * @ORM\Table(name="jos_client_fields")
+ * @ORM\Table(name="jos_client_fields", uniqueConstraints={@ORM\UniqueConstraint(name="id", columns={"client"})})
  * @ORM\Entity
  */
 class JosClientFields
@@ -24,7 +24,7 @@ class JosClientFields
     /**
      * @var int
      *
-     * @ORM\Column(name="client", type="integer", nullable=false)
+     * @ORM\Column(name="client", type="integer", nullable=false, unique=true)
      */
     private $client;
 
@@ -48,6 +48,13 @@ class JosClientFields
      * @ORM\Column(name="action", type="string")
      */
     private $action;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="news", type="string")
+     */
+    private $news;
 
     /**
      * @var string
@@ -242,6 +249,22 @@ class JosClientFields
     public function setClient($client)
     {
         $this->client = $client;
+    }
+
+    /**
+     * @return string
+     */
+    public function getNews()
+    {
+        return $this->news;
+    }
+
+    /**
+     * @param string $news
+     */
+    public function setNews($news)
+    {
+        $this->news = $news;
     }
 
 }
