@@ -39,7 +39,7 @@ class DescriptionKeyAdmin extends AbstractAdmin
 
     protected function configureFormFields(FormMapper $formMapper)
     {
-        $id = $this->getRequest()->get('id');
+//        $id = $this->getRequest()->get('id');
         $formMapper
 //            ->tab('Основные данные')
 //            ->with('Номер организации', ['class' => 'col-md-4'])
@@ -53,12 +53,12 @@ class DescriptionKeyAdmin extends AbstractAdmin
 ////            ])
 //            ->end()
 //            ->with('Раздел', ['class' => 'col-md-4'])
-            ->add('keys', TextType::class, [
-                'required' => false,
+            ->add('titleKey', TextType::class, [
+//                'required' => false,
                 'label' => 'Ключ'
                 ])
             ->add('description', TextareaType::class, [
-                'required' => false,
+//                'required' => false,
                 'label' => 'Описание',
                 'help' => 'Стараться писать до 180 символов (иначе будет ошибка)'
                 ]);
@@ -69,7 +69,7 @@ class DescriptionKeyAdmin extends AbstractAdmin
     {
         $datagridMapper
             ->add('id')
-            ->add('keys', null, [
+            ->add('titleKey', null, [
                 'label' => 'Ключ',
                 'show_filter' => true
             ]);
@@ -87,9 +87,14 @@ class DescriptionKeyAdmin extends AbstractAdmin
 //            ->addIdentifier('company', null, [
 //                'label' => 'Id организации',
 //            ])
-            ->addIdentifier('keys', null, [
+            ->addIdentifier('titleKey', null, [
                 'label' => 'Ключ'
             ])
+            ->add('description', TextareaType::class, [
+//                'required' => false,
+                'label' => 'Описание',
+            ])
+//            ->add('company')
 //            ->add('companies.id')
             ->add('_action', null, [
                 'label' => 'Действия',
@@ -111,7 +116,7 @@ class DescriptionKeyAdmin extends AbstractAdmin
     public function toString($object)
     {
         return $object instanceof DescriptionKey
-            ? $object->getKeys()
+            ? $object->getTitleKey()
             : 'ID Компании'; // shown in the breadcrumb on the create view
     }
 

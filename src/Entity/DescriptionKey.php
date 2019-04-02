@@ -27,21 +27,21 @@ class DescriptionKey
 //    private $content;
 
     /**
-     * @ORM\ManyToOne(targetEntity="JosClients", inversedBy="keys")
+     * @ORM\ManyToOne(targetEntity="JosClients", inversedBy="keyss")
      */
     private $company;
 
     /**
-     * @var string|null
+     * @var string
      *
-     * @ORM\Column(name="keys", type="text", length=65535, nullable=true)
+     * @ORM\Column(name="title_key", type="string")
      */
-    private $keys;
+    private $titleKey;
 
     /**
-     * @var string|null
+     * @var string
      *
-     * @ORM\Column(name="description", type="string", length=180, nullable=true)
+     * @ORM\Column(name="description", type="string", length=180)
      */
     private $description;
 
@@ -110,19 +110,19 @@ class DescriptionKey
     }
 
     /**
-     * @return null|string
+     * @return string
      */
-    public function getKeys()
+    public function getTitleKey()
     {
-        return $this->keys;
+        return $this->titleKey;
     }
 
     /**
-     * @param null|string $keys
+     * @param string $titleKey
      */
-    public function setKeys($keys)
+    public function setTitleKey($titleKey)
     {
-        $this->keys = $keys;
+        $this->titleKey = $titleKey;
     }
 
     /**

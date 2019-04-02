@@ -124,7 +124,7 @@ class JosClients
     /**
      * @ORM\OneToMany(targetEntity="DescriptionKey", mappedBy="company")
      */
-    private $keys;
+    private $keyss;
 
     /**
      * @return mixed
@@ -481,17 +481,17 @@ class JosClients
     /**
      * @return mixed
      */
-    public function getKeys()
+    public function getKeyss()
     {
-        return $this->keys;
+        return $this->keyss;
     }
 
     /**
-     * @param mixed $keys
+     * @param mixed $keyss
      */
-    public function setKeys($keys)
+    public function setKeyss($keyss)
     {
-        $this->keys = $keys;
+        $this->keyss = $keyss;
     }
 
 }
