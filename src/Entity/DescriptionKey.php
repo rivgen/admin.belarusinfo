@@ -21,24 +21,22 @@ class DescriptionKey
      */
     private $id;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="JosContent", inversedBy="descriptionKeys")
-     */
-    private $content;
+//    /**
+//     * @ORM\ManyToOne(targetEntity="JosContent", inversedBy="descriptionKeys")
+//     */
+//    private $content;
 
     /**
-     * @var int
-     *
-     * @ORM\Column(name="company_id", type="integer", length=11, nullable=false)
+     * @ORM\ManyToOne(targetEntity="JosClients", inversedBy="keys")
      */
-    private $companyId;
+    private $company;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="key", type="text", length=65535, nullable=true)
+     * @ORM\Column(name="keys", type="text", length=65535, nullable=true)
      */
-    private $key;
+    private $keys;
 
     /**
      * @var string|null
@@ -114,17 +112,17 @@ class DescriptionKey
     /**
      * @return null|string
      */
-    public function getKey()
+    public function getKeys()
     {
-        return $this->key;
+        return $this->keys;
     }
 
     /**
-     * @param null|string $key
+     * @param null|string $keys
      */
-    public function setKey($key)
+    public function setKeys($keys)
     {
-        $this->key = $key;
+        $this->keys = $keys;
     }
 
     /**

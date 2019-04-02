@@ -96,25 +96,68 @@ class JosClientFieldsAdmin extends AbstractAdmin
         $listMapper
             ->addIdentifier('client', null, [
                 'label' => 'Клиент',
-                'header_style' => 'width: 5%',
                 'row_align' => 'left'
             ])
-//            ->add('fb', TextType::class, [
-//                'label' => 'Facebook',
-//                'header_style' => 'width: 25%',
-////                'header_class' => 'fbAdmin',
+            ->add('fb', null, [
+                'label' => 'Facebook',
+//                'attr' => ['style' => 'width: 5%'],
+//                'header_style' => 'width: 25px',
+//                'header_class' => 'fbAdmin',
 //                'collapse' => [
 //                    // height in px
 //                    'height' => 1,
 //
 //                    // content of the "read more" link
-//                    'more' => 'I want to see the full description',
+//                    'more' => 'I want to see',
 //
 //                    // content of the "read less" link
 //                    'less' => 'This text is too long, reduce the size',
+//
 //                ],
-////                'label_icon' => 'fa fa-thumbs-o-up',
-//            ])
+                'required' => false,
+                'editable' => true
+//                'label_icon' => 'fa fa-thumbs-o-up',
+            ])
+            ->add('instagram', null, [
+                'label' => 'Instagram',
+                'required' => false,
+                'editable' => true
+            ])
+            ->add('ok', null, [
+                'label' => 'Одноклассники',
+                'required' => false,
+                'editable' => true
+            ])
+            ->add('vk', null, [
+                'label' => 'В контакте',
+                'required' => false,
+                'editable' => true
+            ])
+            ->add('tripadvisor', null, [
+                'label' => 'Tripadvisor',
+                'required' => false,
+                'editable' => true
+            ])
+            ->add('youtube', null, [
+                'label' => 'Youtube',
+                'required' => false,
+                'editable' => true
+            ])
+            ->add('gps', null, [
+                'label' => 'GPS координаты',
+                'required' => false,
+                'editable' => true
+            ])
+            ->add('action', null, [
+                'label' => 'Акции и скидки',
+                'required' => false,
+                'editable' => true
+            ])
+            ->add('news', null, [
+                'label' => 'Новости',
+                'required' => false,
+                'editable' => true
+            ])
             ->add('_action', null, [
                 'actions' => [
 //                    'show' => [],

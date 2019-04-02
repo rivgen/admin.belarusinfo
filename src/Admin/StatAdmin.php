@@ -67,7 +67,8 @@ class StatAdmin extends AbstractAdmin
             ->add('count', null, [
                 'label' => 'счетчик',
                 'header_style' => 'width: 5%',
-                'row_align' => 'left'
+                'row_align' => 'left',
+                'editable' => true
             ])
             ->add('_action', null, [
                 'actions' => [

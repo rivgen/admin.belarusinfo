@@ -122,6 +122,11 @@ class JosClients
     private $content;
 
     /**
+     * @ORM\OneToMany(targetEntity="DescriptionKey", mappedBy="company")
+     */
+    private $keys;
+
+    /**
      * @return mixed
      */
     public function getId()
@@ -471,6 +476,22 @@ class JosClients
     public function setContent($content)
     {
         $this->content = $content;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getKeys()
+    {
+        return $this->keys;
+    }
+
+    /**
+     * @param mixed $keys
+     */
+    public function setKeys($keys)
+    {
+        $this->keys = $keys;
     }
 
 }

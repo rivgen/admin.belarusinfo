@@ -41,38 +41,36 @@ class DescriptionKeyAdmin extends AbstractAdmin
     {
         $id = $this->getRequest()->get('id');
         $formMapper
-            ->tab('Основные данные')
-            ->with('Номер организации', ['class' => 'col-md-4'])
-            ->add('content',ChoiceType::class, [
-                'data' => $id,
-                'choices' =>[  $id => $id, ],
-                'expanded' => true,
-                'mapped' => false,
-                'required' => true,
-                'label' => 'контент id '.$id,
-            ])
-            ->add('companyId', NumberType::class, [
-                'label' => 'id организации',
-            ])
-            ->end()
-            ->with('Раздел', ['class' => 'col-md-4'])
-            ->add('key', TextType::class, [
+//            ->tab('Основные данные')
+//            ->with('Номер организации', ['class' => 'col-md-4'])
+////            ->add('content',ChoiceType::class, [
+////                'data' => $id,
+////                'choices' =>[  $id => $id, ],
+////                'expanded' => true,
+////                'mapped' => false,
+////                'required' => true,
+////                'label' => 'контент id '.$id,
+////            ])
+//            ->end()
+//            ->with('Раздел', ['class' => 'col-md-4'])
+            ->add('keys', TextType::class, [
                 'required' => false,
                 'label' => 'Ключ'
                 ])
-            ->add('description', TextType::class, [
+            ->add('description', TextareaType::class, [
                 'required' => false,
-                'label' => 'Описание'
-                ])
-            ->end();
+                'label' => 'Описание',
+                'help' => 'Стараться писать до 180 символов (иначе будет ошибка)'
+                ]);
+//            ->end();
     }
 
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
     {
         $datagridMapper
-//            ->add('id')
-            ->add('companyId', null, [
-                'label' => 'id организации',
+            ->add('id')
+            ->add('keys', null, [
+                'label' => 'Ключ',
                 'show_filter' => true
             ]);
 //            ->add('categoryProduct', null, ['show_filter' => true], EntityType::class, [
@@ -83,19 +81,20 @@ class DescriptionKeyAdmin extends AbstractAdmin
 
     protected function configureListFields(ListMapper $listMapper)
     {
+        unset($this->listModes['mosaic']);
         $listMapper
-//            ->add('id')
-            ->addIdentifier('companyId', null, [
-                'label' => 'Id организации',
-            ])
-            ->add('key', null, [
+            ->add('id')
+//            ->addIdentifier('company', null, [
+//                'label' => 'Id организации',
+//            ])
+            ->addIdentifier('keys', null, [
                 'label' => 'Ключ'
             ])
 //            ->add('companies.id')
             ->add('_action', null, [
                 'label' => 'Действия',
                 'actions' => [
-                    'show' => [],
+//                    'show' => [],
                     'edit' => [],
                     'delete' => [],
                 ]]);
@@ -105,14 +104,14 @@ class DescriptionKeyAdmin extends AbstractAdmin
     protected function configureShowFields(ShowMapper $showMapper)
     {
         $showMapper
-//            ->add('id')
-            ->add('companyId');
+            ->add('id');
+//            ->add('company');
     }
 
     public function toString($object)
     {
         return $object instanceof DescriptionKey
-            ? $object->getCompanyId()
+            ? $object->getKeys()
             : 'ID Компании'; // shown in the breadcrumb on the create view
     }
 

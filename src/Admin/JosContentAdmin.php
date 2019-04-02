@@ -13,6 +13,7 @@ use Sonata\AdminBundle\Admin\AdminInterface;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
+use Sonata\AdminBundle\Route\RouteCollection;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Sonata\AdminBundle\Form\Type\ModelType;
@@ -40,7 +41,7 @@ class JosContentAdmin extends AbstractAdmin
 //        '_sort_by' => 'updatedAt',
     ];
 
-      protected function configureFormFields(FormMapper $formMapper)
+    protected function configureFormFields(FormMapper $formMapper)
     {
 
         $userId = $this->getConfigurationPool()->getContainer()->get('security.token_storage')->getToken()->getUser()->getId();
@@ -50,18 +51,18 @@ class JosContentAdmin extends AbstractAdmin
 //        $username = $this->getUser();
 //          dump($content);
         $formMapper
-            ->tab('Основные данные')
+//            ->tab('Основные данные')
 //            ->with('Id', ['class' => 'col-md-2'])
 //            ->add('id', NumberType::class)
 //            ->end()
-            ->with('Номер организации '. $idParent, ['class' => 'col-md-4'])
+            ->with('Номер организации ' . $idParent, ['class' => 'col-md-4'])
             ->add('title', HiddenType::class, [
                 'label' => 'id организации',
                 'data' => $idParent,
             ])
             ->add('alias', HiddenType::class, [
                 'label' => 'alias',
-                'data' => 'alias-'.$idParent,
+                'data' => 'alias-' . $idParent,
             ])
             ->add('state', ChoiceType::class, [
                 'label' => 'Опубликовано',
@@ -69,7 +70,7 @@ class JosContentAdmin extends AbstractAdmin
                 'data' => true,
                 'expanded' => true,
 //                'required' => false,
-                'choices'  => [
+                'choices' => [
                     'Да' => true,
                     'Нет' => false,]
             ])
@@ -97,14 +98,26 @@ class JosContentAdmin extends AbstractAdmin
 //            ])
 //            ->end()
             ->with('Раздел', ['class' => 'col-md-4'])
-            ->add('sectionid', NumberType::class, [
-                'required' => false,
-                'label' => 'Рубрика'
-                ])
-            ->add('catid', NumberType::class, [
-                'required' => false,
-                'label' => 'Категория'
-                ])
+            ->add('sectionid', ChoiceType::class, [
+//                'required' => false,
+                'attr' => ['style' => 'width: 100%'],
+                'choices' => [
+                    'AV 24' => 14,
+                ],
+                'label' => 'Рубрика',
+                'data' => 14
+            ])
+            ->add('catid', ChoiceType::class, [
+//                'required' => false,
+//                'editable' => true,
+                'label' => 'Категория',
+                'attr' => ['style' => 'width: 100%'],
+                'choices' => [
+                    'О компании' => 54,
+                    'Продукция' => 53,
+                    'Фотогалерея' => 55,
+                ]
+            ])
             ->end();
         if ($this->getRoot()->getSubject()->getCreated() == null) {
             $formMapper
@@ -169,8 +182,8 @@ class JosContentAdmin extends AbstractAdmin
 //                'data' => ''
 //            ])
 //            ->end()
-            ->end()
-            ->tab('О компании')
+//            ->end()
+            ->with('О компании')
 //            ->add('shot_description', TextareaType::class, ['required' => false])
             ->add('introtext', TextareaType::class, [
                 'required' => false,
@@ -208,16 +221,29 @@ class JosContentAdmin extends AbstractAdmin
 
     protected function configureListFields(ListMapper $listMapper)
     {
+        unset($this->listModes['mosaic']);
         $listMapper
             ->add('id')
             ->addIdentifier('title', null, [
                 'label' => 'Id организации',
             ])
+            ->add('catid', 'choice', [
+//                'required' => false,
+//                'editable' => true,
+//                'class' => 'App\Entity\JosCategories',
+                'label' => 'Категория',
+//                'attr' => ['style' => 'width: 100%'],
+                'choices' => [
+                    54 => 'О компании',
+                    53 => 'Продукция',
+                    55 => 'Фотогалерея',
+                ]
+            ])
 //            ->add('companies.id')
             ->add('_action', null, [
                 'label' => 'Действия',
                 'actions' => [
-                    'show' => [],
+//                    'show' => [],
                     'edit' => [],
                     'delete' => [],
                 ]]);
@@ -250,24 +276,35 @@ class JosContentAdmin extends AbstractAdmin
 //        $menu->addChild('View BlogPost', [
 //        'uri' => $admin->generateUrl('show', ['id' => $id])
 //    ]);
-if ($this->getRoot()->getSubject()->getCatid() == 53) {
-        if ($this->isGranted('EDIT')) {
-            $menu->addChild('Редактирование контента', [
-                'uri' => $admin->generateUrl('edit', ['id' => $id])
-            ]);
+        if ($this->getRoot()->getSubject()->getCatid() == 53) {
+            if ($this->isGranted('EDIT')) {
+                $menu->addChild('Редактирование контента', [
+                    'uri' => $admin->generateUrl('edit', ['id' => $id])
+                ]);
+            }
+
+            if ($this->isGranted('LIST')) {
+                $menu->addChild('список ключей', [
+                    'uri' => $admin->generateUrl('admin.description.key.list', ['id' => $id])
+                ]);
+            }
+
+            if ($this->isGranted('create')) {
+                $menu->addChild('добавить ключ', [
+                    'uri' => $admin->generateUrl('admin.description.key.create', ['id' => $id])
+                ]);
+            }
+        }
+    }
+
+    protected function configureRoutes(RouteCollection $collection)
+    {
+        if ($this->isChild()) {
+            return;
         }
 
-    if ($this->isGranted('LIST')) {
-        $menu->addChild('список ключей', [
-            'uri' => $admin->generateUrl('admin.description.key.list', ['id' => $id])
-        ]);
-    }
+        // This is the route configuration as a parent
+        $collection->clear();
 
-    if ($this->isGranted('create')) {
-        $menu->addChild('добавить ключ', [
-            'uri' => $admin->generateUrl('admin.description.key.create', ['id' => $id])
-        ]);
-    }
-}
     }
 }

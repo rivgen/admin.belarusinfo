@@ -54,6 +54,8 @@ sonata_admin:
                                 roles: [ ROLE_USER ]
 #                                roles: [ ROLE_SUPER_ADMIN ]
 
+    show_mosaic_button: false
+
 sonata_block:
     blocks:
         sonata.admin.block.admin_list:
@@ -120,7 +122,8 @@ services:
                arguments: [~, App\Entity\JosClients, ~]
                calls:
                   - [addChild, ['@admin.jos.content', 'companytitle']]
+                  - [addChild, ['@admin.description.key', 'company']]
                tags:
-                   - { name: sonata.admin, manager_type: orm, label: Ключевики организаций, label_catalogue: App }
+                   - { name: sonata.admin, manager_type: orm, label: Список компаний, label_catalogue: App }
                public: true
 

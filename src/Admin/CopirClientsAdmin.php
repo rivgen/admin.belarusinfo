@@ -9,6 +9,7 @@ use Sonata\AdminBundle\Admin\AdminInterface;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
+use Sonata\AdminBundle\Route\RouteCollection;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Sonata\AdminBundle\Form\Type\ModelType;
 use Sonata\AdminBundle\Show\ShowMapper;
@@ -42,6 +43,7 @@ class CopirClientsAdmin extends AbstractAdmin
         $formMapper
             ->add('keywords', null, [
                 'label' => 'Ключевые слова',
+                'attr' => ['style' => 'height: 200px']
             ]);
     }
 
@@ -60,14 +62,16 @@ class CopirClientsAdmin extends AbstractAdmin
 
     protected function configureListFields(ListMapper $listMapper)
     {
+        // удаляет ссылку на выбор плитки
+        unset($this->listModes['mosaic']);
         $listMapper
-            ->addIdentifier('id', null, [
+            ->add('id', null, [
                 'header_style' => 'width: 5%',
                 'row_align' => 'left'
             ])
-            ->add('name', null, [
+            ->addIdentifier('name', null, [
                 'label' => 'Название организации',
-                'header_style' => 'width: 5%',
+                'header_style' => 'width: 50%',
                 'row_align' => 'left'
             ])
             ->add('_action', null, [
@@ -76,6 +80,13 @@ class CopirClientsAdmin extends AbstractAdmin
                     'edit' => [],
                     'delete' => [],
                 ]]);;
+    }
+// удаляет ссылку на создание "create"
+    protected function configureRoutes(RouteCollection $collection)
+    {
+        $collection->remove('create');
+        $collection->remove('export');
+        $collection->remove('delete');
     }
 
     protected function configureShowFields(ShowMapper $showMapper)
@@ -103,17 +114,35 @@ class CopirClientsAdmin extends AbstractAdmin
 //        $menu->addChild('View Playlist', [
 //            'uri' => $admin->generateUrl('show', ['id' => $id])
 //        ]);
+        if ($this->isGranted('LIST')) {
+            $menu->addChild('Все компании', [
+                'uri' => $admin->generateUrl('list')
+            ]);
+        }
 
-//        if ($this->isGranted('EDIT')) {
-//            $menu->addChild('Edit Playlist', [
-//                'uri' => $admin->generateUrl('edit', ['id' => $id])
-//            ]);
-//        }
+        if ($this->isGranted('EDIT')) {
+            $menu->addChild('Ключевые слова ('.$id.')', [
+                'uri' => $admin->generateUrl('edit', ['id' => $id])
+            ]);
+        }
 
         if ($this->isGranted('LIST')) {
-            $menu->addChild('О компании', [
+            $menu->addChild('О компании ('.$id.')', [
                 'uri' => $admin->generateUrl('admin.jos.content.list', ['id' => $id])
             ]);
         }
+
+        if ($this->isGranted('LIST')) {
+            $menu->addChild('Текст / ключевики ('.$id.')', [
+                'uri' => $admin->generateUrl('admin.description.key.list', ['id' => $id])
+            ]);
+        }
+    }
+
+    public function configureExportFields(AdminInterface $admin, array $fields)
+    {
+        unset($fields['updatedAt']);
+
+        return $fields;
     }
 }
