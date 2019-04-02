@@ -51,7 +51,7 @@ sonata_admin:
                                     - admin.client.field
                                     - admin.clients.land
                                     - admin.banners
-                                roles: [ ROLE_USER ]
+                                roles: [ ROLE_ADMIN ]
 #                                roles: [ ROLE_SUPER_ADMIN ]
 
     show_mosaic_button: false
