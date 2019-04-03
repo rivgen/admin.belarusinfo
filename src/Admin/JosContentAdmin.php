@@ -2,12 +2,7 @@
 
 namespace App\Admin;
 
-use App\Entity\City;
 use App\Entity\JosContent;
-use App\Entity\Product;
-use App\Entity\Company;
-use App\Entity\ProductRubric;
-use App\Entity\Region;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Admin\AdminInterface;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
@@ -51,10 +46,6 @@ class JosContentAdmin extends AbstractAdmin
 //        $username = $this->getUser();
 //          dump($content);
         $formMapper
-//            ->tab('Основные данные')
-//            ->with('Id', ['class' => 'col-md-2'])
-//            ->add('id', NumberType::class)
-//            ->end()
             ->with('Номер организации ' . $idParent, ['class' => 'col-md-4'])
             ->add('title', HiddenType::class, [
                 'label' => 'id организации',
@@ -75,28 +66,6 @@ class JosContentAdmin extends AbstractAdmin
                     'Нет' => false,]
             ])
             ->end()
-//            ->with('Адрес', ['class' => 'col-md-3'])
-//            ->add('introtext', TextType::class, ['required' => false])
-//            ->end()
-//            ->with('Область', ['class' => 'col-md-3'])
-//            ->add('region', EntityType::class, [
-//                'class' => Region::class,
-//                'choice_label' => 'regionName',
-//            ])
-//            ->end()
-//            ->with('Город', ['class' => 'col-md-3'])
-//            ->add('city', EntityType::class, [
-//                'class' => City::class,
-//                'choice_label' => 'cityName',
-//            ])
-//            ->end()
-//            ->with('Логотип', ['class' => 'col-md-3'])
-//            ->add('logo', ChoiceType::class, [
-//                'choices'  => [
-//                    'Yes' => true,
-//                    'No' => false,]
-//            ])
-//            ->end()
             ->with('Раздел', ['class' => 'col-md-4'])
             ->add('sectionid', ChoiceType::class, [
 //                'required' => false,
