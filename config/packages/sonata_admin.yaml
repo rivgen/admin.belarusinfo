@@ -130,10 +130,10 @@ services:
 
     admin.admin.clients:
                class: App\Admin\AdminClientsAdmin
-               arguments: [~, App\Entity\JosClients, ~]
+               arguments: [~, App\Entity\JosAdminClients, ~]
                calls:
                   - [addChild, ['@admin.jos.content', 'companytitle']]
                tags:
-                   - { name: sonata.admin, manager_type: orm, label: Список компаний, label_catalogue: App }
+                   - { name: sonata.admin, manager_type: orm, label: Компании, label_catalogue: App }
                public: true
 

@@ -2,7 +2,7 @@
 
 namespace App\Admin;
 
-use App\Entity\JosClients;
+use App\Entity\JosAdminClients;
 use App\Entity\JosContent;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Admin\AdminInterface;
@@ -38,13 +38,48 @@ class AdminClientsAdmin extends AbstractAdmin
 
       protected function configureFormFields(FormMapper $formMapper)
     {
-
+        $admin = $this->isChild() ? $this->getParent() : $this;
+        $idParent = $admin->getRequest()->get('id');
 //        $username = $this->security->getUser()->getUsername();
         $formMapper
-            ->add('keywords', null, [
-                'label' => 'Ключевые слова',
-                'attr' => ['style' => 'height: 200px']
-            ]);
+            ->with('Номер организации ' . $idParent, ['class' => 'col-md-4'])
+            ->add('name', null, [
+                'label' => 'Название организации',
+            ])
+            ->add('address', null, [
+                'label' => 'Адрес',
+            ])
+            ->add('reklama', null, [
+                'label' => 'Рекламная строка',
+            ])
+            ->end()
+            ->with('Информация', ['class' => 'col-md-4'])
+
+            ->add('email')
+            ->add('site', null, [
+                'label' => 'Сайт',
+            ])
+
+            ->add('promo', null, [
+                'label' => 'Ссылка на промо',
+            ])
+            ->end()
+            ->with('Телефон', ['class' => 'col-md-4'])
+            ->add('phoneNum', null, [
+                'label' => 'Тел.',
+            ])
+            ->add('phoneType')
+            ->end()
+            ->with('Рубрики', ['class' => 'col-md-4'])
+            ->add('rubric', null, [
+                'label' => 'Номера.',
+            ])
+            ->end()
+//            ->add('keywords', null, [
+//                'label' => 'Ключевые слова',
+//                'attr' => ['style' => 'height: 200px']
+//            ])
+        ;
     }
 
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
@@ -97,7 +132,7 @@ class AdminClientsAdmin extends AbstractAdmin
 
     public function toString($object)
     {
-        return $object instanceof JosClients
+        return $object instanceof JosAdminClients
             ? $object->getName()
             : 'счетчик'; // shown in the breadcrumb on the create view
     }
