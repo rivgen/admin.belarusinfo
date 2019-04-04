@@ -72,7 +72,7 @@ class AdminClientsAdmin extends AbstractAdmin
             ->end()
             ->with('Рубрики', ['class' => 'col-md-4'])
             ->add('rubric', null, [
-                'label' => 'Номера.',
+                'label' => 'Номера',
             ])
             ->end()
 //            ->add('keywords', null, [
@@ -108,6 +108,9 @@ class AdminClientsAdmin extends AbstractAdmin
                 'label' => 'Название организации',
                 'header_style' => 'width: 50%',
                 'row_align' => 'left'
+            ])
+            ->add('rubric', null, [
+                'label' => 'Номер рубрики',
             ])
             ->add('_action', null, [
                 'actions' => [
