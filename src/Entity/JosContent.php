@@ -8,6 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * JosContent
  *
  * @ORM\Table(name="jos_content", indexes={@ORM\Index(name="idx_access", columns={"access"}), @ORM\Index(name="idx_state", columns={"state"}), @ORM\Index(name="idx_createdby", columns={"created_by"}), @ORM\Index(name="idx_section", columns={"sectionid"}), @ORM\Index(name="idx_checkout", columns={"checked_out"}), @ORM\Index(name="idx_catid", columns={"catid"})})
+ * @ORM\Entity(repositoryClass="App\Repository\JosContentRepository")
  * @ORM\Entity
  */
 class JosContent

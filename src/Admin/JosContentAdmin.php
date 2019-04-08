@@ -43,6 +43,12 @@ class JosContentAdmin extends AbstractAdmin
         $admin = $this->isChild() ? $this->getParent() : $this;
         $idParent = $admin->getRequest()->get('id');
         $content = $this->getRoot()->getSubject();
+        $update = date_format($this -> getRoot() -> getSubject() -> getModified(), 'Y-m-d H:m');
+        if ($update = '1991-01-01 00:00' or $update = null){
+            $updateData = 'не было изменений';
+        }else
+            $updateData = $update;
+
 //        $username = $this->getUser();
 //          dump($content);
         $formMapper
@@ -131,7 +137,7 @@ class JosContentAdmin extends AbstractAdmin
                 ])
 //                ->add('modifiedId', NumberType::class)
                 ->add('modified', DateTimeType::class, [
-                    'label' => 'изменения',
+                    'label' => 'изменения - '.$updateData,
                     'widget' => 'single_text',
                     'format' => 'dd-MM-yyyy HH:mm:ss',
                     'data' => new \DateTime(),
@@ -190,7 +196,11 @@ class JosContentAdmin extends AbstractAdmin
 
     protected function configureListFields(ListMapper $listMapper)
     {
-        unset($this->listModes['mosaic']);
+
+//        $em = $this-> getConfigurationPool () -> getContainer () -> get ('doctrine') -> getRepository (JosContent::class);
+//        $login = $em->loginUser('6');
+//        dump($login);
+//        unset($this->listModes['mosaic']);
         $listMapper
             ->add('id')
             ->addIdentifier('title', null, [
@@ -208,6 +218,8 @@ class JosContentAdmin extends AbstractAdmin
                     55 => 'Фотогалерея',
                 ]
             ])
+//            ->add('created')
+//            ->add('createdBy')
 //            ->add('companies.id')
             ->add('_action', null, [
                 'label' => 'Действия',
