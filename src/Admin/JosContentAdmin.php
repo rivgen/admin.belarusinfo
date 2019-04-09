@@ -43,14 +43,14 @@ class JosContentAdmin extends AbstractAdmin
         $admin = $this->isChild() ? $this->getParent() : $this;
         $idParent = $admin->getRequest()->get('id');
         $content = $this->getRoot()->getSubject();
-        $update = date_format($this -> getRoot() -> getSubject() -> getModified(), 'Y-m-d H:m');
-        if ($update = '1991-01-01 00:00' or $update = null){
+        $update = !empty ($this -> getRoot() -> getSubject() -> getModified())?date_format($this -> getRoot() -> getSubject() -> getModified(), 'Y-m-d H:m'):null;
+        if ($update == '1991-01-01 00:00' or $update == null){
             $updateData = 'не было изменений';
         }else
             $updateData = $update;
 
 //        $username = $this->getUser();
-//          dump($content);
+//          dump($update);
         $formMapper
             ->with('Номер организации ' . $idParent, ['class' => 'col-md-4'])
             ->add('title', HiddenType::class, [
