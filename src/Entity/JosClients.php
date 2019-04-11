@@ -102,16 +102,6 @@ class JosClients
     private $rubricDescription;
 
     /**
-     * @ORM\Column(name="phone_num", type="string", length=255, nullable=true)
-     */
-    private $phoneNum;
-
-    /**
-     * @ORM\Column(name="phone_type", type="string", length=255, nullable=true)
-     */
-    private $phoneType;
-
-    /**
      * @ORM\Column(name="fi", type="integer", nullable=true)
      */
     private $fi;
@@ -428,38 +418,6 @@ class JosClients
     public function setRubricDescription($rubricDescription)
     {
         $this->rubricDescription = $rubricDescription;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getPhoneNum()
-    {
-        return $this->phoneNum;
-    }
-
-    /**
-     * @param mixed $phoneNum
-     */
-    public function setPhoneNum($phoneNum)
-    {
-        $this->phoneNum = $phoneNum;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getPhoneType()
-    {
-        return $this->phoneType;
-    }
-
-    /**
-     * @param mixed $phoneType
-     */
-    public function setPhoneType($phoneType)
-    {
-        $this->phoneType = $phoneType;
     }
 
     /**

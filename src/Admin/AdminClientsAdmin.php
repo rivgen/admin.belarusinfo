@@ -64,12 +64,6 @@ class AdminClientsAdmin extends AbstractAdmin
                 'label' => 'Ссылка на промо',
             ])
             ->end()
-            ->with('Телефон', ['class' => 'col-md-4'])
-            ->add('phoneNum', null, [
-                'label' => 'Тел.',
-            ])
-            ->add('phoneType')
-            ->end()
             ->with('Рубрики', ['class' => 'col-md-4'])
             ->add('rubric', null, [
                 'label' => 'Номера',
