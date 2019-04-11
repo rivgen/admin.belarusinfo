@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * DescriptionKey
@@ -42,6 +43,12 @@ class DescriptionKey
      * @var string
      *
      * @ORM\Column(name="description", type="string", length=180)
+     * @Assert\Length(
+     *      min = 90,
+     *      max = 180,
+     *      minMessage = "Поле заполнено менее чем на {{ limit }} символов",
+     *      maxMessage = "Поле заполнено более чем на {{ limit }} символов"
+     * )
      */
     private $description;
 
