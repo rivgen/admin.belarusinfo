@@ -44,7 +44,7 @@ class DescriptionKey
      *
      * @ORM\Column(name="description", type="string", length=180)
      * @Assert\Length(
-     *      min = 90,
+     *      min = 50,
      *      max = 180,
      *      minMessage = "Поле заполнено менее чем на {{ limit }} символов",
      *      maxMessage = "Поле заполнено более чем на {{ limit }} символов"
