@@ -19,6 +19,7 @@ use Sonata\AdminBundle\Form\Type\ModelType;
 use Sonata\AdminBundle\Show\ShowMapper;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -61,7 +62,10 @@ class DescriptionKeyAdmin extends AbstractAdmin
 //                'required' => false,
                 'label' => 'Описание',
                 'help' => 'Стараться писать до 180 символов (иначе будет ошибка)'
-                ]);
+                ])
+            ->add('position', HiddenType::class, [
+                'attr' => ['hidden' => true]
+            ]);;
 //            ->end();
     }
 

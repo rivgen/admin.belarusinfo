@@ -10,6 +10,7 @@ use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Route\RouteCollection;
+use Sonata\Form\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Sonata\AdminBundle\Form\Type\ModelType;
 use Sonata\AdminBundle\Show\ShowMapper;
@@ -36,7 +37,7 @@ class CopirClientsAdmin extends AbstractAdmin
 //        '_sort_by' => 'updatedAt',
     ];
 
-      protected function configureFormFields(FormMapper $formMapper)
+    protected function configureFormFields(FormMapper $formMapper)
     {
 
 //        $username = $this->security->getUser()->getUsername();
@@ -44,6 +45,22 @@ class CopirClientsAdmin extends AbstractAdmin
             ->add('keywords', null, [
                 'label' => 'Ключевые слова',
                 'attr' => ['style' => 'height: 200px']
+            ])
+            ->add('keyss', CollectionType::class, [
+                'by_reference' => false,
+                'required' => false,
+                'type_options' => [
+                    'delete' => false,
+                ],
+                'btn_add' => 'Edit',
+//                'allow_add' => true,
+            ], [
+                'edit' => 'inline',
+                'inline' => 'table',
+                'sortable' => 'position',
+//                'limit' => 1,
+                'allow_add' => true,
+
             ]);
     }
 
@@ -81,6 +98,7 @@ class CopirClientsAdmin extends AbstractAdmin
                     'delete' => [],
                 ]]);;
     }
+
 // удаляет ссылку на создание "create"
     protected function configureRoutes(RouteCollection $collection)
     {
@@ -121,13 +139,13 @@ class CopirClientsAdmin extends AbstractAdmin
         }
 
         if ($this->isGranted('EDIT')) {
-            $menu->addChild('Ключевые слова ('.$id.')', [
+            $menu->addChild('Ключевые слова (' . $id . ')', [
                 'uri' => $admin->generateUrl('edit', ['id' => $id])
             ]);
         }
 
         if ($this->isGranted('LIST')) {
-            $menu->addChild('О компании ('.$id.')', [
+            $menu->addChild('О компании (' . $id . ')', [
                 'uri' => $admin->generateUrl('admin.jos.content.list', ['id' => $id])
             ]);
         }

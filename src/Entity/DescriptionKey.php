@@ -52,6 +52,8 @@ class DescriptionKey
      */
     private $description;
 
+    private $position;
+
     /**
      * @return mixed
      */
@@ -148,5 +150,20 @@ class DescriptionKey
         $this->description = $description;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getPosition()
+    {
+        return $this->position;
+    }
+
+    /**
+     * @param mixed $position
+     */
+    public function setPosition($position)
+    {
+        $this->position = $position;
+    }
 
 }
