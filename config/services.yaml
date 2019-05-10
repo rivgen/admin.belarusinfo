@@ -7,7 +7,7 @@ parameters:
     locale: 'en'
 
 artgris_file_manager:
-#    web_dir: public                 # set your public Directory (not required, default value: web)
+    web_dir: public/belarusinfo.by                 # set your public Directory (not required, default value: web)
     conf:
         tiny:
             dir: "../public/belarusinfo.by/ru/images/stories/photo_gallery/"
