@@ -54,42 +54,32 @@ file that was distributed with this source code.
 
         {#{{ include('admin-bundle/views/_js_for_TinymceBundle.twig') }}#}
         <script type="text/javascript">
+            function myFileBrowser(field_name, url, type, win) {
+
+                var cmsURL = "{{ path('file_manager', {module:'tiny', conf:'tiny'}) }}";
+                if (cmsURL.indexOf("?") < 0) {
+                    cmsURL = cmsURL + "?type=" + type;
+                }
+                else {
+                    cmsURL = cmsURL + "&type=" + type;
+                }
+
+                tinyMCE.activeEditor.windowManager.open({
+                    file: cmsURL,
+                    title: 'File Manager',
+                    width: 1024,
+                    height: 500
+                }, {
+                    window: win,
+                    input: field_name
+                });
+
+                return false;
+            }
         tinymce.init({
         selector: '.mytextarea',
-//            images_upload_base_path: '/',
-//            images_reuse_filename: true,
+            file_browser_callback: myFileBrowser,
             menubar: false,
-//            images_upload_credentials: true,
-//            images_upload_handler: function (blobInfo, success, failure) {
-//                var xhr, formData;
-//
-//                xhr = new XMLHttpRequest();
-//                xhr.withCredentials = false;
-//                xhr.open('POST', '/postAcceptor.php');
-//
-//                xhr.onload = function() {
-//                    var json;
-//
-//                    if (xhr.status != 200) {
-//                        failure('HTTP Error: ' + xhr.status);
-//                        return;
-//                    }
-//
-//                    json = JSON.parse(xhr.responseText);
-//
-//                    if (!json || typeof json.location != 'string') {
-//                        failure('Invalid JSON: ' + xhr.responseText);
-//                        return;
-//                    }
-//
-//                    success(json.location);
-//                };
-//
-//                formData = new FormData();
-//                formData.append('file', blobInfo.blob(), blobInfo.filename());
-//
-//                xhr.send(formData);
-//            },
             content_css : '/css/main.css',
             default_link_target: "_blank",
         plugins: 'image imagetools advlist media link paste table textcolor colorpicker directionality anchor autolink' +
@@ -97,15 +87,15 @@ file that was distributed with this source code.
         'textpattern toc visualblocks wordcount code',
         bbcode_dialect: "punbb",
         toolbar: "undo redo | insert | styleselect | fontselect fontsizeselect | bold italic underline | tinycomments forecolor backcolor |"+
-        " code responsivefilemanager image advlist media link | " +
+        " code image advlist media link | " +
         "cut copy paste | tableprops tabledelete table " +
         "| ltr rtl | restoredraft help hr | numlist bullist | " +
         "preview print visualblocks",
             relative_urls: false,
             image_advtab: true,
-            external_filemanager_path:"/filemanager/",
-            filemanager_title:"Responsive Filemanager1" ,
-            external_plugins: { "filemanager" : "/filemanager/plugin.min.js"},
+//            external_filemanager_path:"/filemanager/",
+//            filemanager_title:"Responsive Filemanager1" ,
+//            external_plugins: { "filemanager" : "/filemanager/plugin.min.js"},
             // убирает строку выводящуо сообщение о регистрации
             init_instance_callback : function(editor) {
                 var freeTiny = document.querySelector('.mce-notification');
@@ -126,8 +116,6 @@ file that was distributed with this source code.
 //                {title: 'Cat', value: 'mycat.gif'}
 //            ]);},
         height: 400,
-        //                    toolbar: 'code',  // last reminder, note the comma!
-        ////                    menubar: false,
         code_dialog_height: 500,
         code_dialog_width: 950,
         plugin_preview_height: 600,
@@ -136,48 +124,9 @@ file that was distributed with this source code.
         powerpaste_allow_local_images: true,
         powerpaste_word_import: 'prompt',
         powerpaste_html_import: 'prompt',
-        //                    content_css: [
-        //                        '//fonts.googleapis.com/css?family=Lato:300,300i,400,400i',
-        //                        '//www.tinymce.com/css/codepen.min.css']
-        //                    plugins: 'advlist'
         language: 'ru',
         language_url: '/js/ru.js',
         skin: 'lightgray',
-//            file_picker_callback: function(cb, value, meta) {
-//                var input = document.createElement('input');
-//                input.setAttribute('type', 'file');
-//                input.setAttribute('accept', 'image/*');
-//                // Note: In modern browsers input[type="file"] is functional without
-//                // even adding it to the DOM, but that might not be the case in some older
-//                // or quirky browsers like IE, so you might want to add it to the DOM
-//                // just in case, and visually hide it. And do not forget do remove it
-//                // once you do not need it anymore.
-//
-//                input.onchange = function() {
-//                    var file = this.files[0];
-//
-//                    var reader = new FileReader();
-//                    reader.onload = function () {
-//                        // Note: Now we need to register the blob in TinyMCEs image blob
-//                        // registry. In the next release this part hopefully won't be
-//                        // necessary, as we are looking to handle it internally.
-//                        var id = 'blobid' + (new Date()).getTime();
-//                        var blobCache =  tinymce.activeEditor.editorUpload.blobCache;
-//                        var base64 = reader.result.split(',')[1];
-//                        var blobInfo = blobCache.create(id, file, base64);
-//                        blobCache.add(blobInfo);
-//
-//                        // call the callback and populate the Title field with the file name
-//                        cb(blobInfo.blobUri(), { title: file.name });
-//                    };
-//                    reader.readAsDataURL(file);
-//                };
-//
-//                input.click();
-//            }
-        //                    plugins: 'myplugin',
-        //                    external_plugins: {
-        //                        'myplugin': '/js/myplugin/plugin.min.js'}
         });
         </script>
         {# localize moment #}

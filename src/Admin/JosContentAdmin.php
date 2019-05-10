@@ -108,7 +108,7 @@ class JosContentAdmin extends AbstractAdmin
 //                    'required' => false,
                     'label' => 'публикации',
                     'widget' => 'single_text',
-                    'format' => 'dd-MM-yyyy HH:mm:ss',
+                    'format' => 'yyyy-MM-dd HH:mm:ss',
                     'data' => new \DateTime()
                 ])
                 ->add('createdBy', HiddenType::class, [

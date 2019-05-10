@@ -1,6 +1,12 @@
 {
+    "artgris/filemanager-bundle": {
+        "version": "1.4.4"
+    },
     "cocur/slugify": {
         "version": "v3.2"
+    },
+    "composer/installers": {
+        "version": "v1.6.0"
     },
     "doctrine/annotations": {
         "version": "1.0",
@@ -115,6 +121,9 @@
     },
     "ocramius/proxy-manager": {
         "version": "2.1.1"
+    },
+    "oomphinc/composer-installers-extender": {
+        "version": "v1.1.2"
     },
     "phpdocumentor/reflection-common": {
         "version": "1.0.1"
