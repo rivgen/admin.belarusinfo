@@ -129,5 +129,5 @@ security:
      - { path: ^/admin/, role: [ROLE_ADMIN, ROLE_SONATA_ADMIN] }
      - { path: ^/app/, role: ROLE_USER }
      - { path: ^/sonata/user/, role: ROLE_SUPER_ADMIN }
-     - { path: ^/manager, role: [ROLE_SUPER_ADMIN, ROLE_STAFF] }
+     - { path: ^/manager, role: [ROLE_STAFF, ROLE_SUPER_ADMIN] }
      - { path: ^/.*, role: IS_AUTHENTICATED_ANONYMOUSLY }
