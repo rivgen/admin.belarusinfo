@@ -54,31 +54,31 @@ file that was distributed with this source code.
 
         {#{{ include('admin-bundle/views/_js_for_TinymceBundle.twig') }}#}
         <script type="text/javascript">
-            function myFileBrowser(field_name, url, type, win) {
+            {#function myFileBrowser(field_name, url, type, win) {#}
 
-                var cmsURL = "{{ path('file_manager', {module:'tiny', conf:'tiny'}) }}";
-                if (cmsURL.indexOf("?") < 0) {
-                    cmsURL = cmsURL + "?type=" + type;
-                }
-                else {
-                    cmsURL = cmsURL + "&type=" + type;
-                }
+                {#var cmsURL = "{{ path('file_manager', {module:'tiny', conf:'tiny'}) }}";#}
+                {#if (cmsURL.indexOf("?") < 0) {#}
+                    {#cmsURL = cmsURL + "?type=" + type;#}
+                {#}#}
+                {#else {#}
+                    {#cmsURL = cmsURL + "&type=" + type;#}
+                {#}#}
 
-                tinyMCE.activeEditor.windowManager.open({
-                    file: cmsURL,
-                    title: 'File Manager',
-                    width: 1024,
-                    height: 500
-                }, {
-                    window: win,
-                    input: field_name
-                });
+                {#tinyMCE.activeEditor.windowManager.open({#}
+                    {#file: cmsURL,#}
+                    {#title: 'File Manager',#}
+                    {#width: 1024,#}
+                    {#height: 500#}
+                {#}, {#}
+                    {#window: win,#}
+                    {#input: field_name#}
+                {#});#}
 
-                return false;
-            }
+                {#return false;#}
+            {#}#}
         tinymce.init({
         selector: '.mytextarea',
-            file_browser_callback: myFileBrowser,
+//            file_browser_callback: myFileBrowser,
             menubar: false,
             content_css : '/css/main.css',
             default_link_target: "_blank",
@@ -87,15 +87,15 @@ file that was distributed with this source code.
         'textpattern toc visualblocks wordcount code',
         bbcode_dialect: "punbb",
         toolbar: "undo redo | insert | styleselect | fontselect fontsizeselect | bold italic underline | tinycomments forecolor backcolor |"+
-        " code image advlist media link | " +
+        " code responsivefilemanager image advlist media link | " +
         "cut copy paste | tableprops tabledelete table " +
         "| ltr rtl | restoredraft help hr | numlist bullist | " +
         "preview print visualblocks",
             relative_urls: false,
             image_advtab: true,
-//            external_filemanager_path:"/filemanager/",
-//            filemanager_title:"Responsive Filemanager1" ,
-//            external_plugins: { "filemanager" : "/filemanager/plugin.min.js"},
+            external_filemanager_path:"/filemanager/",
+            filemanager_title:"Responsive Filemanager" ,
+            external_plugins: { "filemanager" : "/filemanager/plugin.min.js"},
             // убирает строку выводящуо сообщение о регистрации
             init_instance_callback : function(editor) {
                 var freeTiny = document.querySelector('.mce-notification');
