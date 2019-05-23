@@ -30,8 +30,9 @@ security:
         # those are the roles I will use (less verbose)
         ROLE_STAFF:             [ROLE_USER, ROLE_SONATA_FOO_READER]
 #        ROLE_ADMIN:             [ROLE_STAFF, ROLE_SONATA_FOO_EDITOR, ROLE_SONATA_FOO_ADMIN]
+        ROLE_LINK:             [ROLE_LINK_1, ROLE_LINK_2]
         ROLE_ADMIN:             [ROLE_SONATA_FOO_EDITOR, ROLE_SONATA_FOO_ADMIN]
-        ROLE_SUPER_ADMIN:       [ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
+        ROLE_SUPER_ADMIN:       [ROLE_ADMIN, ROLE_LINK, ROLE_ALLOWED_TO_SWITCH]
 
         # you could alternatively use for an admin who has all rights
         ROLE_ALL_ADMIN:         [ROLE_STAFF, ROLE_SONATA_FOO_ALL]
