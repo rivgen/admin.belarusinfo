@@ -99,10 +99,12 @@
                         {% endif %}
                         {# NEXT_MAJOR: remove default filter #}
                         {% if objectId|default(admin.id(object)) is not null %}
-                            {% if not is_granted('ROLE_LINK_1') or not is_granted('ROLE_LINK_2') %}
+                            {% if is_granted('ROLE_LINK_1') or is_granted('ROLE_LINK_2') %}
+                                {% else %}
 
                             <button type="submit" class="btn btn-success" name="btn_update_and_edit"><i class="fa fa-save" aria-hidden="true"></i> {{ 'btn_update_and_edit_again'|trans({}, 'SonataAdminBundle') }}</button>
-                            {% elseif is_granted('ROLE_SUPER_ADMIN') %}
+                            {% endif %}
+                            {% if is_granted('ROLE_SUPER_ADMIN') %}
                                 <button type="submit" class="btn btn-success" name="btn_update_and_edit"><i class="fa fa-save" aria-hidden="true"></i> {{ 'btn_update_and_edit_again'|trans({}, 'SonataAdminBundle') }}</button>
                             {% endif %}
 

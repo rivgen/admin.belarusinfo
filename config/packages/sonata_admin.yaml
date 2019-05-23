@@ -60,7 +60,7 @@ sonata_admin:
                                 label_catalogue: App
                                 items:
                                     - admin.link
-                                roles: [ ROLE_LINK_1 ]
+                                roles: [ ROLE_LINK_1, ROLE_LINK_2 ]
 
     show_mosaic_button: false
     templates:
