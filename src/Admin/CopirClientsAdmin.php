@@ -82,8 +82,8 @@ class CopirClientsAdmin extends AbstractAdmin
                 'header_style' => 'width: 5%',
                 'row_align' => 'left'
             ])
-            ->addIdentifier('keywords', null, [
-                'label' => 'Ключевые слова',
+            ->addIdentifier('name', null, [
+                'label' => 'Организация',
                 'header_style' => 'width: 50%',
                 'row_align' => 'left'
             ])
@@ -112,7 +112,7 @@ class CopirClientsAdmin extends AbstractAdmin
     public function toString($object)
     {
         return $object instanceof JosClientsKeywords
-            ? 'Организация '.$object->getId()
+            ? $object->getName()
             : 'Организация'; // shown in the breadcrumb on the create view
     }
 

@@ -23,6 +23,11 @@ class JosClientsKeywords
     private $keywords;
 
     /**
+     * @ORM\Column(name="name", type="text", nullable=true)
+     */
+    private $name;
+
+    /**
      * @ORM\OneToMany(targetEntity="JosContent", mappedBy="companytitle")
      */
     private $content;
@@ -94,6 +99,22 @@ class JosClientsKeywords
     public function setKeyss($keyss)
     {
         $this->keyss = $keyss;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * @param mixed $name
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
     }
 
 }
