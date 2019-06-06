@@ -5,7 +5,8 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\JosClientsRepository")
+ * @ORM\Table(name="jos_clients")
+ * @ORM\Entity
  */
 class JosAdminClients
 {
@@ -20,11 +21,6 @@ class JosAdminClients
      * @ORM\Column(name="name", type="string", length=255, nullable=true)
      */
     private $name;
-
-    /**
-     * @ORM\Column(name="keywords", type="text", nullable=true)
-     */
-    private $keywords;
 
     /**
      * @ORM\Column(name="address", type="string", length=255, nullable=true)
@@ -102,16 +98,6 @@ class JosAdminClients
     private $rubricDescription;
 
     /**
-     * @ORM\Column(name="phone_num", type="string", length=255, nullable=true)
-     */
-    private $phoneNum;
-
-    /**
-     * @ORM\Column(name="phone_type", type="string", length=255, nullable=true)
-     */
-    private $phoneType;
-
-    /**
      * @ORM\Column(name="fi", type="integer", nullable=true)
      */
     private $fi;
@@ -122,9 +108,9 @@ class JosAdminClients
     private $content;
 
     /**
-     * @ORM\OneToMany(targetEntity="DescriptionKey", mappedBy="company")
+     * @ORM\OneToMany(targetEntity="Tel", mappedBy="client")
      */
-    private $keyss;
+    private $tels;
 
     /**
      * @return mixed
@@ -156,22 +142,6 @@ class JosAdminClients
     public function setName($name)
     {
         $this->name = $name;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getKeywords()
-    {
-        return $this->keywords;
-    }
-
-    /**
-     * @param mixed $keywords
-     */
-    public function setKeywords($keywords)
-    {
-        $this->keywords = $keywords;
     }
 
     /**
@@ -433,38 +403,6 @@ class JosAdminClients
     /**
      * @return mixed
      */
-    public function getPhoneNum()
-    {
-        return $this->phoneNum;
-    }
-
-    /**
-     * @param mixed $phoneNum
-     */
-    public function setPhoneNum($phoneNum)
-    {
-        $this->phoneNum = $phoneNum;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getPhoneType()
-    {
-        return $this->phoneType;
-    }
-
-    /**
-     * @param mixed $phoneType
-     */
-    public function setPhoneType($phoneType)
-    {
-        $this->phoneType = $phoneType;
-    }
-
-    /**
-     * @return mixed
-     */
     public function getContent()
     {
         return $this->content;
@@ -481,17 +419,17 @@ class JosAdminClients
     /**
      * @return mixed
      */
-    public function getKeyss()
+    public function getTels()
     {
-        return $this->keyss;
+        return $this->tels;
     }
 
     /**
-     * @param mixed $keyss
+     * @param mixed $tels
      */
-    public function setKeyss($keyss)
+    public function setTels($tels)
     {
-        $this->keyss = $keyss;
+        $this->tels = $tels;
     }
 
 }

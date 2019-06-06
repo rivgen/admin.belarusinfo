@@ -10,6 +10,7 @@ use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Route\RouteCollection;
+use Sonata\Form\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Sonata\AdminBundle\Form\Type\ModelType;
 use Sonata\AdminBundle\Show\ShowMapper;
@@ -73,6 +74,34 @@ class AdminClientsAdmin extends AbstractAdmin
 //                'label' => 'Ключевые слова',
 //                'attr' => ['style' => 'height: 200px']
 //            ])
+            ->with('Телефоны', ['class' => 'col-md-12'])
+            ->add('tels', CollectionType::class, [
+                'label' => false,
+                'by_reference' => false,
+                'required' => false,
+                'type_options' => [
+                    'delete' => false,
+//                    'delete_options' => [
+//                        // You may otherwise choose to put the field but hide it
+//                        'type'         => HiddenType::class,
+//                        // In that case, you need to fill in the options as well
+//                        'type_options' => [
+//                            'mapped'   => false,
+//                            'required' => false,
+//                        ]
+//                    ]
+                ],
+                'btn_add' => false,
+//                'allow_add' => true,
+            ], [
+                'edit' => 'inline',
+                'inline' => 'table',
+                'sortable' => 'position',
+//                'limit' => 1,
+                'allow_add' => true,
+
+            ])
+            ->end()
         ;
     }
 
@@ -164,6 +193,11 @@ class AdminClientsAdmin extends AbstractAdmin
             ]);
         }
 
+        if ($this->isGranted('LIST')) {
+            $menu->addChild('Телефоны ('.$id.')', [
+                'uri' => $admin->generateUrl('admin.tels.list', ['id' => $id])
+            ]);
+        }
 //        if ($this->isGranted('LIST')) {
 //            $menu->addChild('Текст / ключевики ('.$id.')', [
 //                'uri' => $admin->generateUrl('admin.description.key.list', ['id' => $id])

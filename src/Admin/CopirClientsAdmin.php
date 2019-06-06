@@ -2,8 +2,7 @@
 
 namespace App\Admin;
 
-use App\Entity\JosClients;
-use App\Entity\JosContent;
+use App\Entity\JosClientsKeywords;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Admin\AdminInterface;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
@@ -67,14 +66,11 @@ class CopirClientsAdmin extends AbstractAdmin
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
     {
         $datagridMapper
-//            ->add('id')
             ->add('id', null, [
                 'label' => 'Клиент',
                 'show_filter' => true,
             ])
-            ->add('name', null, [
-                'label' => 'Название организации',
-            ]);
+        ;
     }
 
     protected function configureListFields(ListMapper $listMapper)
@@ -86,8 +82,8 @@ class CopirClientsAdmin extends AbstractAdmin
                 'header_style' => 'width: 5%',
                 'row_align' => 'left'
             ])
-            ->addIdentifier('name', null, [
-                'label' => 'Название организации',
+            ->addIdentifier('keywords', null, [
+                'label' => 'Ключевые слова',
                 'header_style' => 'width: 50%',
                 'row_align' => 'left'
             ])
@@ -110,14 +106,14 @@ class CopirClientsAdmin extends AbstractAdmin
     protected function configureShowFields(ShowMapper $showMapper)
     {
         $showMapper
-            ->add('name');
+            ->add('keywords');
     }
 
     public function toString($object)
     {
-        return $object instanceof JosClients
-            ? $object->getName()
-            : 'счетчик'; // shown in the breadcrumb on the create view
+        return $object instanceof JosClientsKeywords
+            ? 'Организация '.$object->getId()
+            : 'Организация'; // shown in the breadcrumb on the create view
     }
 
     protected function configureSideMenu(MenuItemInterface $menu, $action, AdminInterface $childAdmin = null)

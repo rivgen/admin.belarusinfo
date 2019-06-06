@@ -91,6 +91,7 @@ class JosContentAdmin extends AbstractAdmin
                     'О компании' => 54,
                     'Продукция' => 53,
                     'Фотогалерея' => 55,
+                    'Вакансии' => 58,
                 ]
             ])
             ->end();

@@ -129,7 +129,7 @@ services:
 
     admin.clients:
                class: App\Admin\CopirClientsAdmin
-               arguments: [~, App\Entity\JosClients, ~]
+               arguments: [~, App\Entity\JosClientsKeywords, ~]
                calls:
                   - [addChild, ['@admin.jos.content', 'companytitle']]
                   - [addChild, ['@admin.description.key', 'company']]
@@ -142,6 +142,7 @@ services:
                arguments: [~, App\Entity\JosAdminClients, ~]
                calls:
                   - [addChild, ['@admin.jos.content', 'companytitle']]
+                  - [addChild, ['@admin.tels', 'client']]
                tags:
                    - { name: sonata.admin, manager_type: orm, label: Компании, label_catalogue: App }
                public: true
@@ -151,4 +152,11 @@ services:
                    arguments: [~, App\Entity\Link, ~]
                    tags:
                        - { name: sonata.admin, manager_type: orm, label: Ссылки, label_catalogue: App }
+                   public: true
+
+    admin.tels:
+                   class: App\Admin\TelAdmin
+                   arguments: [~, App\Entity\Tel, ~]
+                   tags:
+                       - { name: sonata.admin, manager_type: orm, label: Телефоны, label_catalogue: App }
                    public: true
