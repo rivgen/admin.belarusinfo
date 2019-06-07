@@ -28,7 +28,7 @@ class DescriptionKey
 //    private $content;
 
     /**
-     * @ORM\ManyToOne(targetEntity="JosClients", inversedBy="keyss")
+     * @ORM\ManyToOne(targetEntity="JosClientsKeywords", inversedBy="keyss")
      */
     private $company;
 
