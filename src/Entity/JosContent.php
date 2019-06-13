@@ -31,7 +31,7 @@ class JosContent
 
     /**
      * @ORM\ManyToOne(targetEntity="JosClientsKeywords", inversedBy="content")
-     * @ORM\ManyToOne(targetEntity="JosAdminClients", inversedBy="content")
+     *
      */
     private $companytitle;
 

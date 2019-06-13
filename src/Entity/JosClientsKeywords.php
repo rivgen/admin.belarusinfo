@@ -33,9 +33,31 @@ class JosClientsKeywords
     private $content;
 
     /**
+     * @ORM\OneToOne(targetEntity="JosAdminClients", mappedBy="clientsKeywords")
+     *
+     */
+    private $adminClients;
+
+    /**
      * @ORM\OneToMany(targetEntity="DescriptionKey", mappedBy="company")
      */
     private $keyss;
+
+    /**
+     * @return mixed
+     */
+    public function getAdminClients()
+    {
+        return $this->adminClients;
+    }
+
+    /**
+     * @param mixed $adminClients
+     */
+    public function setAdminClients($adminClients)
+    {
+        $this->adminClients = $adminClients;
+    }
 
     /**
      * @return mixed

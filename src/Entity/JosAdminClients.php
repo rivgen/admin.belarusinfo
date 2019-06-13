@@ -102,15 +102,34 @@ class JosAdminClients
      */
     private $fi;
 
+
     /**
-     * @ORM\OneToMany(targetEntity="JosContent", mappedBy="companytitle")
+     * @ORM\OneToOne(targetEntity="JosClientsKeywords", mappedBy="adminClients")
+     * @ORM\JoinColumn(name="id", referencedColumnName="id")
+     *
      */
-    private $content;
+    private $clientsKeywords;
 
     /**
      * @ORM\OneToMany(targetEntity="Tel", mappedBy="client")
      */
     private $tels;
+
+    /**
+     * @return mixed
+     */
+    public function getClientsKeywords()
+    {
+        return $this->clientsKeywords;
+    }
+
+    /**
+     * @param mixed $clientsKeywords
+     */
+    public function setClientsKeywords($clientsKeywords)
+    {
+        $this->clientsKeywords = $clientsKeywords;
+    }
 
     /**
      * @return mixed
@@ -430,6 +449,22 @@ class JosAdminClients
     public function setTels($tels)
     {
         $this->tels = $tels;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getContent2()
+    {
+        return $this->content2;
+    }
+
+    /**
+     * @param mixed $content2
+     */
+    public function setContent2($content2)
+    {
+        $this->content2 = $content2;
     }
 
 }

@@ -189,7 +189,7 @@ class AdminClientsAdmin extends AbstractAdmin
 
         if ($this->isGranted('LIST')) {
             $menu->addChild('О компании ('.$id.')', [
-                'uri' => $admin->generateUrl('admin.jos.content.list', ['id' => $id])
+                'uri' => $admin->getChild('admin.clients')->generateUrl('admin.jos.content.list', ['id' => $id, 'childId' => $id])
             ]);
         }
 

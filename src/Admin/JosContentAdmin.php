@@ -217,6 +217,7 @@ class JosContentAdmin extends AbstractAdmin
                     54 => 'О компании',
                     53 => 'Продукция',
                     55 => 'Фотогалерея',
+                    58 => 'Вакансии' ,
                 ]
             ])
 //            ->add('created')
@@ -246,38 +247,38 @@ class JosContentAdmin extends AbstractAdmin
             : 'Компания'; // shown in the breadcrumb on the create view
     }
 
-    protected function configureSideMenu(MenuItemInterface $menu, $action, AdminInterface $childAdmin = null)
-    {
-        if (!$childAdmin && !in_array($action, ['edit', 'show'])) {
-            return;
-        }
-
-        $admin = $this->isChild() ? $this->getParent() : $this;
-        $id = $admin->getRequest()->get('id');
-
-//        $menu->addChild('View BlogPost', [
-//        'uri' => $admin->generateUrl('show', ['id' => $id])
-//    ]);
-        if ($this->getRoot()->getSubject()->getCatid() == 53) {
-            if ($this->isGranted('EDIT')) {
-                $menu->addChild('Редактирование контента', [
-                    'uri' => $admin->generateUrl('edit', ['id' => $id])
-                ]);
-            }
-
-            if ($this->isGranted('LIST')) {
-                $menu->addChild('список ключей', [
-                    'uri' => $admin->generateUrl('admin.description.key.list', ['id' => $id])
-                ]);
-            }
-
-            if ($this->isGranted('create')) {
-                $menu->addChild('добавить ключ', [
-                    'uri' => $admin->generateUrl('admin.description.key.create', ['id' => $id])
-                ]);
-            }
-        }
-    }
+//    protected function configureSideMenu(MenuItemInterface $menu, $action, AdminInterface $childAdmin = null)
+//    {
+//        if (!$childAdmin && !in_array($action, ['edit', 'show'])) {
+//            return;
+//        }
+//
+//        $admin = $this->isChild() ? $this->getParent() : $this;
+//        $id = $admin->getRequest()->get('id');
+//
+////        $menu->addChild('View BlogPost', [
+////        'uri' => $admin->generateUrl('show', ['id' => $id])
+////    ]);
+//        if ($this->getRoot()->getSubject()->getCatid() == 53) {
+//            if ($this->isGranted('EDIT')) {
+//                $menu->addChild('Редактирование контента', [
+//                    'uri' => $admin->generateUrl('edit', ['id' => $id])
+//                ]);
+//            }
+//
+//            if ($this->isGranted('LIST')) {
+//                $menu->addChild('список ключей', [
+//                    'uri' => $admin->generateUrl('admin.description.key.list', ['id' => $id])
+//                ]);
+//            }
+//
+//            if ($this->isGranted('create')) {
+//                $menu->addChild('добавить ключ', [
+//                    'uri' => $admin->generateUrl('admin.description.key.create', ['id' => $id])
+//                ]);
+//            }
+//        }
+//    }
 
     protected function configureRoutes(RouteCollection $collection)
     {

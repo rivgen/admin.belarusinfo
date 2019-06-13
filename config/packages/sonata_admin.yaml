@@ -80,7 +80,7 @@ services:
                ##                        - [setLabelTranslatorStrategy, ['@sonata.admin.label.strategy.underscore']]
                ##                       - [setTranslationDomain, ['App']]
                #                      - [addChild, ['@admin.category', 'blogposts']]
-                                     - [addChild, ['@admin.description.key', 'content']]
+#                                     - [addChild, ['@admin.description.key', 'content']]
                tags:
                    - { name: sonata.admin, manager_type: orm, label: О компании, label_catalogue: App }
                public: true
@@ -141,7 +141,8 @@ services:
                class: App\Admin\AdminClientsAdmin
                arguments: [~, App\Entity\JosAdminClients, ~]
                calls:
-                  - [addChild, ['@admin.jos.content', 'companytitle']]
+#                  - [addChild, ['@admin.jos.content', 'companytitle2']]
+                  - [addChild, ['@admin.clients', 'adminClients']]
                   - [addChild, ['@admin.tels', 'client']]
                tags:
                    - { name: sonata.admin, manager_type: orm, label: Компании, label_catalogue: App }
