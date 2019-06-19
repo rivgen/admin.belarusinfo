@@ -87,7 +87,7 @@ class Tel
     /**
      * @return int
      */
-    public function getOrdering(): int
+    public function getOrdering()
     {
         return $this->ordering;
     }
@@ -101,15 +101,15 @@ class Tel
     }
 
     /**
-     * @return string
+     * @return null|string
      */
-    public function getPhoneType(): string
+    public function getPhoneType()
     {
         return $this->phoneType;
     }
 
     /**
-     * @param string $phoneType
+     * @param null|string $phoneType
      */
     public function setPhoneType(string $phoneType)
     {
@@ -119,7 +119,7 @@ class Tel
     /**
      * @return string
      */
-    public function getPhone(): string
+    public function getPhone()
     {
         return $this->phone;
     }

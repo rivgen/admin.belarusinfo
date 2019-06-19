@@ -41,10 +41,10 @@ class TelAdmin extends AbstractAdmin
 
 //        $username = $this->security->getUser()->getUsername();
         $formMapper
-            ->add('phoneType', null, [
+            ->add('phoneType', TextType::class, [
                 'label' => 'Конкретизация',
             ])
-            ->add('phone', null, [
+            ->add('phone', TextType::class, [
                 'label' => 'Тел.',
             ])->add('ordering', null, [
                 'label' => 'сортировка',
