@@ -116,6 +116,11 @@ class JosAdminClients
     private $tels;
 
     /**
+     * @ORM\OneToMany(targetEntity="Tel", mappedBy="client")
+     */
+    private $rubrics;
+
+    /**
      * @return mixed
      */
     public function getClientsKeywords()

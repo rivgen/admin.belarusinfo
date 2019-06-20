@@ -60,6 +60,9 @@ class AdminClientsAdmin extends AbstractAdmin
             ->add('site', null, [
                 'label' => 'Сайт',
             ])
+            ->add('clientIndex', null, [
+                'label' => 'Индекс почтовый',
+            ])
 
             ->add('promo', null, [
                 'label' => 'Ссылка на промо',
