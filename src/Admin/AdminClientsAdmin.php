@@ -37,7 +37,7 @@ class AdminClientsAdmin extends AbstractAdmin
 //        '_sort_by' => 'updatedAt',
     ];
 
-      protected function configureFormFields(FormMapper $formMapper)
+    protected function configureFormFields(FormMapper $formMapper)
     {
         $admin = $this->isChild() ? $this->getParent() : $this;
         $idParent = $admin->getRequest()->get('id');
@@ -55,7 +55,6 @@ class AdminClientsAdmin extends AbstractAdmin
             ])
             ->end()
             ->with('Информация', ['class' => 'col-md-4'])
-
             ->add('email')
             ->add('site', null, [
                 'label' => 'Сайт',
@@ -63,7 +62,6 @@ class AdminClientsAdmin extends AbstractAdmin
             ->add('clientIndex', null, [
                 'label' => 'Индекс почтовый',
             ])
-
             ->add('promo', null, [
                 'label' => 'Ссылка на промо',
             ])
@@ -105,7 +103,32 @@ class AdminClientsAdmin extends AbstractAdmin
 
             ])
             ->end()
-        ;
+            ->add('rubrics', CollectionType::class, [
+                'label' => false,
+                'by_reference' => false,
+                'required' => false,
+                'type_options' => [
+                    'delete' => false,
+//                    'delete_options' => [
+//                        // You may otherwise choose to put the field but hide it
+//                        'type'         => HiddenType::class,
+//                        // In that case, you need to fill in the options as well
+//                        'type_options' => [
+//                            'mapped'   => false,
+//                            'required' => false,
+//                        ]
+//                    ]
+                ],
+                'btn_add' => false,
+//                'allow_add' => true,
+            ], [
+                'edit' => 'inline',
+                'inline' => 'table',
+                'sortable' => 'position',
+//                'limit' => 1,
+                'allow_add' => true,
+
+            ]);
     }
 
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
@@ -145,6 +168,7 @@ class AdminClientsAdmin extends AbstractAdmin
                     'delete' => [],
                 ]]);;
     }
+
 // удаляет ссылку на создание "create"
     protected function configureRoutes(RouteCollection $collection)
     {
@@ -185,20 +209,26 @@ class AdminClientsAdmin extends AbstractAdmin
         }
 
         if ($this->isGranted('EDIT')) {
-            $menu->addChild('Компания ('.$id.')', [
+            $menu->addChild('Компания (' . $id . ')', [
                 'uri' => $admin->generateUrl('edit', ['id' => $id])
             ]);
         }
 
         if ($this->isGranted('LIST')) {
-            $menu->addChild('О компании ('.$id.')', [
+            $menu->addChild('О компании (' . $id . ')', [
                 'uri' => $admin->getChild('admin.clients')->generateUrl('admin.jos.content.list', ['id' => $id, 'childId' => $id])
             ]);
         }
 
         if ($this->isGranted('LIST')) {
-            $menu->addChild('Телефоны ('.$id.')', [
+            $menu->addChild('Телефоны (' . $id . ')', [
                 'uri' => $admin->generateUrl('admin.tels.list', ['id' => $id])
+            ]);
+        }
+
+        if ($this->isGranted('LIST')) {
+            $menu->addChild('Рубрики (' . $id . ')', [
+                'uri' => $admin->generateUrl('admin.jos.rubric.client.list', ['id' => $id])
             ]);
         }
 //        if ($this->isGranted('LIST')) {

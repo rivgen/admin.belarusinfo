@@ -144,6 +144,7 @@ services:
 #                  - [addChild, ['@admin.jos.content', 'companytitle2']]
                   - [addChild, ['@admin.clients', 'adminClients']]
                   - [addChild, ['@admin.tels', 'client']]
+                  - [addChild, ['@admin.jos.rubric.client', 'client']]
                tags:
                    - { name: sonata.admin, manager_type: orm, label: Компании, label_catalogue: App }
                public: true
@@ -160,4 +161,18 @@ services:
                    arguments: [~, App\Entity\Tel, ~]
                    tags:
                        - { name: sonata.admin, manager_type: orm, label: Телефоны, label_catalogue: App }
+                   public: true
+
+    admin.jos.rubric.client:
+                   class: App\Admin\JosRubricClientTestAdmin
+                   arguments: [~, App\Entity\JosRubricClientTest, ~]
+                   tags:
+                       - { name: sonata.admin, manager_type: orm, label: Телефоны, label_catalogue: App }
+                   public: true
+
+    admin.jos.rubric:
+                   class: App\Admin\JosRubricAdmin
+                   arguments: [~, App\Entity\JosRubric, ~]
+                   tags:
+                        - { name: sonata.admin, manager_type: orm, label: Телефоны, label_catalogue: App }
                    public: true

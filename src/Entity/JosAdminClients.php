@@ -116,7 +116,7 @@ class JosAdminClients
     private $tels;
 
     /**
-     * @ORM\OneToMany(targetEntity="Tel", mappedBy="client")
+     * @ORM\OneToMany(targetEntity="JosRubricClientTest", mappedBy="client")
      */
     private $rubrics;
 
@@ -470,6 +470,22 @@ class JosAdminClients
     public function setContent2($content2)
     {
         $this->content2 = $content2;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getRubrics()
+    {
+        return $this->rubrics;
+    }
+
+    /**
+     * @param mixed $rubrics
+     */
+    public function setRubrics($rubrics)
+    {
+        $this->rubrics = $rubrics;
     }
 
 }
