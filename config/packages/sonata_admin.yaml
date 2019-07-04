@@ -28,9 +28,10 @@ sonata_admin:
                                 label: Контент
                                 label_catalogue: App
                                 items:
-                                    - admin.jos.content
-                                    - admin.description.key
+#                                    - admin.jos.content
+#                                    - admin.description.key
                                     - admin.clients
+                                    - admin.banners
                                 roles: [ ROLE_STAFF ]
 #                                roles: [ ROLE_USER ]
 #                                roles: [ ROLE_ADMIN ]
@@ -109,6 +110,15 @@ services:
     admin.banners:
                class: App\Admin\JosBannersAdmin
                arguments: [~, App\Entity\JosBanners, ~]
+               calls:
+                   - [addChild, ['@admin.banners.key', 'josBanners']]
+               tags:
+                   - { name: sonata.admin, manager_type: orm, label: Банера, label_catalogue: App }
+               public: true
+
+    admin.banners.key:
+               class: App\Admin\BannersKeyAdmin
+               arguments: [~, App\Entity\BannersKey, ~]
                tags:
                    - { name: sonata.admin, manager_type: orm, label: Банера, label_catalogue: App }
                public: true

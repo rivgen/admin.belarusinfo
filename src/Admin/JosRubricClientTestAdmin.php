@@ -47,6 +47,7 @@ class JosRubricClientTestAdmin extends AbstractAdmin
         $formMapper
 //            ->add('id')
             ->add('newRubric', EntityType::class, [
+                'label' => 'Название рубрики',
                 'class' => JosRubric::class,
                 'choice_label' => 'name',
                 'query_builder' => function(EntityRepository $repo) {
@@ -83,7 +84,15 @@ class JosRubricClientTestAdmin extends AbstractAdmin
         unset($this->listModes['mosaic']);
         $listMapper
 //            ->add('id')
-            ->addIdentifier('newRubricId')
+            ->addIdentifier('newRubric', EntityType::class, [
+                'label' => 'Название рубрики',
+                'class' => JosRubric::class,
+                'associated_property' => 'name',
+//                'query_builder' => function(EntityRepository $repo) {
+//                    return $repo->createQueryBuilder('r')->andWhere('r.level = 3')->orderBy('r.name');
+//                }
+            ])
+//            ->addIdentifier('newRubricId')
 //            ->add('rubricId', null, [
 //                'header_style' => 'width: 5%',
 //                'row_align' => 'left'

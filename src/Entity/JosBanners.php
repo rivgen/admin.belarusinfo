@@ -18,9 +18,9 @@ class JosBanners
     private $id;
 
     /**
-     * @ORM\Column(name="rubric_id", type="integer")
+     * @ORM\ManyToOne(targetEntity="JosRubric", inversedBy="banners")
      */
-    private $rubricId;
+    private $rubric;
 
     /**
      * @ORM\Column(name="client_id", type="bigint")
@@ -52,6 +52,11 @@ class JosBanners
      * @ORM\Column(name="ordering", type="integer", nullable=true)
      */
     private $ordering;
+
+    /**
+     * @ORM\OneToMany(targetEntity="BannersKey", mappedBy="josBanners")
+     */
+    private $key;
 
     /**
      * @return mixed
@@ -181,5 +186,36 @@ class JosBanners
         $this->ordering = $ordering;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getKey()
+    {
+        return $this->key;
+    }
+
+    /**
+     * @param mixed $key
+     */
+    public function setKey($key)
+    {
+        $this->key = $key;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getRubric()
+    {
+        return $this->rubric;
+    }
+
+    /**
+     * @param mixed $rubric
+     */
+    public function setRubric($rubric)
+    {
+        $this->rubric = $rubric;
+    }
 
 }

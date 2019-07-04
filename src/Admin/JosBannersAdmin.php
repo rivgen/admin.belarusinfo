@@ -4,6 +4,7 @@ namespace App\Admin;
 
 use App\Entity\JosBanners;
 use App\Entity\JosContent;
+use App\Entity\JosRubric;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Admin\AdminInterface;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
@@ -40,8 +41,10 @@ class JosBannersAdmin extends AbstractAdmin
 
 //        $username = $this->security->getUser()->getUsername();
         $formMapper
-            ->add('rubricId', null, [
+            ->add('rubric', EntityType::class, [
                 'label' => 'рубрика',
+                'class' => JosRubric::class,
+                'choice_label' => 'name',
             ])
             ->add('clientId', null, [
                 'label' => 'Клиент',
@@ -81,10 +84,10 @@ class JosBannersAdmin extends AbstractAdmin
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
     {
         $datagridMapper
-            ->add('rubricId', null, [
-                'label' => 'рубрика',
-                'show_filter' => true,
-            ])
+//            ->add('rubricId', null, [
+//                'label' => 'рубрика',
+//                'show_filter' => true,
+//            ])
             ->add('clientId', null, [
                 'label' => 'клиент',
                 'show_filter' => true,
@@ -104,10 +107,12 @@ class JosBannersAdmin extends AbstractAdmin
                 'header_style' => 'width: 5%',
                 'row_align' => 'left'
             ])
-            ->add('rubricId', null, [
+            ->add('rubric', EntityType::class, [
                 'label' => 'рубрика',
                 'header_style' => 'width: 5%',
-                'row_align' => 'left'
+                'row_align' => 'left',
+                'class' => JosRubric::class,
+                'associated_property' => 'name',
             ])
             ->add('ordering', null, [
                 'label' => 'порядок сортировки',
@@ -140,4 +145,40 @@ class JosBannersAdmin extends AbstractAdmin
             : 'баннер'; // shown in the breadcrumb on the create view
     }
 
+    protected function configureSideMenu(MenuItemInterface $menu, $action, AdminInterface $childAdmin = null)
+    {
+        if (!$childAdmin && !in_array($action, ['edit', 'show'])) {
+            return;
+        }
+
+        $admin = $this->isChild() ? $this->getParent() : $this;
+        $id = $admin->getRequest()->get('id');
+
+//        $menu->addChild('View Playlist', [
+//            'uri' => $admin->generateUrl('show', ['id' => $id])
+//        ]);
+        if ($this->isGranted('LIST')) {
+            $menu->addChild('Все банера', [
+                'uri' => $admin->generateUrl('list')
+            ]);
+        }
+
+        if ($this->isGranted('EDIT')) {
+            $menu->addChild('Банер (' . $id . ')', [
+                'uri' => $admin->generateUrl('edit', ['id' => $id])
+            ]);
+        }
+
+        if ($this->isGranted('LIST')) {
+            $menu->addChild('Ключи для банера (' . $id . ')', [
+                'uri' => $admin->generateUrl('admin.banners.key.list', ['id' => $id])
+            ]);
+        }
+
+//        if ($this->isGranted('LIST')) {
+//            $menu->addChild('Текст / ключевики ('.$id.')', [
+//                'uri' => $admin->generateUrl('admin.description.key.list', ['id' => $id])
+//            ]);
+//        }
+    }
 }

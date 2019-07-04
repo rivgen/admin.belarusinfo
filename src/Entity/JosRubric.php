@@ -47,6 +47,11 @@ class JosRubric
     private $alias;
 
     /**
+     * @ORM\OneToMany(targetEntity="JosBanners", mappedBy="rubric")
+     */
+    private $banners;
+
+    /**
      * @return mixed
      */
     public function getId()
@@ -188,6 +193,22 @@ class JosRubric
     public function setOldd($oldd)
     {
         $this->oldd = $oldd;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getBanners()
+    {
+        return $this->banners;
+    }
+
+    /**
+     * @param mixed $banners
+     */
+    public function setBanners($banners)
+    {
+        $this->banners = $banners;
     }
 
 }
