@@ -37,6 +37,11 @@ class JosRubric
     private $old;
 
     /**
+     * @ORM\Column(name="old_id", type="integer", nullable=false)
+     */
+    private $oldId;
+
+    /**
      * @ORM\Column(name="published", type="integer", nullable=false)
      */
     private $published;
@@ -182,22 +187,6 @@ class JosRubric
     /**
      * @return mixed
      */
-    public function getOldd()
-    {
-        return $this->oldd;
-    }
-
-    /**
-     * @param mixed $oldd
-     */
-    public function setOldd($oldd)
-    {
-        $this->oldd = $oldd;
-    }
-
-    /**
-     * @return mixed
-     */
     public function getBanners()
     {
         return $this->banners;
@@ -209,6 +198,22 @@ class JosRubric
     public function setBanners($banners)
     {
         $this->banners = $banners;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getOldId()
+    {
+        return $this->oldId;
+    }
+
+    /**
+     * @param mixed $oldId
+     */
+    public function setOldId($oldId)
+    {
+        $this->oldId = $oldId;
     }
 
 }

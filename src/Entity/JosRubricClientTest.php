@@ -48,6 +48,11 @@ class JosRubricClientTest
     private $published;
 
     /**
+     * @ORM\Column(name="rubric_id", type="integer")
+     */
+    private $rubricId;
+
+    /**
      * @return mixed
      */
     public function getId()
@@ -157,6 +162,22 @@ class JosRubricClientTest
     public function setNewRubricId($newRubricId)
     {
         $this->newRubricId = $newRubricId;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getRubricId()
+    {
+        return $this->rubricId;
+    }
+
+    /**
+     * @param mixed $rubricId
+     */
+    public function setRubricId($rubricId)
+    {
+        $this->rubricId = $rubricId;
     }
 
 }

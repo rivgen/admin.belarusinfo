@@ -19,6 +19,8 @@ use Sonata\AdminBundle\Form\Type\ModelType;
 use Sonata\AdminBundle\Show\ShowMapper;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -44,8 +46,25 @@ class JosRubricClientTestAdmin extends AbstractAdmin
     {
 
 //        $username = $this->security->getUser()->getUsername();
+        if ($this->isChild()) {
+            $rubricId = $this->getRoot()->getSubject()->getNewRubric()->getOldId();
+            dump($rubricId);
+        }else {
+            $rubricId = null;
+        }
+        if ($this->getRoot()->getSubject()->getId() != null) {
+           $formMapper
+            ->add('newRubricId', null, [
+                'disabled' => true
+            ]);
+        }
+        if ($rubricId != null) {
+            $formMapper
+                ->add('rubricId', IntegerType::class, [
+                    'data' => $rubricId,
+                ]);
+        }
         $formMapper
-//            ->add('id')
             ->add('newRubric', EntityType::class, [
                 'label' => 'Название рубрики',
                 'class' => JosRubric::class,

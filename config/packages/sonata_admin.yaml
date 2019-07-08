@@ -177,7 +177,7 @@ services:
                    class: App\Admin\JosRubricClientTestAdmin
                    arguments: [~, App\Entity\JosRubricClientTest, ~]
                    tags:
-                       - { name: sonata.admin, manager_type: orm, label: Телефоны, label_catalogue: App }
+                       - { name: sonata.admin, manager_type: orm, label: Рубрики, label_catalogue: App }
                    public: true
 
     admin.jos.rubric:
