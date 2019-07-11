@@ -33,7 +33,8 @@ class JosAdminClients
     private $region;
 
     /**
-     * @ORM\Column(name="city", type="integer", nullable=true)
+     * @ORM\ManyToOne(targetEntity="JosCity")
+     * @ORM\JoinColumn(name="city", referencedColumnName="City_ID")
      */
     private $city;
 

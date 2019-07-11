@@ -3,6 +3,7 @@
 namespace App\Admin;
 
 use App\Entity\JosAdminClients;
+use App\Entity\JosCity;
 use App\Entity\JosContent;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Admin\AdminInterface;
@@ -49,6 +50,11 @@ class AdminClientsAdmin extends AbstractAdmin
             ])
             ->add('address', null, [
                 'label' => 'Адрес',
+            ])
+            ->add('city', EntityType::class, [
+                'label' => 'Города',
+                'class' => JosCity::class,
+                'choice_label' => 'cityName',
             ])
             ->add('reklama', null, [
                 'label' => 'Рекламная строка',
