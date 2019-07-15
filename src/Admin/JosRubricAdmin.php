@@ -4,7 +4,9 @@ namespace App\Admin;
 
 use App\Entity\JosAdminClients;
 use App\Entity\JosClientsKeywords;
+use App\Entity\JosRubric;
 use App\Entity\JosRubricClientTest;
+use Doctrine\ORM\EntityRepository;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Admin\AdminInterface;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
@@ -17,11 +19,13 @@ use Sonata\AdminBundle\Form\Type\ModelType;
 use Sonata\AdminBundle\Show\ShowMapper;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Knp\Menu\ItemInterface as MenuItemInterface;
 use Symfony\Component\Security\Core\Security;
+use Symfony\Component\Validator\Constraints\Date;
 
 class JosRubricAdmin extends AbstractAdmin
 {
@@ -45,28 +49,71 @@ class JosRubricAdmin extends AbstractAdmin
         $formMapper
 //            ->add('id')
             ->add('name')
+            ->add('alias')
+            ->add('level', HiddenType::class, [
+                'data' => 3,
+            ])
+            ->add('parent', EntityType::class, [
+                'class' => JosRubric::class,
+                'choice_label' => 'name',
+                'query_builder' => function (EntityRepository $repo) {
+                    return $repo->createQueryBuilder('r')->andWhere('r.level = 2')->andWhere('r.published = 1')->orderBy('r.name');
+                }
+            ])
+            ->add('oldId')
             ->add('published', ChoiceType::class, [
-        'label' => 'Опубликовано',
+                'label' => 'Опубликовано',
 //                'multiple' => true,
-        'data' => true,
-        'expanded' => true,
+                'data' => true,
+                'expanded' => true,
 //                'required' => false,
-        'choices' => [
-            'Да' => 1,
-            'Нет' => 0,]
-    ])
-//            ->add('rubricDescription')
-           ;
+                'choices' => [
+                    'Да' => 1,
+                    'Нет' => 0,]
+            ])
+            ->add('description', null, [
+                'required' => false,
+            ])
+            ->add('key', null, [
+                'required' => false,
+            ]);
+        if ($this->getRoot()->getSubject()->getCreated()) {
+            $formMapper
+                ->add('modified', DateTimeType::class, [
+                    'label' => 'Дата изменения',
+                    'data' => new \DateTime(),
+                    'widget' => 'single_text',
+                    'format' => 'dd-MM-yyyy HH:mm:ss',
+
+                ]);
+        } else {
+            $formMapper
+                ->add('created', DateTimeType::class, [
+                    'label' => 'Дата создания',
+                    'data' => new \DateTime(),
+                    'widget' => 'single_text',
+                    'format' => 'dd-MM-yyyy HH:mm:ss',
+
+                ])
+                ->add('modified', DateTimeType::class, [
+                    'label' => 'Дата изменения',
+                    'data' => new \DateTime(),
+                    'widget' => 'single_text',
+                    'format' => 'dd-MM-yyyy HH:mm:ss',
+
+                ]);
+        }
+        //            ->add('rubricDescription')
+        ;
     }
 
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
     {
         $datagridMapper
-            ->add('id', null, [
-                'label' => 'Клиент',
+            ->add('name', null, [
+                'label' => 'Рубрика',
                 'show_filter' => true,
-            ])
-        ;
+            ]);
     }
 
     protected function configureListFields(ListMapper $listMapper)
@@ -85,8 +132,8 @@ class JosRubricAdmin extends AbstractAdmin
 //                'expanded' => true,
 //                'required' => false,
                 'choices' => [
-                     1 => 'Да',
-                     0 => 'Нет',]
+                    1 => 'Да',
+                    0 => 'Нет',]
             ])
             ->add('_action', null, [
                 'actions' => [
@@ -99,15 +146,13 @@ class JosRubricAdmin extends AbstractAdmin
 // удаляет ссылку на создание "create"
     protected function configureRoutes(RouteCollection $collection)
     {
-        if ($this->isChild()) {
-            return;
-        }
-
-        // This is the route configuration as a parent
-        $collection->clear();
-        $collection->remove('create');
+//        if ($this->isChild()) {
+//            return;
+//        }
+//
+//        // This is the route configuration as a parent
+//        $collection->clear();
         $collection->remove('export');
-        $collection->remove('delete');
 
     }
 
@@ -120,7 +165,7 @@ class JosRubricAdmin extends AbstractAdmin
     public function toString($object)
     {
         return $object instanceof JosRubric
-            ? 'Рубрика'.$object->getId()
+            ? 'Рубрика' . $object->getId()
             : 'Рубрика'; // shown in the breadcrumb on the create view
     }
 

@@ -46,33 +46,52 @@ class JosRubricClientTestAdmin extends AbstractAdmin
     {
 
 //        $username = $this->security->getUser()->getUsername();
-        if ($this->isChild()) {
-            $rubricId = $this->getRoot()->getSubject()->getNewRubric()->getOldId();
-            dump($rubricId);
-        }else {
-            $rubricId = null;
-        }
-        if ($this->getRoot()->getSubject()->getId() != null) {
+        $rubricId = null;
+        if ($this->getRoot()->getSubject()->getId() != null and $this->isChild()) {
+                $rubricId = $this->getRoot()->getSubject()->getNewRubric()->getOldId();
+//                dump($rubricId);
            $formMapper
             ->add('newRubricId', null, [
-                'disabled' => true
+                'disabled' => true,
+                'label' => 'Id рубрики',
             ]);
-        }
-        if ($rubricId != null) {
+        if ($rubricId and $this->getRoot()->getSubject()->getRubricId() == null) {
             $formMapper
                 ->add('rubricId', IntegerType::class, [
                     'data' => $rubricId,
+                    'label' => 'OldId рубрики',
+                    'help' => '<span class="help-block sonata-ba-field-help" style="color: red">Сохраните этот id рубрики</span>',
+                ]);
+        } else if ($rubricId){
+            $formMapper
+                ->add('rubricId', IntegerType::class, [
+                    'label' => 'OldId рубрики',
+                    'disabled' => true,
+                ]);
+        }}
+        if ($this->getRoot()->getSubject()->getId()) {
+            $formMapper
+                ->add('newRubric', EntityType::class, [
+                    'label' => 'Название рубрики',
+                    'disabled' => true,
+                    'class' => JosRubric::class,
+                    'choice_label' => 'name',
+                    'query_builder' => function (EntityRepository $repo) {
+                        return $repo->createQueryBuilder('r')->andWhere('r.level = 3')->orderBy('r.name');
+                    }
+                ]);
+            } else {
+            $formMapper
+                ->add('newRubric', EntityType::class, [
+                    'label' => 'Название рубрики',
+                    'class' => JosRubric::class,
+                    'choice_label' => 'name',
+                    'query_builder' => function (EntityRepository $repo) {
+                        return $repo->createQueryBuilder('r')->andWhere('r.level = 3')->orderBy('r.name');
+                    }
                 ]);
         }
         $formMapper
-            ->add('newRubric', EntityType::class, [
-                'label' => 'Название рубрики',
-                'class' => JosRubric::class,
-                'choice_label' => 'name',
-                'query_builder' => function(EntityRepository $repo) {
-                    return $repo->createQueryBuilder('r')->andWhere('r.level = 3')->orderBy('r.name');
-                }
-            ])
             ->add('published', ChoiceType::class, [
         'label' => 'Опубликовано',
 //                'multiple' => true,
@@ -103,6 +122,9 @@ class JosRubricClientTestAdmin extends AbstractAdmin
         unset($this->listModes['mosaic']);
         $listMapper
 //            ->add('id')
+            ->add('newRubricId', null , [
+                'label' => 'Id рубрики',
+            ])
             ->addIdentifier('newRubric', EntityType::class, [
                 'label' => 'Название рубрики',
                 'class' => JosRubric::class,
@@ -125,6 +147,11 @@ class JosRubricClientTestAdmin extends AbstractAdmin
                 'choices' => [
                      1 => 'Да',
                      0 => 'Нет',]
+            ])
+            ->add('rubricId', null, [
+//                'data' => $rubricId,
+                'label' => 'OldId рубрики',
+                'row_align' => 'left'
             ])
             ->add('_action', null, [
                 'actions' => [

@@ -45,19 +45,20 @@ sonata_admin:
                                 roles: [ ROLE_SUPER_ADMIN ]
 
                             app.admin.group.stat:
-                                label: Статистика
+                                label: Админ. компаний
                                 label_catalogue: App
                                 items:
                                     - admin.stat
                                     - admin.client.field
                                     - admin.clients.land
                                     - admin.banners
+                                    - admin.jos.rubric
                                     - admin.admin.clients
                                 roles: [ ROLE_ADMIN ]
 #                                roles: [ ROLE_SUPER_ADMIN ]
 
                             app.admin.group.link:
-                                label: Ссылки
+                                label: Счетчик по ссылкам
                                 label_catalogue: App
                                 items:
                                     - admin.link
@@ -184,5 +185,5 @@ services:
                    class: App\Admin\JosRubricAdmin
                    arguments: [~, App\Entity\JosRubric, ~]
                    tags:
-                        - { name: sonata.admin, manager_type: orm, label: Телефоны, label_catalogue: App }
+                        - { name: sonata.admin, manager_type: orm, label: Рубрики, label_catalogue: App }
                    public: true

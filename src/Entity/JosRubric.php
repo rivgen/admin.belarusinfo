@@ -22,6 +22,41 @@ class JosRubric
     private $name;
 
     /**
+     * @ORM\Column(name="keywords", type="text", nullable=false)
+     */
+    private $keywords = ' ';
+
+    /**
+     * @ORM\Column(name="description", type="text", nullable=false)
+     */
+    private $description = ' ';
+
+    /**
+     * @ORM\Column(name="`key`", type="text", nullable=false)
+     */
+    private $key = ' ';
+//
+    /**
+ * @ORM\Column(name="key_w", type="text", nullable=false)
+ */
+    private $keyW = ' ';
+
+    /**
+     * @ORM\Column(name="title", type="text", nullable=false)
+     */
+    private $title = ' ';
+
+    /**
+     * @ORM\Column(name="seo_text", type="text", nullable=false)
+     */
+    private $seoText = ' ';
+
+    /**
+     * @ORM\Column(name="seo_key", type="text", nullable=false)
+     */
+    private $seoKey = ' ';
+
+    /**
      * @ORM\ManyToOne(targetEntity="JosRubric", inversedBy="id")
      */
     private $parent;
@@ -50,6 +85,17 @@ class JosRubric
      * @ORM\Column(name="alias", type="string", nullable=false)
      */
     private $alias;
+
+    /**
+     * @ORM\Column(name="created", type="datetime", nullable=false)
+     */
+    private $created;
+
+    /**
+     * @ORM\Column(name="modified", type="datetime", nullable=false)
+     */
+    private $modified;
+
 
     /**
      * @ORM\OneToMany(targetEntity="JosBanners", mappedBy="rubric")
@@ -214,6 +260,150 @@ class JosRubric
     public function setOldId($oldId)
     {
         $this->oldId = $oldId;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCreated()
+    {
+        return $this->created;
+    }
+
+    /**
+     * @param mixed $created
+     */
+    public function setCreated($created)
+    {
+        $this->created = $created;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getModified()
+    {
+        return $this->modified;
+    }
+
+    /**
+     * @param mixed $modified
+     */
+    public function setModified($modified)
+    {
+        $this->modified = $modified;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getKeywords()
+    {
+        return $this->keywords;
+    }
+
+    /**
+     * @param mixed $keywords
+     */
+    public function setKeywords($keywords)
+    {
+        $this->keywords = $keywords;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+    /**
+     * @param mixed $description
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getKey()
+    {
+        return $this->key;
+    }
+
+    /**
+     * @param mixed $key
+     */
+    public function setKey($key)
+    {
+        $this->key = $key;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getKeyW()
+    {
+        return $this->keyW;
+    }
+
+    /**
+     * @param mixed $keyW
+     */
+    public function setKeyW($keyW)
+    {
+        $this->keyW = $keyW;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getTitle()
+    {
+        return $this->title;
+    }
+
+    /**
+     * @param mixed $title
+     */
+    public function setTitle($title)
+    {
+        $this->title = $title;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSeoText()
+    {
+        return $this->seoText;
+    }
+
+    /**
+     * @param mixed $seoText
+     */
+    public function setSeoText($seoText)
+    {
+        $this->seoText = $seoText;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSeoKey()
+    {
+        return $this->seoKey;
+    }
+
+    /**
+     * @param mixed $seoKey
+     */
+    public function setSeoKey($seoKey)
+    {
+        $this->seoKey = $seoKey;
     }
 
 }
