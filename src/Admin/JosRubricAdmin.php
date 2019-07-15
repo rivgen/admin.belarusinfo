@@ -102,18 +102,24 @@ class JosRubricAdmin extends AbstractAdmin
                     'format' => 'dd-MM-yyyy HH:mm:ss',
 
                 ]);
-        }
-        //            ->add('rubricDescription')
+        }//            ->add('rubricDescription')
         ;
     }
 
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
     {
         $datagridMapper
-            ->add('name', null, [
-                'label' => 'Рубрика',
+            ->add('id', null, [
                 'show_filter' => true,
-            ]);
+                'label' => 'Рубрики',
+            ],
+                EntityType::class, [
+                    'class' => JosRubric::class,
+                    'choice_label' => 'name',
+                    'query_builder' => function (EntityRepository $repo) {
+                        return $repo->createQueryBuilder('r')->andWhere('r.level = 3')->orderBy('r.name');
+                    }
+                ]);
     }
 
     protected function configureListFields(ListMapper $listMapper)
@@ -121,9 +127,15 @@ class JosRubricAdmin extends AbstractAdmin
         // удаляет ссылку на выбор плитки
         unset($this->listModes['mosaic']);
         $listMapper
+            ->add('id')
             ->addIdentifier('name', null, [
-                'header_style' => 'width: 5%',
+//                'header_style' => 'width: 5%',
                 'row_align' => 'left'
+            ])
+            ->add('parent', EntityType::class, [
+                'class' => JosRubric::class,
+                'associated_property' => 'name',
+//                'disabled' => true,
             ])
             ->add('published', 'choice', [
                 'label' => 'Опубликовано',
@@ -135,15 +147,15 @@ class JosRubricAdmin extends AbstractAdmin
                     1 => 'Да',
                     0 => 'Нет',]
             ])
+            ->add('oldId')
             ->add('_action', null, [
                 'actions' => [
 //                    'show' => [],
                     'edit' => [],
                     'delete' => [],
-                ]]);;
+                ]]);
     }
 
-// удаляет ссылку на создание "create"
     protected function configureRoutes(RouteCollection $collection)
     {
 //        if ($this->isChild()) {
@@ -156,24 +168,17 @@ class JosRubricAdmin extends AbstractAdmin
 
     }
 
-    protected function configureShowFields(ShowMapper $showMapper)
-    {
-        $showMapper
-            ->add('keywords');
-    }
+//    protected function configureShowFields(ShowMapper $showMapper)
+//    {
+//        $showMapper
+//            ->add('keywords');
+//    }
 
     public function toString($object)
     {
         return $object instanceof JosRubric
             ? 'Рубрика' . $object->getId()
             : 'Рубрика'; // shown in the breadcrumb on the create view
-    }
-
-    public function configureExportFields(AdminInterface $admin, array $fields)
-    {
-        unset($fields['updatedAt']);
-
-        return $fields;
     }
 
 }
