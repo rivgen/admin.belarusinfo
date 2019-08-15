@@ -56,9 +56,15 @@ class AdminClientsAdmin extends AbstractAdmin
                 'class' => JosCity::class,
                 'choice_label' => 'cityName',
             ])
-            ->add('reklama', null, [
-                'label' => 'Рекламная строка',
-            ])
+            ->add('logo', ChoiceType::class, [
+                'label' => 'Логотип',
+//                'multiple' => true,
+                'data' => true,
+                'expanded' => true,
+//                'required' => false,
+                'choices' => [
+                    'Есть' => 1,
+                    'Нет' => 0,]])
             ->end()
             ->with('Информация', ['class' => 'col-md-4'])
             ->add('email')
@@ -75,6 +81,11 @@ class AdminClientsAdmin extends AbstractAdmin
             ->with('Рубрики', ['class' => 'col-md-4'])
             ->add('rubric', null, [
                 'label' => 'Номера',
+            ])
+            ->end()
+            ->with('Рекламная строка')
+            ->add('reklama', null, [
+                'label' => false,
             ])
             ->end()
 //            ->add('keywords', null, [
