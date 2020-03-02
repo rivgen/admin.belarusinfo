@@ -48,7 +48,6 @@ sonata_admin:
                                 label: Админ. компаний
                                 label_catalogue: App
                                 items:
-                                    - admin.stat
                                     - admin.client.field
                                     - admin.clients.land
                                     - admin.banners
@@ -56,6 +55,13 @@ sonata_admin:
                                     - admin.admin.clients
                                 roles: [ ROLE_ADMIN ]
 #                                roles: [ ROLE_SUPER_ADMIN ]
+
+                            app.admin.group.statOnly:
+                                label: Статистика компаний
+                                label_catalogue: App
+                                items:
+                                    - admin.stat
+                                roles: [ ROLE_STAT_ONLY ]
 
                             app.admin.group.link:
                                 label: Счетчик по ссылкам
