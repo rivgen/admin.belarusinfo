@@ -219,6 +219,7 @@ class JosContentAdmin extends AbstractAdmin
                     53 => 'Продукция',
                     55 => 'Фотогалерея',
                     58 => 'Вакансии' ,
+                    59 => 'Заявки',
                 ]
             ])
 //            ->add('created')
