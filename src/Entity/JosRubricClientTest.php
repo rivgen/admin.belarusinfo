@@ -22,10 +22,15 @@ class JosRubricClientTest
     private $rubricDescription;
 
     /**
-     * @ORM\ManyToOne(targetEntity="JosAdminClients", inversedBy="rubrics")
+     * @ORM\Column(name="client_id", type="integer", nullable=false, options={"unsigned"=true})
      */
     private $client;
-
+    
+    /**
+     * @ORM\ManyToOne(targetEntity="JosAdminClients", inversedBy="rubrics")
+     * @ORM\JoinColumn(name="company_id", referencedColumnName="id_inc")
+     */
+    private $company;
     /**
      *
      * @ORM\ManyToOne(targetEntity="JosRubric", inversedBy="old")
@@ -98,6 +103,22 @@ class JosRubricClientTest
     public function setClient($client)
     {
         $this->client = $client;
+    }
+    
+    /**
+     * @return mixed
+     */
+    public function getCompany()
+    {
+        return $this->company;
+    }
+
+    /**
+     * @param mixed $company
+     */
+    public function setCompany($company)
+    {
+        $this->company = $company;
     }
 
     /**

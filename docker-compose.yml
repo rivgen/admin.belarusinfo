@@ -1,0 +1,50 @@
+version: '3.8'
+services:
+
+    php:
+        build:
+          context: ./docker/php-fpm
+          network: host
+        volumes:
+          - ./:/var/www
+
+    nginx:
+      build:
+        context: "./docker/nginx"
+        network: host
+      ports:
+        - ${NGINX_HTTP_PORTAL_PORT}:80
+#        - ${NGINX_HTTPS_PORTAL_PORT}:443
+      volumes:
+        - "${SOURCES_DIR}:/var/www:delegated"
+#      restart: ${RESTART_CONDITION}:on
+      links:
+        - php
+
+    nginx-site:
+      build:
+        context: "./docker/nginx-site"
+        network: host
+      ports:
+        - ${NGINX_HTTP_SITE_PORT}:80
+#        - ${NGINX_HTTPS_PORTAL_PORT}:443
+      volumes:
+        - "${SOURCES_DIR}:/var/www:delegated"
+#      restart: ${RESTART_CONDITION}
+      links:
+        - php
+
+    db:
+      build:
+        context: "./docker/mysql"
+        network: host
+      ports:
+        - ${DB_PORT}:3306
+      volumes:
+        - "./mnt/mysql:/var/lib/mysql:delegated"
+        - /tmp:/tmp
+#      restart: ${RESTART_CONDITION}
+      environment:
+        MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+        MYSQL_DATABASE: ${MYSQL_DATABASE}
+        MYSQL_ROOT_HOST: "%"

@@ -29,6 +29,7 @@ class DescriptionKey
 
     /**
      * @ORM\ManyToOne(targetEntity="JosClientsKeywords", inversedBy="keyss")
+     * @ORM\JoinColumn(name="company_id", referencedColumnName="id")
      */
     private $company;
 

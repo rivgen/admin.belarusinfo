@@ -26,20 +26,21 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Tetranz\Select2EntityBundle\Form\Type\Select2EntityType;
 use Tetranz\Select2EntityBundle\Service\AutocompleteService;
+use EdSDK\FlmngrServer\FlmngrServer;
 
 class IndexController extends Controller
 {
-    /**
-     * @Route("/", name="index_index", methods="GET")
-     */
-    public function index(Request $request): Response
-    {
-        $em = $this->getDoctrine()->getManager();
+    ///**
+     //* @Route("/", name="index_index", methods="GET")
+    // */
+    //public function index(Request $request): Response
+    //{
+    //    $em = $this->getDoctrine()->getManager();
 //        $companyRepository = $em->getRepository(Company::class);
 //        $rubricsRepository = $em->getRepository(Rubric::class);
 //        $regionRepository = $em->getRepository(Region::class);
 //        $cityRepository = $em->getRepository(City::class);
-        $newsRepository = $em->getRepository(News::class);
+       // $newsRepository = $em->getRepository(News::class);
 //        $productRubricRepository = $em->getRepository(ProductRubric::class);
 //        $terms = $request->query->all();
 //        $terms['tagName'] =  $request->query->get('tags');
@@ -80,8 +81,8 @@ class IndexController extends Controller
 //        $showCites = $cityRepository->showCites($terms);
 //        $countRegionIdes = count($countRegionId);
 //        $showRegions = $regionRepository->showRegions($terms);
-        $showNewsTop = $newsRepository->showNewsTop();
-        $showNews = $newsRepository->showNews();
+       // $showNewsTop = $newsRepository->showNewsTop();
+        //$showNews = $newsRepository->showNews();
 //        $rubricProduct = $productRubricRepository->getRubricProduct();
 //        $countRubricProduct = $productRubricRepository->countRubricProduct();
 //        dump($terms);
@@ -90,7 +91,7 @@ class IndexController extends Controller
 //        dump($showCites);
 
 
-        return $this->render('index/index.html.twig', [
+       // return $this->render('index/index.html.twig', [
 //            'search_form' => $search_form->createView(),
 //            'search_form2' => $search_form->createView(),
 //            'searchTags' => $searchTags->createView(),
@@ -101,24 +102,24 @@ class IndexController extends Controller
 //            'serviceAll' => $serviceASC,
 //            'showRegions' => $showRegions,
 //            'showCites' => $showCites,
-            'showNewsTop' => $showNewsTop,
-            'showNews' => $showNews,
+        //    'showNewsTop' => $showNewsTop,
+        //    'showNews' => $showNews,
 //            'terms' => $terms,
 //            'tagIds' => $tagIds,
 //            'rubricProduct' => $rubricProduct,
 //            'countRubricProduct' => $countRubricProduct,
-        ]);
-    }
+      //  ]);
+    //}
 
-    /**
-     * @Route("/search/tags", name="search_tags", methods="GET")
-     */
-    public function searchTagsAjax(Request $request)
-    {
-        $em = $this->getDoctrine()->getManager();
-        $terms = $request->query->all();
-        $terms['q'] = $request->query->get('q');
-        $result =  $em->getRepository(Tag::class)->searchTags($terms);
+   // /**
+   //  * @Route("/search/tags", name="search_tags", methods="GET")
+   //  */
+   // public function searchTagsAjax(Request $request)
+    //{
+    //    $em = $this->getDoctrine()->getManager();
+    //    $terms = $request->query->all();
+    //    $terms['q'] = $request->query->get('q');
+    //    $result =  $em->getRepository(Tag::class)->searchTags($terms);
 //        return new JsonResponse([
 //            'results' => $result,
 ////            'code'    => $exception->getCode(),
@@ -126,21 +127,21 @@ class IndexController extends Controller
 //        'more' => true,
 //
 //        ]);
-        return new JsonResponse($result);
-    }
+     //   return new JsonResponse($result);
+    //}
 
-    /**
-     * @Route("/search/regions", name="search_regions", methods="GET")
-     */
-    public function searchRegionsAjax(Request $request)
-    {
-        $em = $this->getDoctrine()->getManager();
-        $terms = $request->query->all();
-        $terms['r'] = $request->query->get('r');
-        $result =  $em->getRepository(Region::class)->searchRegions($terms);
+    ///**
+    // * @Route("/search/regions", name="search_regions", methods="GET")
+    // */
+    //public function searchRegionsAjax(Request $request)
+    //{
+    //    $em = $this->getDoctrine()->getManager();
+    //    $terms = $request->query->all();
+    //    $terms['r'] = $request->query->get('r');
+    //    $result =  $em->getRepository(Region::class)->searchRegions($terms);
 
-        return new JsonResponse($result);
-    }
+    //    return new JsonResponse($result);
+    //}
 
     /**
      * Create SearchForm
@@ -363,5 +364,21 @@ class IndexController extends Controller
             ])
             ->getForm();
         return $form;
+    }
+    
+    /**
+     * @Route("/flmngr", name="flmngr")
+     */
+    public function flmngr()
+    {
+        FlmngrServer::flmngrRequest(
+            array(
+                'dirFiles' => $this->getParameter('kernel.project_dir') . '/public/belarusinfo.by/ru/images/stories/photo_gallery'
+            )
+        );
+
+        // As far Flmngr returns a response itself,
+        // you must use "die" here to prevent a error.
+        die;
     }
 }

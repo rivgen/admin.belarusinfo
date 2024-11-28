@@ -31,9 +31,16 @@ class JosContent
 
     /**
      * @ORM\ManyToOne(targetEntity="JosClientsKeywords", inversedBy="content")
+     * @ORM\JoinColumn(name="companytitle_id", referencedColumnName="id_inc")
      *
      */
     private $companytitle;
+    
+    // /**
+    //  * @ORM\Column(type="integer", unique=true)
+    //  *
+    //  */
+    // private $companytitle;
 
     /**
      * @var string
@@ -258,7 +265,7 @@ author=';
     /**
      * @ORM\OneToMany(targetEntity="DescriptionKey", mappedBy="content")
      */
-    private $descriptionKeys;
+    //private $descriptionKeys;
 
     /**
      * @return int

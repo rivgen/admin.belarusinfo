@@ -53,6 +53,12 @@ sonata_admin:
                                     - admin.banners
                                     - admin.jos.rubric
                                     - admin.admin.clients
+                                    - admin.categoryservice
+                                    - admin.categoryproduct
+                                    - admin.allreview
+#                                    - admin.seotemplate
+                                    - admin.clientsetting
+#                                    - admin.newsletteradmin
                                 roles: [ ROLE_ADMIN ]
 #                                roles: [ ROLE_SUPER_ADMIN ]
 
@@ -160,8 +166,17 @@ services:
                calls:
 #                  - [addChild, ['@admin.jos.content', 'companytitle2']]
                   - [addChild, ['@admin.clients', 'adminClients']]
-                  - [addChild, ['@admin.tels', 'client']]
-                  - [addChild, ['@admin.jos.rubric.client', 'client']]
+                  - [addChild, ['@admin.tels', 'company']]
+                  - [addChild, ['@admin.jos.rubric.client', 'company']]
+                  - [addChild, ['@admin.newsletteradmin', 'company']]
+                  - [addChild, ['@admin.sale', 'client']]
+                  - [addChild, ['@admin.review', 'client']]
+                  - [addChild, ['@admin.vacancy', 'company']]
+                  - [addChild, ['@admin.product', 'company']]
+                  - [addChild, ['@admin.service', 'company']]
+                  - [addChild, ['@admin.filial', 'client']]
+                  - [addChild, ['@admin.clientsetting', 'company']]
+                  - [addChild, ['@admin.clientmetric', 'company']]
                tags:
                    - { name: sonata.admin, manager_type: orm, label: Компании, label_catalogue: App }
                public: true
@@ -193,3 +208,82 @@ services:
                    tags:
                         - { name: sonata.admin, manager_type: orm, label: Рубрики, label_catalogue: App }
                    public: true
+
+    admin.newsletteradmin:
+                   class: App\Admin\NewsletterAdmin
+                   arguments: [~, App\Entity\NewsletterAdmin, ~]
+                   tags:
+                   - { name: sonata.admin, manager_type: orm, label: Новости, label_catalogue: App }
+                   public: true
+    admin.sale:
+                   class: App\Admin\SaleAdmin
+                   arguments: [~, App\Entity\SaleAdmin, ~]
+                   tags:
+                   - { name: sonata.admin, manager_type: orm, label: Акции, label_catalogue: App }
+                   public: true
+    admin.review:
+                   class: App\Admin\ReviewAdmin
+                   arguments: [~, App\Entity\ReviewAdmin, ~]
+                   tags:
+                   - { name: sonata.admin, manager_type: orm, label: Отзывы, label_catalogue: App }
+                   public: true
+    admin.vacancy:
+                   class: App\Admin\VacancyAdmin
+                   arguments: [~, App\Entity\VacancyAdmin, ~]
+                   tags:
+                   - { name: sonata.admin, manager_type: orm, label: Вакансии, label_catalogue: App }
+                   public: true
+    admin.categoryservice:
+                    class: App\Admin\CategoryserviceAdmin
+                    arguments: [~, App\Entity\CategoryserviceAdmin, ~]
+                    tags:
+                    - { name: sonata.admin, manager_type: orm, label: Категории услуг, label_catalogue: App }
+                    public: true
+    admin.categoryproduct:
+                    class: App\Admin\CategoryproductAdmin
+                    arguments: [~, App\Entity\CategoryproductAdmin, ~]
+                    tags:
+                    - { name: sonata.admin, manager_type: orm, label: Категории товаров, label_catalogue: App }
+                    public: true
+    admin.product:
+                    class: App\Admin\ProductAdmin
+                    arguments: [~, App\Entity\ProductAdmin, ~]
+                    tags:
+                    - { name: sonata.admin, manager_type: orm, label: Товары, label_catalogue: App }
+                    public: true
+    admin.service:
+                    class: App\Admin\ServiceAdmin
+                    arguments: [~, App\Entity\ServiceAdmin, ~]
+                    tags:
+                    - { name: sonata.admin, manager_type: orm, label: Услуги, label_catalogue: App }
+                    public: true
+    admin.allreview:
+                    class: App\Admin\AllreviewAdmin
+                    arguments: [~, App\Entity\AllreviewAdmin, ~]
+                    tags:
+                    - { name: sonata.admin, manager_type: orm, label: Все отзывы, label_catalogue: App }
+                    public: true
+    admin.seotemplate:
+                    class: App\Admin\SeotemplateAdmin
+                    arguments: [~, App\Entity\SeotemplateAdmin, ~]
+                    tags:
+                    - { name: sonata.admin, manager_type: orm, label: Шаблоны Meta, label_catalogue: App }
+                    public: true
+    admin.filial:
+                    class: App\Admin\FilialAdmin
+                    arguments: [~, App\Entity\FilialAdmin, ~]
+                    tags:
+                    - { name: sonata.admin, manager_type: orm, label: Филиалы, label_catalogue: App }
+                    public: true
+    admin.clientsetting:
+                    class: App\Admin\ClientsettingAdmin
+                    arguments: [~, App\Entity\ClientsettingAdmin, ~]
+                    tags:
+                    - { name: sonata.admin, manager_type: orm, label: Дополнительно, label_catalogue: App }
+                    public: true
+    admin.clientmetric:
+                    class: App\Admin\ClientmetricAdmin
+                    arguments: [~, App\Entity\ClientmetricAdmin, ~]
+                    tags:
+                    - { name: sonata.admin, manager_type: orm, label: Метрика, label_catalogue: App }
+                    public: true

@@ -16,6 +16,7 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Sonata\AdminBundle\Form\Type\ModelType;
 use Sonata\AdminBundle\Show\ShowMapper;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -42,9 +43,28 @@ class AdminClientsAdmin extends AbstractAdmin
     {
         $admin = $this->isChild() ? $this->getParent() : $this;
         $idParent = $admin->getRequest()->get('id');
+        
+        /** @var User $subject */
+        $subject = $this->getSubject();
+        
+        $ms_metric = $subject->getMsmetric() ?? 1;
+        $metric = $subject->getMetric() ?? 1;
+        // get the current Image instance
+//        $image = $this->getSubject();
+//        $fileFormOptions = ['required' => false];
+//        if ($image && ($webPath = $image->getWebPath())) {
+//            $container = $this->getConfigurationPool()->getContainer();
+//            $fullPath = $container->get('request_stack')->getCurrentRequest()->getBasePath().'/'.$webPath;
+//            $fileFormOptions['help'] = '<img src="/public/'.$image->getImage().'" class="admin-preview" style="max-height: 150px;padding-top: 15px;"  />';
+//        }
+
 //        $username = $this->security->getUser()->getUsername();
         $formMapper
-            ->with('Номер организации ' . $idParent, ['class' => 'col-md-4'])
+            ->with('Номер организации ' . $subject->getIdCompany(), ['class' => 'col-md-4'])
+            ->add('idCompany', null, [
+                'label' => 'Id Номер организации',
+                
+            ])
             ->add('name', null, [
                 'label' => 'Название организации',
             ])
@@ -77,11 +97,26 @@ class AdminClientsAdmin extends AbstractAdmin
             ->add('promo', null, [
                 'label' => 'Ссылка на промо',
             ])
+            ->add('ordering')
             ->end()
             ->with('Рубрики', ['class' => 'col-md-4'])
             ->add('rubric', null, [
                 'label' => 'Номера',
             ])
+            ->end()
+            ->with('Посещения', ['class' => 'col-md-4'])
+            ->add('metric', null, [
+                'label' => 'Количество посещений',
+                'data' => $metric
+            ])
+            ->add('ms_metric', null, [
+                'label' => 'Количество посещений от Медиа Шарк',
+                'data' => $ms_metric
+            ])
+//            ->end()
+//            ->with('Фоновое изображение', ['class' => 'col-md-4'])
+//            ->add('file', FileType::class, $fileFormOptions)
+
             ->end()
             ->with('Рекламная строка')
             ->add('reklama', null, [
@@ -145,14 +180,21 @@ class AdminClientsAdmin extends AbstractAdmin
 //                'limit' => 1,
                 'allow_add' => true,
 
-            ]);
+            ])
+            ->end()
+
+
+
+        ;
+
+
     }
 
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
     {
         $datagridMapper
 //            ->add('id')
-            ->add('id', null, [
+            ->add('idCompany', null, [
                 'label' => 'Клиент',
                 'show_filter' => true,
             ])
@@ -166,7 +208,7 @@ class AdminClientsAdmin extends AbstractAdmin
         // удаляет ссылку на выбор плитки
         unset($this->listModes['mosaic']);
         $listMapper
-            ->add('id', null, [
+            ->add('idCompany', null, [
                 'header_style' => 'width: 5%',
                 'row_align' => 'left'
             ])
@@ -186,12 +228,24 @@ class AdminClientsAdmin extends AbstractAdmin
                 ]]);;
     }
 
+
+    public function prePersist($model) {
+
+        //$model->upload();
+    }
+//
+    public function preUpdate($model) {
+
+        //$model->upload();
+    }
+
+
 // удаляет ссылку на создание "create"
     protected function configureRoutes(RouteCollection $collection)
     {
-        $collection->remove('create');
+        //$collection->remove('create');
         $collection->remove('export');
-        $collection->remove('delete');
+        //$collection->remove('delete');
     }
 
     protected function configureShowFields(ShowMapper $showMapper)
@@ -215,7 +269,8 @@ class AdminClientsAdmin extends AbstractAdmin
 
         $admin = $this->isChild() ? $this->getParent() : $this;
         $id = $admin->getRequest()->get('id');
-
+        $josAdminClients = $this-> getConfigurationPool () -> getContainer () -> get ('doctrine') -> getRepository (JosAdminClients::class);
+        $company = $josAdminClients->findOneBy(['idInc' => $id]);
 //        $menu->addChild('View Playlist', [
 //            'uri' => $admin->generateUrl('show', ['id' => $id])
 //        ]);
@@ -226,28 +281,84 @@ class AdminClientsAdmin extends AbstractAdmin
         }
 
         if ($this->isGranted('EDIT')) {
-            $menu->addChild('Компания (' . $id . ')', [
+            $menu->addChild('Компания (' . $company->getIdCompany() . ')', [
                 'uri' => $admin->generateUrl('edit', ['id' => $id])
             ]);
         }
 
         if ($this->isGranted('LIST')) {
-            $menu->addChild('О компании (' . $id . ')', [
+            $menu->addChild('О компании (' . $company->getIdCompany() . ')', [
                 'uri' => $admin->getChild('admin.clients')->generateUrl('admin.jos.content.list', ['id' => $id, 'childId' => $id])
             ]);
         }
 
         if ($this->isGranted('LIST')) {
-            $menu->addChild('Телефоны (' . $id . ')', [
+            $menu->addChild('Телефоны (' . $company->getIdCompany() . ')', [
                 'uri' => $admin->generateUrl('admin.tels.list', ['id' => $id])
             ]);
         }
 
         if ($this->isGranted('LIST')) {
-            $menu->addChild('Рубрики (' . $id . ')', [
+            $menu->addChild('Рубрики (' . $company->getIdCompany() . ')', [
                 'uri' => $admin->generateUrl('admin.jos.rubric.client.list', ['id' => $id])
             ]);
         }
+
+        if ($this->isGranted('LIST')) {
+            $menu->addChild('Новости (' . $company->getIdCompany() . ')', [
+                'uri' => $admin->generateUrl('admin.newsletteradmin.list', ['id' => $id])
+            ]);
+        }
+
+        /*if ($this->isGranted('LIST')) {
+            $menu->addChild('Акции (' . $company->getIdCompany() . ')', [
+                'uri' => $admin->generateUrl('admin.sale.list', ['id' => $id])
+            ]);
+        }
+
+        if ($this->isGranted('LIST')) {
+            $menu->addChild('Отзывы (' . $company->getIdCompany() . ')', [
+                'uri' => $admin->generateUrl('admin.review.list', ['id' => $id])
+            ]);
+        }*/
+
+        if ($this->isGranted('LIST')) {
+            $menu->addChild('Вакансии (' . $company->getIdCompany() . ')', [
+                'uri' => $admin->generateUrl('admin.vacancy.list', ['id' => $id])
+            ]);
+        }
+
+        if ($this->isGranted('LIST')) {
+            $menu->addChild('Товары (' . $company->getIdCompany() . ')', [
+                'uri' => $admin->generateUrl('admin.product.list', ['id' => $id])
+            ]);
+        }
+
+        if ($this->isGranted('LIST')) {
+            $menu->addChild('Услуги (' . $company->getIdCompany() . ')', [
+                'uri' => $admin->generateUrl('admin.service.list', ['id' => $id])
+            ]);
+        }
+
+        /*if ($this->isGranted('LIST')) {
+            $menu->addChild('Филиалы (' . $company->getIdCompany() . ')', [
+                'uri' => $admin->generateUrl('admin.filial.list', ['id' => $id])
+            ]);
+        }*/
+
+        if ($this->isGranted('LIST')) {
+            $menu->addChild('Дополнительно (' . $company->getIdCompany() . ')', [
+                'uri' => $admin->generateUrl('admin.clientsetting.list', ['id' => $id])
+            ]);
+        }
+
+        if ($this->isGranted('LIST')) {
+            $menu->addChild('Метрика (' . $company->getIdCompany() . ')', [
+                'uri' => $admin->generateUrl('admin.clientmetric.list', ['id' => $id])
+            ]);
+        }
+
+
 //        if ($this->isGranted('LIST')) {
 //            $menu->addChild('Текст / ключевики ('.$id.')', [
 //                'uri' => $admin->generateUrl('admin.description.key.list', ['id' => $id])

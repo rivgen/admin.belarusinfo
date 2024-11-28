@@ -10,8 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
 class JosClients
 {
     /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
+     * @ORM\Id
      * @ORM\Column(type="integer")
      */
     private $id;

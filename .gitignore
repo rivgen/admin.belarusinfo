@@ -1,0 +1,6 @@
+vendor
+var
+mnt/mysql
+.env
+# временно исключим
+public

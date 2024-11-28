@@ -46,29 +46,24 @@ class JosRubricClientTestAdmin extends AbstractAdmin
     {
 
 //        $username = $this->security->getUser()->getUsername();
+$admin = $this->isChild() ? $this->getParent() : $this;
+        $idParent = $admin->getRequest()->get('id');
+        $josAdminClients = $this-> getConfigurationPool () -> getContainer () -> get ('doctrine') -> getRepository (JosAdminClients::class);
+        $company = $josAdminClients->findOneBy(['idInc' => $idParent]);
+        
         $rubricId = null;
         if ($this->getRoot()->getSubject()->getId() != null and $this->isChild()) {
-                $rubricId = $this->getRoot()->getSubject()->getNewRubric()->getOldId();
-//                dump($rubricId);
            $formMapper
             ->add('newRubricId', null, [
                 'disabled' => true,
                 'label' => 'Id рубрики',
             ]);
-        if ($rubricId and $this->getRoot()->getSubject()->getRubricId() == null) {
-            $formMapper
-                ->add('rubricId', IntegerType::class, [
-                    'data' => $rubricId,
-                    'label' => 'OldId рубрики',
-                    'help' => '<span class="help-block sonata-ba-field-help" style="color: red">Сохраните этот id рубрики</span>',
-                ]);
-        } else if ($rubricId){
             $formMapper
                 ->add('rubricId', IntegerType::class, [
                     'label' => 'OldId рубрики',
                     'disabled' => true,
                 ]);
-        }}
+        }
         if ($this->getRoot()->getSubject()->getId()) {
             $formMapper
                 ->add('newRubric', EntityType::class, [
@@ -103,8 +98,17 @@ class JosRubricClientTestAdmin extends AbstractAdmin
             'Нет' => 0,]
     ])
             ->add('rubricDescription')
+            ->add('client', HiddenType::class, [
+                    'data' => $company->getIdCompany(),
+            ])
            ;
     }
+    
+    public function prePersist( $object)
+    {
+        $object->setRubricId($object->getNewRubric()->getOldId());
+    }
+    
 
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
     {

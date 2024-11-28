@@ -2,6 +2,7 @@
 
 namespace App\Admin;
 
+use App\Entity\JosAdminClients;
 use App\Entity\JosContent;
 use App\Entity\Tel;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
@@ -10,6 +11,7 @@ use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Route\RouteCollection;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Sonata\AdminBundle\Form\Type\ModelType;
 use Sonata\AdminBundle\Show\ShowMapper;
@@ -40,7 +42,14 @@ class TelAdmin extends AbstractAdmin
     {
 
 //        $username = $this->security->getUser()->getUsername();
+          $admin = $this->isChild() ? $this->getParent() : $this;
+          $idParent = $admin->getRequest()->get('id');
+          $josAdminClients = $this-> getConfigurationPool () -> getContainer () -> get ('doctrine') -> getRepository (JosAdminClients::class);
+          $company = $josAdminClients->findOneBy(['idInc' => $idParent]);
         $formMapper
+            ->add('client', HiddenType::class, [
+                'data' => $company->getIdCompany(),
+            ])
             ->add('phoneType', TextType::class, [
                 'label' => 'Конкретизация',
             ])

@@ -41,6 +41,7 @@ class CopirClientsAdmin extends AbstractAdmin
 
 //        $username = $this->security->getUser()->getUsername();
         $formMapper
+            ->add('idCompany')
             ->add('keywords', null, [
                 'label' => 'Ключевые слова',
                 'attr' => ['style' => 'height: 200px']
@@ -66,7 +67,7 @@ class CopirClientsAdmin extends AbstractAdmin
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
     {
         $datagridMapper
-            ->add('id', null, [
+            ->add('idCompany', null, [
                 'label' => 'Клиент',
                 'show_filter' => true,
             ])
@@ -78,11 +79,11 @@ class CopirClientsAdmin extends AbstractAdmin
         // удаляет ссылку на выбор плитки
         unset($this->listModes['mosaic']);
         $listMapper
-            ->add('id', null, [
+            ->addIdentifier('idCompany', null, [
                 'header_style' => 'width: 5%',
                 'row_align' => 'left'
             ])
-            ->addIdentifier('name', null, [
+            ->add('name', null, [
                 'label' => 'Организация',
                 'header_style' => 'width: 50%',
                 'row_align' => 'left'
@@ -98,9 +99,9 @@ class CopirClientsAdmin extends AbstractAdmin
 // удаляет ссылку на создание "create"
     protected function configureRoutes(RouteCollection $collection)
     {
-        $collection->remove('create');
+        //$collection->remove('create');
         $collection->remove('export');
-        $collection->remove('delete');
+        //$collection->remove('delete');
     }
 
     protected function configureShowFields(ShowMapper $showMapper)
@@ -124,7 +125,10 @@ class CopirClientsAdmin extends AbstractAdmin
 
         $admin = $this->isChild() ? $this->getParent() : $this;
         $id = $admin->getRequest()->get('id');
-
+        
+        $josAdminClients = $this-> getConfigurationPool () -> getContainer () -> get ('doctrine') -> getRepository (JosClientsKeywords::class);
+        $company = $josAdminClients->findOneBy(['idInc' => $id]);
+dump($id, $company);
 //        $menu->addChild('View Playlist', [
 //            'uri' => $admin->generateUrl('show', ['id' => $id])
 //        ]);
@@ -135,12 +139,12 @@ class CopirClientsAdmin extends AbstractAdmin
         }
 
         if ($this->isGranted('EDIT')) {
-            $menu->addChild('Ключевые слова (' . $id . ')', [
+            $menu->addChild('Ключевые слова (' . $company->getIdCompany() . ')', [
                 'uri' => $admin->generateUrl('edit', ['id' => $id])
             ]);
         }
 
-        if ($this->isGranted('LIST')) {
+       /* if ($this->isGranted('LIST')) {
             $menu->addChild('О компании (' . $id . ')', [
                 'uri' => $admin->generateUrl('admin.jos.content.list', ['id' => $id])
             ]);
@@ -150,7 +154,7 @@ class CopirClientsAdmin extends AbstractAdmin
             $menu->addChild('Текст / ключевики ('.$id.')', [
                 'uri' => $admin->generateUrl('admin.description.key.list', ['id' => $id])
             ]);
-        }
+        }*/
     }
 
     public function configureExportFields(AdminInterface $admin, array $fields)

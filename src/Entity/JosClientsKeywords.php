@@ -10,12 +10,17 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class JosClientsKeywords
 {
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
+   /**
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     * @ORM\Column(type="integer", name="id_inc")
      */
-    private $id;
+    private $idInc;
+    
+    /**
+     * @ORM\Column(type="integer", unique=true, name="id")
+     */
+    private $idCompany;
 
     /**
      * @ORM\Column(name="keywords", type="text", nullable=true)
@@ -34,9 +39,9 @@ class JosClientsKeywords
 
     /**
      * @ORM\OneToOne(targetEntity="JosAdminClients", mappedBy="clientsKeywords")
-     *
+     * 
      */
-    private $adminClients;
+    //private $adminClients;
 
     /**
      * @ORM\OneToMany(targetEntity="DescriptionKey", mappedBy="company")
@@ -58,21 +63,29 @@ class JosClientsKeywords
     {
         $this->adminClients = $adminClients;
     }
-
+    
     /**
      * @return mixed
      */
-    public function getId()
+    public function getIdInc()
     {
-        return $this->id;
+        return $this->idInc;
+    }
+    
+    /**
+     * @return mixed
+     */
+    public function getIdCompany()
+    {
+        return $this->idCompany;
     }
 
     /**
-     * @param mixed $id
+     * @param mixed $idCompany
      */
-    public function setId($id)
+    public function setIdCompany($idCompany)
     {
-        $this->id = $id;
+        $this->idCompany = $idCompany;
     }
 
     /**

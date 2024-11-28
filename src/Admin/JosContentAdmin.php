@@ -3,6 +3,7 @@
 namespace App\Admin;
 
 use App\Entity\JosContent;
+use App\Entity\JosAdminClients;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Admin\AdminInterface;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
@@ -44,6 +45,9 @@ class JosContentAdmin extends AbstractAdmin
         $idParent = $admin->getRequest()->get('id');
         $content = $this->getRoot()->getSubject();
         $update = !empty ($this -> getRoot() -> getSubject() -> getModified())?date_format($this -> getRoot() -> getSubject() -> getModified(), 'Y-m-d H:m'):null;
+        $josAdminClients = $this-> getConfigurationPool () -> getContainer () -> get ('doctrine') -> getRepository (JosAdminClients::class);
+        $company = $josAdminClients->findOneBy(['idInc' => $idParent]);
+        // $client = $this->getEntityManager()->getRepository(OrderType::class)->findOneBy(['id' => $idParent]);
         if ($update == '1991-01-01 00:00' or $update == null){
             $updateData = 'не было изменений';
         }else
@@ -52,14 +56,14 @@ class JosContentAdmin extends AbstractAdmin
 //        $username = $this->getUser();
 //          dump($update);
         $formMapper
-            ->with('Номер организации ' . $idParent, ['class' => 'col-md-4'])
+            ->with('Номер организации ' . $company->getIdCompany(), ['class' => 'col-md-4'])
             ->add('title', HiddenType::class, [
                 'label' => 'id организации',
-                'data' => $idParent,
+                'data' => $company->getIdCompany(),
             ])
             ->add('alias', HiddenType::class, [
                 'label' => 'alias',
-                'data' => 'alias-' . $idParent,
+                'data' => 'alias-' . $company->getIdCompany(),
             ])
             ->add('state', ChoiceType::class, [
                 'label' => 'Опубликовано',

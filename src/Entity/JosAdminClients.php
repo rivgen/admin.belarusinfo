@@ -3,19 +3,34 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
  * @ORM\Table(name="jos_clients")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="App\Repository\JosAdminClientsRepository")
  */
 class JosAdminClients
 {
+    protected $image_folder = 'clientsettings';
+
     /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
+     * @Assert\File(maxSize="6000000")
      */
-    private $id;
+    protected $file;
+    protected $path;
+
+    /**
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     * @ORM\Column(type="integer", name="id_inc")
+     */
+    private $idInc;
+
+    /**
+     * @ORM\Column(type="integer", unique=true, nullable=false, name="id")
+     */
+    private $idCompany;
 
     /**
      * @ORM\Column(name="name", type="string", length=255, nullable=true)
@@ -109,17 +124,39 @@ class JosAdminClients
      * @ORM\JoinColumn(name="id", referencedColumnName="id")
      *
      */
-    private $clientsKeywords;
+    //private $clientsKeywords;
 
     /**
-     * @ORM\OneToMany(targetEntity="Tel", mappedBy="client")
+     * @ORM\OneToMany(targetEntity="Tel", mappedBy="company")
      */
     private $tels;
 
     /**
-     * @ORM\OneToMany(targetEntity="JosRubricClientTest", mappedBy="client")
+     * @ORM\OneToMany(targetEntity="JosRubricClientTest", mappedBy="company")
      */
     private $rubrics;
+    
+     /**
+     * @ORM\OneToMany(targetEntity="NewsletterAdmin", mappedBy="company")
+     */
+    private $news;
+
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+//    private $image;
+
+    /**
+     * @ORM\Column(name="metric",length=24, type="integer", nullable=true)
+     */
+    private $metric;
+
+    /**
+     * @ORM\Column(name="ms_metric",length=24, type="integer", nullable=true)
+     */
+    private $ms_metric;
+
 
     /**
      * @return mixed
@@ -136,21 +173,37 @@ class JosAdminClients
     {
         $this->clientsKeywords = $clientsKeywords;
     }
-
+    
+    /**
+     * @return mixed
+     */
+    public function getIdInc()
+    {
+        return $this->idInc;
+    }
+    
     /**
      * @return mixed
      */
     public function getId()
     {
-        return $this->id;
+        return $this->idInc;
     }
 
     /**
-     * @param mixed $id
+     * @return mixed
      */
-    public function setId($id)
+    public function getIdCompany()
     {
-        $this->id = $id;
+        return $this->idCompany;
+    }
+
+    /**
+     * @param mixed $idCompany
+     */
+    public function setIdCompany($idCompany)
+    {
+        $this->idCompany = $idCompany;
     }
 
     /**
@@ -488,5 +541,54 @@ class JosAdminClients
     {
         $this->rubrics = $rubrics;
     }
+
+//    public function getImage(): ?string
+//    {
+//        return $this->image;
+//    }
+//
+//    public function setImage(?string $image): self
+//    {
+//        $this->image = $image;
+//
+//        return $this;
+//    }
+
+//    public function __toString() {
+//        return $this->name;
+//    }
+
+    /**
+     * @return mixed
+     */
+    public function getMetric()
+    {
+        return $this->metric;
+    }
+
+    /**
+     * @param mixed $metric
+     */
+    public function setMetric($metric)
+    {
+        $this->metric = $metric;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getMsmetric()
+    {
+        return $this->ms_metric;
+    }
+
+    /**
+     * @param mixed $ms_metric
+     */
+    public function setMsmetric($ms_metric)
+    {
+        $this->ms_metric = $ms_metric;
+    }
+
 
 }
