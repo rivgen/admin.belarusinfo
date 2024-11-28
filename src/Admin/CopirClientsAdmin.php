@@ -128,7 +128,7 @@ class CopirClientsAdmin extends AbstractAdmin
         
         $josAdminClients = $this-> getConfigurationPool () -> getContainer () -> get ('doctrine') -> getRepository (JosClientsKeywords::class);
         $company = $josAdminClients->findOneBy(['idInc' => $id]);
-dump($id, $company);
+
 //        $menu->addChild('View Playlist', [
 //            'uri' => $admin->generateUrl('show', ['id' => $id])
 //        ]);

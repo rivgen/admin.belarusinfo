@@ -352,11 +352,11 @@ class AdminClientsAdmin extends AbstractAdmin
             ]);
         }
 
-        if ($this->isGranted('LIST')) {
-            $menu->addChild('Метрика (' . $company->getIdCompany() . ')', [
-                'uri' => $admin->generateUrl('admin.clientmetric.list', ['id' => $id])
-            ]);
-        }
+//        if ($this->isGranted('LIST')) {
+//            $menu->addChild('Метрика (' . $company->getIdCompany() . ')', [
+//                'uri' => $admin->generateUrl('admin.clientmetric.list', ['id' => $id])
+//            ]);
+//        }
 
 
 //        if ($this->isGranted('LIST')) {
