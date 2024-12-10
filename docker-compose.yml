@@ -8,6 +8,13 @@ services:
         volumes:
           - ./:/var/www
 
+    php-site:
+        build:
+          context: ./docker/php-fpm-site
+          network: host
+        volumes:
+          - ./public/belarusinfo.by:/var/www
+
     nginx:
       build:
         context: "./docker/nginx"

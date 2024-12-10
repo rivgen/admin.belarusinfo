@@ -46,22 +46,23 @@ class CopirClientsAdmin extends AbstractAdmin
                 'label' => 'Ключевые слова',
                 'attr' => ['style' => 'height: 200px']
             ])
-            ->add('keyss', CollectionType::class, [
-                'by_reference' => false,
-                'required' => false,
-                'type_options' => [
-                    'delete' => false,
-                ],
-                'btn_add' => 'Edit',
+//            ->add('keyss', CollectionType::class, [
+//                'by_reference' => false,
+//                'required' => false,
+//                'type_options' => [
+//                    'delete' => false,
+//                ],
+//                'btn_add' => 'Edit',
+////                'allow_add' => true,
+//            ], [
+//                'edit' => 'inline',
+//                'inline' => 'table',
+//                'sortable' => 'position',
+////                'limit' => 1,
 //                'allow_add' => true,
-            ], [
-                'edit' => 'inline',
-                'inline' => 'table',
-                'sortable' => 'position',
-//                'limit' => 1,
-                'allow_add' => true,
-
-            ]);
+//
+//            ])
+                ;
     }
 
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
@@ -123,26 +124,26 @@ class CopirClientsAdmin extends AbstractAdmin
             return;
         }
 
-        $admin = $this->isChild() ? $this->getParent() : $this;
-        $id = $admin->getRequest()->get('id');
-        
-        $josAdminClients = $this-> getConfigurationPool () -> getContainer () -> get ('doctrine') -> getRepository (JosClientsKeywords::class);
-        $company = $josAdminClients->findOneBy(['idInc' => $id]);
-
-//        $menu->addChild('View Playlist', [
-//            'uri' => $admin->generateUrl('show', ['id' => $id])
-//        ]);
-        if ($this->isGranted('LIST')) {
-            $menu->addChild('Все компании', [
-                'uri' => $admin->generateUrl('list')
-            ]);
-        }
-
-        if ($this->isGranted('EDIT')) {
-            $menu->addChild('Ключевые слова (' . $company->getIdCompany() . ')', [
-                'uri' => $admin->generateUrl('edit', ['id' => $id])
-            ]);
-        }
+//        $admin = $this->isChild() ? $this->getParent() : $this;
+//        $id = $admin->getRequest()->get('id');
+//        dump($id);
+//        $josAdminClients = $this-> getConfigurationPool () -> getContainer () -> get ('doctrine') -> getRepository (JosClientsKeywords::class);
+//        $company = $josAdminClients->findOneBy(['idInc' => $id]);
+//
+////        $menu->addChild('View Playlist', [
+////            'uri' => $admin->generateUrl('show', ['id' => $id])
+////        ]);
+//        if ($this->isGranted('LIST')) {
+//            $menu->addChild('Все компании', [
+//                'uri' => $admin->generateUrl('list')
+//            ]);
+//        }
+//
+//        if ($this->isGranted('EDIT')) {
+//            $menu->addChild('Ключевые слова (' . $company->getIdCompany() . ')', [
+//                'uri' => $admin->generateUrl('edit', ['id' => $id])
+//            ]);
+//        }
 
        /* if ($this->isGranted('LIST')) {
             $menu->addChild('О компании (' . $id . ')', [

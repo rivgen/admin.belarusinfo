@@ -2,6 +2,7 @@
 
 namespace App\Admin;
 
+use App\Entity\JosAdminClients;
 use App\Entity\JosContent;
 use App\Entity\Tel;
 use App\Entity\ClientsettingAdmin as Sale;
@@ -17,6 +18,7 @@ use Sonata\AdminBundle\Form\Type\ModelType;
 use Sonata\AdminBundle\Show\ShowMapper;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -64,10 +66,14 @@ class ClientsettingAdmin extends AbstractAdmin
             $fileFormOptions['help'] = '<img src="/belarusinfo.by/ms_assets/'.$image->getImage().'" class="admin-preview" style="max-height: 150px;padding-top: 15px;"  />';
             //$fileFormOptions['help_html'] = true;
         }
-
-//        $username = $this->security->getUser()->getUsername();
+        $admin = $this->isChild() ? $this->getParent() : $this;
+        $idParent = $admin->getRequest()->get('id');
+        $josAdminClients = $this-> getConfigurationPool () -> getContainer () -> get ('doctrine') -> getRepository (JosAdminClients::class);
+        $company = $josAdminClients->findOneBy(['idInc' => $idParent]);
         $formMapper
-
+            ->add('client', HiddenType::class, [
+                'data' => $company->getIdCompany(),
+            ])
 
             ->add('file', FileType::class, $fileFormOptions)
 
@@ -113,7 +119,7 @@ class ClientsettingAdmin extends AbstractAdmin
     protected function configureListFields(ListMapper $listMapper)
     {
         $listMapper
-            ->add('id', null, [
+            ->add('client', null, [
                 'label' => 'ID',
                 'row_align' => 'left',
                 'editable' => false

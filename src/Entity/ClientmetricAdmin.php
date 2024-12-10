@@ -18,8 +18,6 @@ use Doctrine\ORM\Mapping\JoinColumn;
 class ClientmetricAdmin
 {
 
-
-
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
@@ -27,32 +25,21 @@ class ClientmetricAdmin
      */
     private $id;
 
-//    /**
-//     * @ORM\Column(type="string", length=255, nullable=true)
-//     */
-//    private $name;
-
-
+    /**
+     * @ORM\Column(name="client_id", type="integer", nullable=false, options={"unsigned"=true})
+     */
+    private $client;
 
     /**
      * @ORM\ManyToOne(targetEntity="JosAdminClients", inversedBy="tels")
+     * @ORM\JoinColumn(name="company_id", referencedColumnName="id_inc")
      */
-    private $client;
+    private $company;
 
     /**
      * @ORM\Column(name="msmetric", type="string", length=64, nullable=true)
      */
     private $msmetric;
-
-
-
-
-
-
-    public function __construct(KernelInterface $kernel)
-    {
-        $this->uploadDir = $kernel->getProjectDir();
-    }
 
     public function getId(): ?int
     {
@@ -198,5 +185,21 @@ class ClientmetricAdmin
 //        return 'uploads/'.$this->image_folder.'';
 
         return 'belarusinfo.by/ms_assets/uploads/'.$this->image_folder.'';
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCompany()
+    {
+        return $this->company;
+    }
+
+    /**
+     * @param mixed $company
+     */
+    public function setCompany($company)
+    {
+        $this->company = $company;
     }
 }

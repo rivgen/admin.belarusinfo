@@ -2,6 +2,7 @@
 
 namespace App\Admin;
 
+use App\Entity\JosAdminClients;
 use App\Entity\JosContent;
 use App\Entity\Tel;
 use App\Entity\ClientsettingAdmin as Sale;
@@ -17,6 +18,7 @@ use Sonata\AdminBundle\Form\Type\ModelType;
 use Sonata\AdminBundle\Show\ShowMapper;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -46,20 +48,17 @@ class ClientmetricAdmin extends AbstractAdmin
     protected function configureFormFields(FormMapper $formMapper)
     {
 
-        // get the current Image instance
-        $image = $this->getSubject();
-
-        // use $fileFormOptions so we can add other options to the field
-        $fileFormOptions = ['required' => false];
-
-//        $username = $this->security->getUser()->getUsername();
+        $admin = $this->isChild() ? $this->getParent() : $this;
+        $idParent = $admin->getRequest()->get('id');
+        $josAdminClients = $this-> getConfigurationPool () -> getContainer () -> get ('doctrine') -> getRepository (JosAdminClients::class);
+        $company = $josAdminClients->findOneBy(['idInc' => $idParent]);
         $formMapper
-
-
+            ->add('client', HiddenType::class, [
+                'data' => $company->getIdCompany(),
+            ])
             ->add('msmetric', null, [
                 'label' => 'Количество посещений',
             ])
-
             ->end()
         ;
     }
@@ -102,17 +101,15 @@ class ClientmetricAdmin extends AbstractAdmin
     protected function configureListFields(ListMapper $listMapper)
     {
         $listMapper
-            ->add('id', null, [
+            ->add('client', null, [
                 'label' => 'ID',
                 'row_align' => 'left',
                 'editable' => false
             ])
+            ->add('msmetric', null, [
+                'label' => 'кол. посещений',
+            ])
 
-//            ->add('ordering', null, [
-//                'label' => 'Ordering',
-//                'row_align' => 'left',
-//                'editable' => true
-//            ])
             ->add('_action', null, [
                 'label' => 'Действия',
                 'actions' => [
