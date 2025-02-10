@@ -157,6 +157,11 @@ class JosAdminClients
      */
     private $ms_metric;
 
+    /**
+     * @ORM\Column(name="all", type="text", nullable=true)
+     */
+    private $all;
+
 
     /**
      * @return mixed
@@ -590,5 +595,13 @@ class JosAdminClients
         $this->ms_metric = $ms_metric;
     }
 
+    public function getAll()
+    {
+        return $this->all;
+    }
 
+    public function setAll($all)
+    {
+        $this->all = $all;
+    }
 }

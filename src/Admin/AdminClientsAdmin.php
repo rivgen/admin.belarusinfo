@@ -155,6 +155,7 @@ class AdminClientsAdmin extends AbstractAdmin
 
             ])
             ->end()
+            ->with('РУбрики', ['class' => 'col-md-12'])
             ->add('rubrics', CollectionType::class, [
                 'label' => false,
                 'by_reference' => false,
@@ -182,7 +183,11 @@ class AdminClientsAdmin extends AbstractAdmin
 
             ])
             ->end()
-
+            ->with('Для поиска', ['class' => 'col-md-12'])
+            ->add('all', null, [
+                'label' => 'Фразы участвующие в поиске (для поискового индекса)',
+            ])
+            ->end()
 
 
         ;
