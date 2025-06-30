@@ -174,7 +174,7 @@ services:
                   - [addChild, ['@admin.vacancy', 'company']]
                   - [addChild, ['@admin.product', 'company']]
                   - [addChild, ['@admin.service', 'company']]
-                  - [addChild, ['@admin.filial', 'client']]
+                  - [addChild, ['@admin.filial', 'company']]
                   - [addChild, ['@admin.clientsetting', 'company']]
                   - [addChild, ['@admin.clientmetric', 'company']]
                tags:

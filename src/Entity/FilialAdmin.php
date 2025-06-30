@@ -26,14 +26,20 @@ class FilialAdmin
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="JosAdminClients", inversedBy="tels")
+     * @ORM\Column(name="client_id", type="integer", nullable=false, options={"unsigned"=true})
      */
     private $client;
 
     /**
+     * @ORM\ManyToOne(targetEntity="JosAdminClients", inversedBy="tels")
+     * @ORM\JoinColumn(name="company_id", referencedColumnName="id_inc")
+     */
+    private $company;
+
+    /**
      * One Company has One Company in relation.
      * @OneToOne(targetEntity="JosAdminClients")
-     * @JoinColumn(name="filial_id", referencedColumnName="id")
+     * @JoinColumn(name="filial_id", referencedColumnName="id_inc")
      */
     private $filial_id;
 
@@ -73,5 +79,20 @@ class FilialAdmin
         $this->client = $client;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getCompany()
+    {
+        return $this->company;
+    }
+
+    /**
+     * @param mixed $company
+     */
+    public function setCompany($company)
+    {
+        $this->company = $company;
+    }
 
 }

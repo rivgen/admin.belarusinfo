@@ -2,7 +2,6 @@
 
 namespace App\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity()
@@ -13,46 +12,56 @@ class JosRubric
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     * @Groups({"api"})
      */
     private $id;
 
     /**
      * @ORM\Column(name="name", type="text", nullable=false)
+     * @Groups({"api"})
      */
     private $name;
 
     /**
      * @ORM\Column(name="keywords", type="text", nullable=false)
+     * @Groups({"api"})
      */
     private $keywords = ' ';
 
     /**
      * @ORM\Column(name="description", type="text", nullable=false)
+     * @Groups({"api"})
+     *
      */
     private $description = ' ';
 
     /**
      * @ORM\Column(name="`key`", type="text", nullable=false)
+     * @Groups({"api"})
      */
     private $key = ' ';
 //
     /**
- * @ORM\Column(name="key_w", type="text", nullable=false)
- */
+     * @ORM\Column(name="key_w", type="text", nullable=false)
+     * @Groups({"api"})
+     */
     private $keyW = ' ';
 
     /**
      * @ORM\Column(name="title", type="text", nullable=false)
+     * @Groups({"api"})
      */
     private $title = ' ';
 
     /**
      * @ORM\Column(name="seo_text", type="text", nullable=false)
+     * @Groups({"api"})
      */
     private $seoText = ' ';
 
     /**
      * @ORM\Column(name="seo_key", type="text", nullable=false)
+     * @Groups({"api"})
      */
     private $seoKey = ' ';
 
@@ -63,6 +72,7 @@ class JosRubric
 
     /**
      * @ORM\Column(name="level", type="integer", nullable=false)
+     * @Groups({"api"})
      */
     private $level;
 
@@ -78,21 +88,25 @@ class JosRubric
 
     /**
      * @ORM\Column(name="published", type="integer", nullable=false)
+     * @Groups({"api"})
      */
     private $published;
 
     /**
      * @ORM\Column(name="alias", type="string", nullable=false)
+     * @Groups({"api"})
      */
     private $alias;
 
     /**
      * @ORM\Column(name="created", type="datetime", nullable=false)
+     * @Groups({"api"})
      */
     private $created;
 
     /**
      * @ORM\Column(name="modified", type="datetime", nullable=false)
+     * @Groups({"api"})
      */
     private $modified;
 
@@ -214,21 +228,21 @@ class JosRubric
         $this->published = $published;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getRubricClient()
-    {
-        return $this->rubricClient;
-    }
-
-    /**
-     * @param mixed $rubricClient
-     */
-    public function setRubricClient($rubricClient)
-    {
-        $this->rubricClient = $rubricClient;
-    }
+//    /**
+//     * @return mixed
+//     */
+//    public function getRubricClient()
+//    {
+//        return $this->rubricClient;
+//    }
+//
+//    /**
+//     * @param mixed $rubricClient
+//     */
+//    public function setRubricClient($rubricClient)
+//    {
+//        $this->rubricClient = $rubricClient;
+//    }
 
     /**
      * @return mixed
