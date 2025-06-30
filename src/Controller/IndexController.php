@@ -13,6 +13,7 @@ use App\Entity\Rubric;
 use App\Entity\Service;
 use App\Entity\Tag;
 use App\Form\CompanyType;
+use Symfony\Component\Routing\Annotation\Route;
 use App\Repository\JosClientsAddedRepository;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
