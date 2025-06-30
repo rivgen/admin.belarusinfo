@@ -19,6 +19,16 @@ class User extends BaseUser
      */
     protected $id;
 
+    public function __toArray() :array
+    {
+        return [
+            'firstName' => $this->getFirstname(),
+            'login' => $this->getUsername(),
+            'email' => $this->getEmail(),
+            'updatedAt' => $this->getUpdatedAt()
+        ];
+    }
+
     /**
      * Get id.
      *

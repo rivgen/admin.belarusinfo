@@ -4,7 +4,7 @@ namespace App\Admin;
 
 use App\Entity\JosAdminClients;
 use App\Entity\JosCity;
-use App\Entity\JosContent;
+use App\Repository\JosAdminClientsRepository;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Admin\AdminInterface;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
@@ -13,30 +13,16 @@ use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Route\RouteCollection;
 use Sonata\Form\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Sonata\AdminBundle\Form\Type\ModelType;
 use Sonata\AdminBundle\Show\ShowMapper;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
-use Symfony\Component\Form\Extension\Core\Type\FileType;
-use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
-use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Knp\Menu\ItemInterface as MenuItemInterface;
-use Symfony\Component\Security\Core\Security;
 
 class AdminClientsAdmin extends AbstractAdmin
 {
 
     protected $datagridValues = [
-
-        // display the first page (default = 1)
-//        '_page' => 1,
-
-        // reverse order (default = 'ASC')
         '_sort_order' => 'DESC',
-
-        // name of the ordered field (default = the model's id field, if any)
-//        '_sort_by' => 'updatedAt',
     ];
 
     protected function configureFormFields(FormMapper $formMapper)
@@ -49,16 +35,6 @@ class AdminClientsAdmin extends AbstractAdmin
         
         $ms_metric = $subject->getMsmetric() ?? 1;
         $metric = $subject->getMetric() ?? 1;
-        // get the current Image instance
-//        $image = $this->getSubject();
-//        $fileFormOptions = ['required' => false];
-//        if ($image && ($webPath = $image->getWebPath())) {
-//            $container = $this->getConfigurationPool()->getContainer();
-//            $fullPath = $container->get('request_stack')->getCurrentRequest()->getBasePath().'/'.$webPath;
-//            $fileFormOptions['help'] = '<img src="/public/'.$image->getImage().'" class="admin-preview" style="max-height: 150px;padding-top: 15px;"  />';
-//        }
-
-//        $username = $this->security->getUser()->getUsername();
         $formMapper
             ->with('Номер организации ' . $subject->getIdCompany(), ['class' => 'col-md-4'])
             ->add('idCompany', null, [
@@ -113,9 +89,6 @@ class AdminClientsAdmin extends AbstractAdmin
                 'label' => 'Количество посещений от Медиа Шарк',
                 'data' => $ms_metric
             ])
-//            ->end()
-//            ->with('Фоновое изображение', ['class' => 'col-md-4'])
-//            ->add('file', FileType::class, $fileFormOptions)
 
             ->end()
             ->with('Рекламная строка')
@@ -123,10 +96,6 @@ class AdminClientsAdmin extends AbstractAdmin
                 'label' => false,
             ])
             ->end()
-//            ->add('keywords', null, [
-//                'label' => 'Ключевые слова',
-//                'attr' => ['style' => 'height: 200px']
-//            ])
             ->with('Телефоны', ['class' => 'col-md-12'])
             ->add('tels', CollectionType::class, [
                 'label' => false,
@@ -134,23 +103,12 @@ class AdminClientsAdmin extends AbstractAdmin
                 'required' => false,
                 'type_options' => [
                     'delete' => false,
-//                    'delete_options' => [
-//                        // You may otherwise choose to put the field but hide it
-//                        'type'         => HiddenType::class,
-//                        // In that case, you need to fill in the options as well
-//                        'type_options' => [
-//                            'mapped'   => false,
-//                            'required' => false,
-//                        ]
-//                    ]
                 ],
                 'btn_add' => false,
-//                'allow_add' => true,
             ], [
                 'edit' => 'inline',
                 'inline' => 'table',
                 'sortable' => 'position',
-//                'limit' => 1,
                 'allow_add' => true,
 
             ])
@@ -162,34 +120,21 @@ class AdminClientsAdmin extends AbstractAdmin
                 'required' => false,
                 'type_options' => [
                     'delete' => false,
-//                    'delete_options' => [
-//                        // You may otherwise choose to put the field but hide it
-//                        'type'         => HiddenType::class,
-//                        // In that case, you need to fill in the options as well
-//                        'type_options' => [
-//                            'mapped'   => false,
-//                            'required' => false,
-//                        ]
-//                    ]
                 ],
                 'btn_add' => false,
-//                'allow_add' => true,
             ], [
                 'edit' => 'inline',
                 'inline' => 'table',
                 'sortable' => 'position',
-//                'limit' => 1,
                 'allow_add' => true,
 
             ])
             ->end()
             ->with('Для поиска', ['class' => 'col-md-12'])
-            ->add('all', null, [
+            ->add('all', TextType::class, [
                 'label' => 'Фразы участвующие в поиске (для поискового индекса)',
             ])
             ->end()
-
-
         ;
 
 
@@ -198,7 +143,6 @@ class AdminClientsAdmin extends AbstractAdmin
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
     {
         $datagridMapper
-//            ->add('id')
             ->add('idCompany', null, [
                 'label' => 'Клиент',
                 'show_filter' => true,
@@ -248,9 +192,7 @@ class AdminClientsAdmin extends AbstractAdmin
 // удаляет ссылку на создание "create"
     protected function configureRoutes(RouteCollection $collection)
     {
-        //$collection->remove('create');
         $collection->remove('export');
-        //$collection->remove('delete');
     }
 
     protected function configureShowFields(ShowMapper $showMapper)
@@ -274,11 +216,9 @@ class AdminClientsAdmin extends AbstractAdmin
 
         $admin = $this->isChild() ? $this->getParent() : $this;
         $id = $admin->getRequest()->get('id');
+        /** @var JosAdminClientsRepository $josAdminClients */
         $josAdminClients = $this-> getConfigurationPool () -> getContainer () -> get ('doctrine') -> getRepository (JosAdminClients::class);
         $company = $josAdminClients->findOneBy(['idInc' => $id]);
-//        $menu->addChild('View Playlist', [
-//            'uri' => $admin->generateUrl('show', ['id' => $id])
-//        ]);
         if ($this->isGranted('LIST')) {
             $menu->addChild('Все компании', [
                 'uri' => $admin->generateUrl('list')
@@ -345,11 +285,11 @@ class AdminClientsAdmin extends AbstractAdmin
             ]);
         }
 
-        /*if ($this->isGranted('LIST')) {
+        if ($this->isGranted('LIST')) {
             $menu->addChild('Филиалы (' . $company->getIdCompany() . ')', [
                 'uri' => $admin->generateUrl('admin.filial.list', ['id' => $id])
             ]);
-        }*/
+        }
 
         if ($this->isGranted('LIST')) {
             $menu->addChild('Дополнительно (' . $company->getIdCompany() . ')', [

@@ -32,3 +32,6 @@ doctrine:
             SonataUserBundle: ~
             FOSUserBundle: ~
             ApplicationSonataUserBundle: ~
+        dql:
+            string_functions:
+                regexp: App\Dql\Regexp

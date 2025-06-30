@@ -119,11 +119,11 @@ class JosAdminClients
     private $fi;
 
 
-    /**
-     * @ORM\OneToOne(targetEntity="JosClientsKeywords", mappedBy="adminClients")
-     * @ORM\JoinColumn(name="id", referencedColumnName="id")
-     *
-     */
+//    /**
+//     * @ORM\OneToOne(targetEntity="JosClientsKeywords", mappedBy="adminClients")
+//     * @ORM\JoinColumn(name="id", referencedColumnName="id")
+//     *
+//     */
     //private $clientsKeywords;
 
     /**
@@ -141,10 +141,15 @@ class JosAdminClients
      */
     private $news;
 
-
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\OneToMany(targetEntity="FilialAdmin", mappedBy="company")
      */
+    private $filial;
+
+
+//    /**
+//     * @ORM\Column(type="string", length=255)
+//     */
 //    private $image;
 
     /**
@@ -158,7 +163,7 @@ class JosAdminClients
     private $ms_metric;
 
     /**
-     * @ORM\Column(name="all", type="text", nullable=true)
+     * @ORM\Column(name="`all`", type="text", nullable=true)
      */
     private $all;
 
