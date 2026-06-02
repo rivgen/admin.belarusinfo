@@ -153,6 +153,10 @@ class AdminClientsAdmin extends AbstractAdmin
                 'label' => 'Клиент',
                 'show_filter' => true,
             ])
+            ->add('isMap', null, [
+                'label' => 'Отображение карты в карточке',
+                'show_filter' => true,
+            ])
             ->add('name', null, [
                 'label' => 'Название организации',
             ]);
@@ -175,6 +179,7 @@ class AdminClientsAdmin extends AbstractAdmin
             ->add('rubric', null, [
                 'label' => 'Номер рубрики',
             ])
+            ->add('isMap')
             ->add('_action', null, [
                 'actions' => [
 //                    'show' => [],
