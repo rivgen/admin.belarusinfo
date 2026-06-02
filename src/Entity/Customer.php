@@ -10,7 +10,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 /**
  * Customer
  *
- * @ORM\Table(name="customer", uniqueConstraints={@ORM\UniqueConstraint(name="email", columns={"email"})})
+ * @ORM\Table(name="fos_user_user", uniqueConstraints={@ORM\UniqueConstraint(name="email", columns={"email"})})
  * @ORM\Entity(repositoryClass="App\Repository\CustomerRepository")
  * @UniqueEntity(fields="email", message="Email already taken")
  * @UniqueEntity(fields="username", message="Username already taken")
@@ -44,37 +44,37 @@ class Customer implements UserInterface
     /**
      * @var string|null
      *
-     * @ORM\Column(name="first_name", type="string", length=255, nullable=true)
+     * @ORM\Column(name="firstname", type="string", length=255, nullable=true)
      */
     private $firstName;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="last_name", type="string", length=255, nullable=true)
+     * @ORM\Column(name="lastname", type="string", length=255, nullable=true)
      */
     private $lastName;
 
-    /**
-     * @var string|null
-     *
-     * @ORM\Column(name="second_name", type="string", length=255, nullable=true)
-     */
-    private $secondName;
+//    /**
+//     * @var string|null
+//     *
+//     * @ORM\Column(name="secondname", type="string", length=255, nullable=true)
+//     */
+//    private $secondName;
 
-    /**
-     * @var string|null
-     *
-     * @ORM\Column(name="description", type="text", length=65535, nullable=true)
-     */
-    private $description;
+//    /**
+//     * @var string|null
+//     *
+//     * @ORM\Column(name="description", type="text", length=65535, nullable=true)
+//     */
+//    private $description;
 
-    /**
-     * @var string|null
-     *
-     * @ORM\Column(name="address", type="string", length=255, nullable=true)
-     */
-    private $address;
+//    /**
+//     * @var string|null
+//     *
+//     * @ORM\Column(name="address", type="string", length=255, nullable=true)
+//     */
+//    private $address;
 
     /**
      * @var string|null

@@ -61,6 +61,12 @@ class AdminClientsAdmin extends AbstractAdmin
                 'choices' => [
                     'Есть' => 1,
                     'Нет' => 0,]])
+            ->add('isMap', ChoiceType::class, [
+                'label' => 'Карта включена',
+                'expanded' => true,
+                'choices' => [
+                    'Да' => 1,
+                    'Нет' => 0,]])
             ->end()
             ->with('Информация', ['class' => 'col-md-4'])
             ->add('email')

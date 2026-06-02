@@ -167,6 +167,13 @@ class JosAdminClients
      */
     private $all;
 
+    /**
+     * @var bool
+     *
+     * @ORM\Column(name="is_map", type="boolean")
+     */
+    private $isMap;
+
 
     /**
      * @return mixed
@@ -608,5 +615,15 @@ class JosAdminClients
     public function setAll($all)
     {
         $this->all = $all;
+    }
+
+    public function getIsMap(): bool
+    {
+        return $this->isMap;
+    }
+
+    public function setIsMap($isMap)
+    {
+        $this->isMap = $isMap;
     }
 }

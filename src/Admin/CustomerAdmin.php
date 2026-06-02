@@ -41,14 +41,8 @@ class CustomerAdmin extends AbstractAdmin
     {
         $role = $this->getRoot()->getSubject()->getRoles();
         $formMapper
-//            ->tab('Основные данные')
-            ->with('Id', ['class' => 'col-md-2'])
-//            ->add('id')
-            ->end()
-            ->with('Номер организации', ['class' => 'col-md-4'])
+            ->with('Основной раздел', ['class' => 'col-md-10'])
             ->add('email', EmailType::class)
-            ->end()
-            ->with('Раздел', ['class' => 'col-md-4'])
             ->add('username', TextType::class, [
                 'required' => false,
 //                'label' => 'Рубрика'

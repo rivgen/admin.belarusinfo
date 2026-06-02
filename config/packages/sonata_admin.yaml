@@ -32,6 +32,7 @@ sonata_admin:
 #                                    - admin.description.key
                                     - admin.clients
                                     - admin.banners
+                                    - admin.modules
                                 roles: [ ROLE_STAFF ]
 #                                roles: [ ROLE_USER ]
 #                                roles: [ ROLE_ADMIN ]
@@ -287,3 +288,10 @@ services:
                     tags:
                     - { name: sonata.admin, manager_type: orm, label: Метрика, label_catalogue: App }
                     public: true
+
+    admin.modules:
+      class: App\Admin\JosModulesAdmin
+      arguments: [ ~, App\Entity\JosModules, ~ ]
+      tags:
+        - { name: sonata.admin, manager_type: orm, label: Сквозной баннер, label_catalogue: App }
+      public: true
